@@ -67,4 +67,5 @@ modules.xml
 .idea/sonarlint
 
 .idea/**
+target/**
 # End of https://www.gitignore.io/api/intellij
