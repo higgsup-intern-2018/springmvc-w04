@@ -11,6 +11,7 @@
     <packaging>war</packaging>
 
     <dependencies>
+        <!--Spring MVC-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -27,6 +28,28 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <!-- / end Spring MVC -->
+
+        <!--Spring JDBC-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+        <!-- / end Spring JDBC-->
+
+        <!-- Utils -->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>${orika-mapper.version}</version>
+        </dependency>
+        <!-- / end Utils-->
     </dependencies>
 
     <build>
@@ -49,5 +72,6 @@
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <java.version>1.8</java.version>
         <jackson.version>2.9.6</jackson.version>
+        <orika-mapper.version>1.5.2</orika-mapper.version>
     </properties>
 </project>

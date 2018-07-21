@@ -1,15 +1,17 @@
-package com.higgsup.intern.ebshop.model;
+package com.higgsup.intern.ebshop.dto;
 
-public class Person {
+public class PersonDTO {
+    private Long id;
     private String firstName;
     private String lastName;
+    private int age;
 
-    public Person() {
+    public Long getId() {
+        return id;
     }
 
-    public Person(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -26,5 +28,13 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
