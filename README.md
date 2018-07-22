@@ -13,6 +13,9 @@ This repository is used for team members to commit their Spring MVC Exercise on 
 ### References ###
 
 * http://www.baeldung.com/spring-jdbc-jdbctemplate
-* http://www.baeldung.com/properties-with-spring
 * https://www.journaldev.com/17053/spring-jdbctemplate-example
+* http://www.baeldung.com/properties-with-spring
 * http://www.baeldung.com/orika-mapping
+* http://www.baeldung.com/hikaricp
+* https://github.com/brettwooldridge/HikariCP
+* https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration

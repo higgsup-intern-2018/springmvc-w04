@@ -1,42 +1,55 @@
-/*
- Navicat Premium Data Transfer
+CREATE DATABASE  IF NOT EXISTS `ebshop` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `ebshop`;
+-- MySQL dump 10.13  Distrib 8.0.11, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: ebshop
+-- ------------------------------------------------------
+-- Server version	8.0.11
 
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 80011
- Source Host           : localhost:3306
- Source Schema         : ebshop
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+SET NAMES utf8 ;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
- Target Server Type    : MySQL
- Target Server Version : 80011
- File Encoding         : 65001
+--
+-- Table structure for table `person`
+--
 
- Date: 21/07/2018 23:23:54
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for person
--- ----------------------------
 DROP TABLE IF EXISTS `person`;
-CREATE TABLE `person`  (
-  `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `age` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `person` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of person
--- ----------------------------
-INSERT INTO `person` VALUES (1, 'Paul', 'Pogba', 25);
-INSERT INTO `person` VALUES (2, 'Benjamin', 'Pavard', 22);
-INSERT INTO `person` VALUES (3, 'Antoine', 'Griezmann', 27);
-INSERT INTO `person` VALUES (4, 'Kylian', 'Mbappé', 19);
-INSERT INTO `person` VALUES (5, 'Kevin', 'De Bruyne', 27);
-INSERT INTO `person` VALUES (6, 'Eden', 'Hazard', 27);
+--
+-- Dumping data for table `person`
+--
 
-SET FOREIGN_KEY_CHECKS = 1;
+LOCK TABLES `person` WRITE;
+/*!40000 ALTER TABLE `person` DISABLE KEYS */;
+INSERT INTO `person` VALUES (1,'Paul','Pogba',25),(2,'Benjamin','Pavard',22),(3,'Antoine','Griezmann',27),(4,'Kylian','Mbappé',19),(5,'Kevin','De Bruyne',27),(6,'Eden','Hazard',27);
+/*!40000 ALTER TABLE `person` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-07-22 20:32:43
