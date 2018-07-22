@@ -19,3 +19,4 @@ This repository is used for team members to commit their Spring MVC Exercise on 
 * http://www.baeldung.com/hikaricp
 * https://github.com/brettwooldridge/HikariCP
 * https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
+* http://www.baeldung.com/exception-handling-for-rest-with-spring
