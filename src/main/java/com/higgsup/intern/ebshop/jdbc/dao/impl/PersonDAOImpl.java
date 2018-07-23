@@ -3,6 +3,7 @@ package com.higgsup.intern.ebshop.jdbc.dao.impl;
 import com.higgsup.intern.ebshop.jdbc.dao.PersonDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.PersonMapper;
 import com.higgsup.intern.ebshop.jdbc.model.Person;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -28,9 +29,13 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public Person findById(Long id) {
-        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select * from person where id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, personMapper);
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+            String sql = "select * from person where id = :id;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, personMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override

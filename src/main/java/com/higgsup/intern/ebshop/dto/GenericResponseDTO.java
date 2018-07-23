@@ -23,6 +23,10 @@ public class GenericResponseDTO {
         return new GenericResponseDTO("DELETED");
     }
 
+    public static GenericResponseDTO of(String message) {
+        return new GenericResponseDTO(message);
+    }
+
     public String getMessage() {
         return message;
     }
