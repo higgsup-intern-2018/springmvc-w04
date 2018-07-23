@@ -7,24 +7,24 @@ public class GenericResponseDTO {
         this.message = message;
     }
 
+    public static GenericResponseDTO of(String message) {
+        return new GenericResponseDTO(message);
+    }
+
     public static GenericResponseDTO success() {
-        return new GenericResponseDTO("SUCCESS");
+        return of("SUCCESS");
     }
 
     public static GenericResponseDTO created() {
-        return new GenericResponseDTO("CREATED");
+        return of("CREATED");
     }
 
     public static GenericResponseDTO updated() {
-        return new GenericResponseDTO("UPDATED");
+        return of("UPDATED");
     }
 
     public static GenericResponseDTO deleted() {
-        return new GenericResponseDTO("DELETED");
-    }
-
-    public static GenericResponseDTO of(String message) {
-        return new GenericResponseDTO(message);
+        return of("DELETED");
     }
 
     public String getMessage() {

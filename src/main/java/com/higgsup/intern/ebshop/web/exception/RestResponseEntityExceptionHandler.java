@@ -1,5 +1,6 @@
 package com.higgsup.intern.ebshop.web.exception;
 
+import com.higgsup.intern.ebshop.dto.ApiErrorDTO;
 import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
@@ -15,13 +16,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFound(Exception ex, WebRequest request) {
-        GenericResponseDTO responseBody = GenericResponseDTO.of(ex.getMessage());
+        ApiErrorDTO responseBody = new ApiErrorDTO(ex.getClass().getSimpleName(), ex.getMessage());
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<Object> handleServiceException(Exception ex, WebRequest request) {
-        GenericResponseDTO responseBody = GenericResponseDTO.of(ex.getMessage());
+        ApiErrorDTO responseBody = new ApiErrorDTO(ex.getClass().getSimpleName(), ex.getMessage());
+        return handleExceptionInternal(ex, responseBody, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleAnyException(Exception ex, WebRequest request) {
+        ApiErrorDTO responseBody = new ApiErrorDTO(ex.getClass().getSimpleName(), ex.getMessage());
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
