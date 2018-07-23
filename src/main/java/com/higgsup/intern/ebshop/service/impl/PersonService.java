@@ -2,6 +2,8 @@ package com.higgsup.intern.ebshop.service.impl;
 
 import com.higgsup.intern.ebshop.dto.PersonDTO;
 import com.higgsup.intern.ebshop.dto.PersonListDTO;
+import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
+import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.PersonDAO;
 import com.higgsup.intern.ebshop.service.IPersonService;
 import com.higgsup.intern.ebshop.jdbc.model.Person;
@@ -24,6 +26,9 @@ public class PersonService implements IPersonService {
     @Override
     public PersonDTO findById(Long id) {
         Person person = personDAO.findById(id);
+        if (person == null) {
+            throw new ResourceNotFoundException(String.format("Person with id = %d does not exist!", id));
+        }
         return mapper.map(person, PersonDTO.class);
     }
 
@@ -48,12 +53,21 @@ public class PersonService implements IPersonService {
 
     @Override
     public void update(PersonDTO personDTO) {
+        Long id = personDTO.getId();
+        if (personDAO.findById(id) == null) {
+            throw new ServiceException(String.format("Person with id = %d does not exist!", id));
+        }
+
         Person person = mapper.map(personDTO, Person.class);
         personDAO.update(person);
     }
 
     @Override
     public void delete(Long id) {
+        if (personDAO.findById(id) == null) {
+            throw new ServiceException(String.format("Person with id = %d does not exist!", id));
+        }
+
         personDAO.delete(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.higgsup.intern.ebshop.web;
+package com.higgsup.intern.ebshop.web.controller;
 
 import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 import com.higgsup.intern.ebshop.dto.PersonDTO;
