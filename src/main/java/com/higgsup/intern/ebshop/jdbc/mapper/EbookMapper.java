@@ -2,10 +2,12 @@ package com.higgsup.intern.ebshop.jdbc.mapper;
 
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class EbookMapper implements RowMapper<Ebook> {
     @Override
     public Ebook mapRow(ResultSet rs, int i) throws SQLException {
@@ -23,5 +25,4 @@ public class EbookMapper implements RowMapper<Ebook> {
         ebook.setDeleted(rs.getBoolean("deleted"));
         return ebook;
     }
-    //ahihi đồ ngốc
 }
