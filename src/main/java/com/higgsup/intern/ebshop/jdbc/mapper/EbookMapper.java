@@ -23,4 +23,5 @@ public class EbookMapper implements RowMapper<Ebook> {
         ebook.setDeleted(rs.getBoolean("deleted"));
         return ebook;
     }
+    //ahihi đồ ngốc
 }
