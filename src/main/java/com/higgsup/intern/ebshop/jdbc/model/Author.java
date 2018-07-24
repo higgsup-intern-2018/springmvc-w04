@@ -1,7 +1,7 @@
 package com.higgsup.intern.ebshop.jdbc.model;
 
 public class Author {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private Integer yearOfBirth;
@@ -9,11 +9,12 @@ public class Author {
     private String website;
     private String organization;
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

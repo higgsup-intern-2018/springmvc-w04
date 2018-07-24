@@ -1,32 +1,32 @@
 package com.higgsup.intern.ebshop.jdbc.model;
 
 public class OrderDetails {
-    private long id;
-    private long orderId;
-    private long ebookId;
+    private Long id;
+    private Long orderId;
+    private Long ebookId;
     private Integer quantity;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public long getEbookId() {
+    public Long getEbookId() {
         return ebookId;
     }
 
-    public void setEbookId(long ebookId) {
+    public void setEbookId(Long ebookId) {
         this.ebookId = ebookId;
     }
 

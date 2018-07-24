@@ -3,23 +3,23 @@ package com.higgsup.intern.ebshop.jdbc.model;
 import java.util.Date;
 
 public class Ebook {
-    private long id;
+    private Long id;
     private String title;
     private String isbn;
     private String description;
-    private long authorId;
-    private long publisherId;
+    private Long authorId;
+    private Long publisherId;
     private Date publicationDate;
     private Integer page;
-    private long price;
+    private Long price;
     private Integer quantity;
-    private boolean deleted;
+    private Boolean deleted;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,19 +47,19 @@ public class Ebook {
         this.description = description;
     }
 
-    public long getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(long authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
 
-    public long getPublisherId() {
+    public Long getPublisherId() {
         return publisherId;
     }
 
-    public void setPublisherId(long publisherId) {
+    public void setPublisherId(Long publisherId) {
         this.publisherId = publisherId;
     }
 
@@ -79,11 +79,11 @@ public class Ebook {
         this.page = page;
     }
 
-    public long getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -95,11 +95,11 @@ public class Ebook {
         this.quantity = quantity;
     }
 
-    public boolean isDeleted() {
+    public Boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 }
