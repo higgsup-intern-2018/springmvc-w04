@@ -18,7 +18,6 @@ public class PersonController {
 
     private final IPersonService personService;
 
-    @Autowired
     public PersonController(IPersonService personService) {
         this.personService = personService;
     }
@@ -38,6 +37,7 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<GenericResponseDTO> createPerson(@RequestBody PersonDTO personDTO) {
         personService.create(personDTO);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(GenericResponseDTO.created());
@@ -46,6 +46,7 @@ public class PersonController {
     @PutMapping
     public ResponseEntity<GenericResponseDTO> updatePerson(@RequestBody PersonDTO personDTO) {
         personService.update(personDTO);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.updated());
@@ -54,6 +55,7 @@ public class PersonController {
     @DeleteMapping("/{id}")
     public ResponseEntity<GenericResponseDTO> deletePersonById(@PathVariable("id") Long id) {
         personService.delete(id);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.deleted());

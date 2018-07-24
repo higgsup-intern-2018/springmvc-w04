@@ -7,12 +7,8 @@ public class GenericResponseDTO {
         this.message = message;
     }
 
-    public static GenericResponseDTO of(String message) {
+    private static GenericResponseDTO of(String message) {
         return new GenericResponseDTO(message);
-    }
-
-    public static GenericResponseDTO success() {
-        return of("SUCCESS");
     }
 
     public static GenericResponseDTO created() {
