@@ -50,8 +50,14 @@ public class AuthorService implements IAuthorService {
         if (authorDAO.findById(id) == null) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
+        if (authorDAO.countEbooksOfAAuthor(id)==0){
+            authorDAO.delete(id);
+        } else {
+            throw new ServiceException(String.format("Not deleted! Because Author with id = %d has some ebooks!", id));
 
-        authorDAO.delete(id);
+        }
+
+
     }
 }
 
