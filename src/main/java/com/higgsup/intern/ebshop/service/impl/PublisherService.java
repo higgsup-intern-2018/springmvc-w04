@@ -1,6 +1,7 @@
 package com.higgsup.intern.ebshop.service.impl;
 
 import com.higgsup.intern.ebshop.dto.PublisherDTO;
+import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.PublisherDAO;
 import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import com.higgsup.intern.ebshop.service.IPublisherService;
@@ -19,8 +20,7 @@ public class PublisherService implements IPublisherService {
     }
 
     @Override
-    public void create(PublisherDTO publisherDTO) {
-        Publisher publisher = mapper.map(publisherDTO, Publisher.class);
-        publisherDAO.create(publisher);
+    public void delete(Long id) {
+        publisherDAO.delete(id);
     }
 }

@@ -25,12 +25,10 @@ public class PublisherDAOImpl implements PublisherDAO {
         this.personMapper = personMapper;
     }
 
-
-    public void create(Publisher publisher)
+    public void delete(Long id)
     {
-        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(publisher);
-        String sql = "insert into publisher (name, website, founder, founded_year, address) values (:name, :website, :founder, :foundedYear, :address)";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
+        String sql = "delete from publisher where id = :id";
         namedParameterJdbcTemplate.update(sql, parameterSource);
     }
-
 }
