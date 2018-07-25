@@ -20,7 +20,7 @@ public class AuthorController {
     public ResponseEntity<GenericResponseDTO> deleteAuthorById(@PathVariable("id") Long id) {
         authorService.delete(id);
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(GenericResponseDTO.deleted());
+                    .status(HttpStatus.OK)
+                    .body(GenericResponseDTO.deleted());
     }
 }
