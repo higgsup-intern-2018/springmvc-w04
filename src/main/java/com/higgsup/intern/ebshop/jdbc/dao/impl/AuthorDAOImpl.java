@@ -25,6 +25,19 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     @Override
+    public Integer countEbooksOfAAuthor(Long id) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("author_id", id);
+            String sql = "SELECT COUNT(ebook.id) " +
+                    "FROM ebook INNER JOIN author ON ebook.author_id = author.id " +
+                    "WHERE author.id = :author_id;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
     public Author findById(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
@@ -54,6 +67,10 @@ public class AuthorDAOImpl implements AuthorDAO {
     public void delete(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
         String sql = "DELETE FROM author WHERE id = :id;";
-        namedParameterJdbcTemplate.update(sql, paramSource);
+
+        if (countEbooksOfAAuthor(id) == 0){
+            namedParameterJdbcTemplate.update(sql, paramSource);
+        }
+
     }
 }
