@@ -20,6 +20,12 @@ public class PublisherService implements IPublisherService {
     }
 
     @Override
+    public void create(PublisherDTO publisherDTO) {
+        Publisher publisher = mapper.map(publisherDTO, Publisher.class);
+        publisherDAO.create(publisher);
+    }
+
+    @Override
     public void delete(Long id) {
         publisherDAO.delete(id);
     }
