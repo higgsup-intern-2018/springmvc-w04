@@ -61,6 +61,7 @@ public class EbookDAOImpl implements EbookDAO {
                         "description = :description, " +
                         "author_id = :authorId, " +
                         "publisher_id = :publisherId, " +
+                        "publication_date = :publicationDate, " +
                         "pages = :pages, " +
                         "price = :price, " +
                         "quantity = :quantity " +
