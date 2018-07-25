@@ -67,7 +67,6 @@ public class PersonService implements IPersonService {
         if (personDAO.findById(id) == null) {
             throw new ServiceException(String.format("Person with id = %d does not exist!", id));
         }
-
         personDAO.delete(id);
     }
 }

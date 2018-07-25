@@ -10,8 +10,8 @@ public class Ebook {
     private Long authorId;
     private Long publisherId;
     private Date publicationDate;
-    private Integer page;
-    private Long price;
+    private Integer pages;
+    private Double price;
     private Integer quantity;
     private Boolean deleted;
 
@@ -71,19 +71,19 @@ public class Ebook {
         this.publicationDate = publicationDate;
     }
 
-    public Integer getPage() {
-        return page;
+    public Integer getPages() {
+        return pages;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

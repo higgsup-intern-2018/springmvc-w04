@@ -19,8 +19,8 @@ public class EbookMapper implements RowMapper<Ebook> {
         ebook.setAuthorId(rs.getLong("author_id"));
         ebook.setPublisherId(rs.getLong("publisher_id"));
         ebook.setPublicationDate(rs.getDate("publication_date"));
-        ebook.setPage(rs.getInt("pages"));
-        ebook.setPrice(rs.getLong("price"));
+        ebook.setPages(rs.getInt("pages"));
+        ebook.setPrice(rs.getDouble("price"));
         ebook.setQuantity(rs.getInt("quantity"));
         ebook.setDeleted(rs.getBoolean("deleted"));
         return ebook;
