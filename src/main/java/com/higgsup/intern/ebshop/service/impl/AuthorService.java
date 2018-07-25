@@ -53,8 +53,7 @@ public class AuthorService implements IAuthorService {
         if (authorDAO.countEbooksOfAAuthor(id)==0){
             authorDAO.delete(id);
         } else {
-            throw new ServiceException(String.format("Not deleted! Because Author with id = %d has some ebooks!", id));
-
+            throw new ServiceException(String.format("Not deleted! Because the author with id = %d has some ebooks!", id));
         }
 
 
