@@ -31,4 +31,12 @@ public class PublisherDAOImpl implements PublisherDAO {
         String sql = "delete from publisher where id = :id";
         namedParameterJdbcTemplate.update(sql, parameterSource);
     }
+
+    @Override
+    public Integer countBook(Long id) {
+        SqlParameterSource parameterSource = new MapSqlParameterSource("publisher_id", id);
+        String sql = "select count(*) from publisher join ebook ON publisher.id = ebook.publisher_id where publisher.id = :publisher_id;";
+        Integer count = namedParameterJdbcTemplate.queryForObject(sql, parameterSource, Integer.class);
+        return count;
+    }
 }
