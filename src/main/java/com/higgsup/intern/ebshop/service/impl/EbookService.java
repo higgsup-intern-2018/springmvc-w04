@@ -28,7 +28,7 @@ public class EbookService implements IEbookService {
     public EbookDTO findById(Long id) {     //check is book existed
         Ebook ebook = ebookDAO.findById(id);
         if (ebook == null) {    //if this book not existed => throw exception
-            throw new ResourceNotFoundException(String.format("Person with id = %d does not exist!", id));
+            throw new ResourceNotFoundException(String.format("Ebook with id = %d does not exist!", id));
         }
         return mapper.map(ebook, EbookDTO.class);
     }
@@ -37,7 +37,7 @@ public class EbookService implements IEbookService {
     public void update(EbookDTO ebookDTO) {
         Long id = ebookDTO.getId();     //get id of book
         if (ebookDAO.findById(id) == null) {    //if book isnot existed in db
-            throw new ServiceException(String.format("Person with id = %d does not exist!", id));
+            throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
         }
 
         Ebook ebook = mapper.map(ebookDTO, Ebook.class);
