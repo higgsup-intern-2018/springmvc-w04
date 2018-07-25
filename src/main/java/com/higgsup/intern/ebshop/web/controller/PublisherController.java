@@ -18,7 +18,7 @@ public class PublisherController
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponseDTO> deletePersonById(@PathVariable("id") Long id) {
+    public ResponseEntity<GenericResponseDTO> deletePublisherById(@PathVariable("id") Long id) {
         publisherService.delete(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
