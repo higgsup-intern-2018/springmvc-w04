@@ -24,9 +24,9 @@ public class EbookController {
 
     @PostMapping
     public ResponseEntity<GenericResponseDTO> createEbook(@RequestBody EbookDTO ebookDTO) {
-        ebookService.create(ebookDTO);
+        GenericResponseDTO responseDTO = ebookService.create(ebookDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(GenericResponseDTO.created());
+                .body(responseDTO);
     }
 }
