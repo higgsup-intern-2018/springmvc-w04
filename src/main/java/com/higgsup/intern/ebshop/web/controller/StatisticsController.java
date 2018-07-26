@@ -19,7 +19,7 @@ public class StatisticsController {
         this.ebookService = ebookService;
     }
 
-    @GetMapping("/top-10-best-sellers")
+    @GetMapping("/top-10-best-seller-ebooks")
     public ResponseEntity<EbookOrderListDTO> top10BestSellers(){
         EbookOrderListDTO ebookOrderListDTO = ebookService.top10BestSellers();
         return ResponseEntity.ok(ebookOrderListDTO);
