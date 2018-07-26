@@ -4,5 +4,6 @@ import com.higgsup.intern.ebshop.dto.PublisherDTO;
 
 
 public interface IPublisherService {
+    PublisherDTO findById(Long id);
     void delete(Long id);
 }
