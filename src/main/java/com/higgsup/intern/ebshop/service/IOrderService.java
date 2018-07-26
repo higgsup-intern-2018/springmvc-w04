@@ -1,7 +1,7 @@
 package com.higgsup.intern.ebshop.service;
 
-import org.springframework.stereotype.Service;
-
+import com.higgsup.intern.ebshop.dto.OrderExportDTO;
 
 public interface IOrderService {
+    OrderExportDTO exportById(Long id);
 }
