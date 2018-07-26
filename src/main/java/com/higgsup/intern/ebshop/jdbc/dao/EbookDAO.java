@@ -1,5 +1,6 @@
 package com.higgsup.intern.ebshop.jdbc.dao;
 
+import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface EbookDAO {
     void create(Ebook ebook);
     void update(Ebook ebook);
     void delete(Long id);
+    Author infoOfAuthor(Long id);
+
 }
