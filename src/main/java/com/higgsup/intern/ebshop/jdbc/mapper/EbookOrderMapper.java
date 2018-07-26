@@ -17,7 +17,7 @@ public class EbookOrderMapper implements RowMapper<EbookOrderDTO>{
         ebookOrderDTO.setAuthorLastName(rs.getString("author.lastname"));
         ebookOrderDTO.setPublisherName(rs.getString("publisher.name"));
         ebookOrderDTO.setPrice(rs.getLong("ebook.price"));
-        ebookOrderDTO.setCopiesSold(rs.getInt("copied_sold"));
+        ebookOrderDTO.setCopiesSold(rs.getInt("copies_sold"));
         return ebookOrderDTO;
     }
 }
