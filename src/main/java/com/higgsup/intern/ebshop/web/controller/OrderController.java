@@ -11,16 +11,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    private final IOrderService orderService;
-
-    public OrderController(IOrderService orderService)
-    {
-        this.orderService = orderService;
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderExportDTO> exportById(@PathVariable("id") Long id) {
-        OrderExportDTO orderExportDTO = orderService.exportById(id);
-        return ResponseEntity.ok(orderExportDTO);
-    }
 }
