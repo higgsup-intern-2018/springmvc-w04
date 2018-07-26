@@ -4,10 +4,13 @@ import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.AuthorDAO;
+import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.dao.impl.AuthorDAOImpl;
+import com.higgsup.intern.ebshop.jdbc.dao.impl.EbookDAOImpl;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import com.higgsup.intern.ebshop.jdbc.model.Person;
+import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import com.higgsup.intern.ebshop.service.IAuthorService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
@@ -18,11 +21,13 @@ import java.util.List;
 public class AuthorService implements IAuthorService {
     private final AuthorDAO authorDAO;
     private final MapperFacade mapper;
+    private final EbookDAO ebookDAO;
 
     public AuthorService(AuthorDAO authorDAO,
-                         MapperFacade mapper) {
+                         MapperFacade mapper, EbookDAO ebookDAO) {
         this.authorDAO = authorDAO;
         this.mapper = mapper;
+        this.ebookDAO = ebookDAO;
     }
 
     @Override
@@ -34,11 +39,18 @@ public class AuthorService implements IAuthorService {
         List<Ebook> ebooks = authorDAO.getTop3BooksOfAuthor(id);
 
         List<EbookDTO> ebookDTOs = mapper.mapAsList(ebooks, EbookDTO.class);
+        for(EbookDTO ebookDTO : ebookDTOs){
+            Publisher publisher = ebookDAO.getPublisherByEbookId(ebookDTO.getId());
+            PublisherDTO publisherDTO = mapper.map(publisher,PublisherDTO.class);
+            ebookDTO.setPublisherDTO(publisherDTO);
+        }
+
         EbookListDTO ebookListDTO = new EbookListDTO();
         ebookListDTO.setEbookDTOList(ebookDTOs);
 
         AuthorDTO authorDTO = mapper.map(author, AuthorDTO.class);
         authorDTO.setEbookListDTO(ebookListDTO);
+
 
         authorDTO.setAllBookOfAuthor(authorDAO.getBookCount(id));
         return authorDTO;

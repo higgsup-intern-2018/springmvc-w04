@@ -3,8 +3,10 @@ package com.higgsup.intern.ebshop.jdbc.dao.impl;
 import com.higgsup.intern.ebshop.jdbc.dao.AuthorDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.AuthorMapper;
 import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
+import com.higgsup.intern.ebshop.jdbc.mapper.PublisherMapper;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
+import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -22,12 +24,15 @@ public class AuthorDAOImpl implements AuthorDAO {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final AuthorMapper authorMapper;
     private final EbookMapper ebookMapper;
+    private final PublisherMapper publisherMapper;
 
-    public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, AuthorMapper authorMapper, EbookMapper ebookMapper) {
+    public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                         AuthorMapper authorMapper, EbookMapper ebookMapper, PublisherMapper publisherMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.authorMapper = authorMapper;
         this.ebookMapper = ebookMapper;
+        this.publisherMapper = publisherMapper;
     }
 
     @Override
@@ -90,5 +95,14 @@ public class AuthorDAOImpl implements AuthorDAO {
                "JOIN author ON ebook.author_id = author.id " +
                "where author.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, parameterSource,Integer.class);
+    }
+
+    public Publisher getPublisherByEbookId(Long id) {
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+        String sql = "select publisher.*, ebook.* from ebook\n" +
+                "join publisher\n" +
+                "on ebook.publisher_id = publisher.id\n" +
+                "where ebook.id = :id;";
+        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
 }
