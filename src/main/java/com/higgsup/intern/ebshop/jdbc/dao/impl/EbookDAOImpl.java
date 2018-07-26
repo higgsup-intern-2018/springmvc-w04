@@ -3,6 +3,7 @@ package com.higgsup.intern.ebshop.jdbc.dao.impl;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -36,6 +37,17 @@ public class EbookDAOImpl implements EbookDAO {
     }
 
     @Override
+    public Ebook findById(String isbn) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("isbn", isbn);
+            String sql = "SELECT * FROM ebook WHERE isbn = :isbn;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, ebookMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
     public void create(Ebook ebook) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(ebook);
         String sql = "INSERT INTO ebook(isbn, title, description, author_id, publisher_id, publication_date, pages, price, quantity, deleted) " +
@@ -46,6 +58,16 @@ public class EbookDAOImpl implements EbookDAO {
     @Override
     public void update(Ebook ebook) {
 
+    }
+
+    @Override
+    public void updateAddedEbook(Ebook ebook) {
+        SqlParameterSource paramSource = new BeanPropertySqlParameterSource(ebook);
+        String sql = "UPDATE ebook " +
+                "SET title = :title, description = :description, author_id = :authorId, publisher_id = :publisherId, " +
+                "publication_date = :publicationDate, pages = :pages, price = :price, deleted = :deleted, quantity = :quantity " +
+                "WHERE isbn = :isbn;";
+        namedParameterJdbcTemplate.update(sql, paramSource);
     }
 
     @Override
