@@ -6,10 +6,7 @@ import com.higgsup.intern.ebshop.service.IAuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/authors")
@@ -27,5 +24,11 @@ public class AuthorController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.updated());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthorDTO> getPersonById(@PathVariable("id") Long id) {
+        AuthorDTO authorDTO = authorService.findbyId(id);
+        return ResponseEntity.ok(authorDTO);
     }
 }

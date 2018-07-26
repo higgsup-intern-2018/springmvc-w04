@@ -1,13 +1,18 @@
 package com.higgsup.intern.ebshop.service.impl;
 
-import com.higgsup.intern.ebshop.dto.AuthorDTO;
+import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.AuthorDAO;
+import com.higgsup.intern.ebshop.jdbc.dao.impl.AuthorDAOImpl;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
+import com.higgsup.intern.ebshop.jdbc.model.Ebook;
+import com.higgsup.intern.ebshop.jdbc.model.Person;
 import com.higgsup.intern.ebshop.service.IAuthorService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AuthorService implements IAuthorService {
@@ -26,7 +31,17 @@ public class AuthorService implements IAuthorService {
         if (author == null) {
             throw new ResourceNotFoundException(String.format("Author with id = %d does not exist!", id));
         }
-        return mapper.map(author, AuthorDTO.class);
+        List<Ebook> ebooks = authorDAO.getTop3BooksOfAuthor(id);
+
+        List<EbookDTO> ebookDTOs = mapper.mapAsList(ebooks, EbookDTO.class);
+        EbookListDTO ebookListDTO = new EbookListDTO();
+        ebookListDTO.setEbookDTOList(ebookDTOs);
+
+        AuthorDTO authorDTO = mapper.map(author, AuthorDTO.class);
+        authorDTO.setEbookListDTO(ebookListDTO);
+
+        authorDTO.setAllBookOfAuthor(authorDAO.getBookCount(id));
+        return authorDTO;
     }
 
     @Override
