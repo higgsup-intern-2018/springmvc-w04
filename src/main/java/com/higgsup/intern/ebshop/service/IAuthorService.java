@@ -1,5 +1,7 @@
 package com.higgsup.intern.ebshop.service;
 
-public interface IAuthorService {
+import com.higgsup.intern.ebshop.dto.AuthorDTO;
 
+public interface IAuthorService {
+    void create(AuthorDTO authorDTO);
 }
