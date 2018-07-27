@@ -5,7 +5,6 @@ import com.higgsup.intern.ebshop.jdbc.mapper.AuthorMapper;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
-
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final AuthorMapper authorMapper;
@@ -25,11 +23,25 @@ public class AuthorDAOImpl implements AuthorDAO {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.authorMapper = authorMapper;
     }
+
     @Override
-    public Author findbyId(Long id) {
+    public Integer countEbooksOfAAuthor(Long id) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("author_id", id);
+            String sql = "SELECT COUNT(ebook.id) " +
+                    "FROM ebook INNER JOIN author ON ebook.author_id = author.id " +
+                    "WHERE author.id = :author_id;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public Author findById(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-            String sql = "select * from author where id = :id";
+            String sql = "SELECT * FROM author WHERE id = :id;";
             return namedParameterJdbcTemplate.queryForObject(sql, paramSource, authorMapper);
         } catch (EmptyResultDataAccessException ex) {
             return null;
@@ -61,9 +73,14 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
 
-
     @Override
     public void delete(Long id) {
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+        String sql = "DELETE FROM author WHERE id = :id;";
+
+        if (countEbooksOfAAuthor(id) == 0){
+            namedParameterJdbcTemplate.update(sql, paramSource);
+        }
 
     }
 }
