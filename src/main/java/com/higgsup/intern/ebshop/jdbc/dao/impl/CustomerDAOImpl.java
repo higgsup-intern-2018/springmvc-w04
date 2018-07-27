@@ -24,12 +24,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public List<Customer> findTop5BestBuyCustomers() {
-        String sql = "SELECT customer.*, sum(order_details.quantity), sum(ebook.price * order_details.quantity) FROM customer " +
+        String sql = "SELECT customer.*, sum(order_details.quantity) totalQuantity , sum(ebook.price * order_details.quantity) totalPrice FROM customer " +
                 "JOIN orders ON customer.id = orders.customer_id " +
                 "JOIN order_details ON orders.id = order_details.order_id " +
                 "JOIN ebook ON order_details.ebook_id = ebook.id "+
                 "GROUP BY customer.id " +
-                "ORDER BY sum(order_details.quantity) DESC " +
+                "ORDER BY totalQuantity DESC " +
                 "limit 5;";
         return jdbcTemplate.query(sql, customerMapper);
     }
