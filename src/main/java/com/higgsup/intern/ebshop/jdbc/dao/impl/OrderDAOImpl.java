@@ -34,8 +34,11 @@ public class OrderDAOImpl implements OrderDAO {
     public OrderExportDTO exportOrder(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("order_id", id);
-            String sql = "select orders.id, customer.firstname, customer.lastname, customer.email, customer.phone from orders join customer " +
-                    "ON orders.customer_id = customer.id where orders.id = :order_id;";
+            String sql = "select orders.id, customer.firstname, customer.lastname, customer.email, customer.phone, sum(ebook.price * order_details.quantity) total_price  " +
+                    "from orders JOIN order_details ON orders.id = order_details.order_id " +
+                    "join customer ON orders.customer_id = customer.id " +
+                    "JOIN ebook ON order_details.ebook_id = ebook.id " +
+                    "where orders.id = :order_id;";
             return namedParameterJdbcTemplate.queryForObject(sql, paramSource, orderExportMapper);
         } catch (EmptyResultDataAccessException ex) {
             return null;

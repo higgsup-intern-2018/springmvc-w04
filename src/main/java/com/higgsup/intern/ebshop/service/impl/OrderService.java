@@ -20,14 +20,11 @@ public class OrderService implements IOrderService {
         this.mapper = mapper;
     }
 
-    public EbookOrderListDTO getEbookOrderList(Long id)
+    public List<EbookOrderDTO> getEbookOrderList(Long id)
     {
         List<EbookOrderDTO> ebookOrders = orderDAO.findByOrderId(id);
 
-        EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
-        ebookOrderListDTO.setEbookOrderDTOs(ebookOrders);
-
-        return ebookOrderListDTO;
+        return ebookOrders;
     }
 
     @Override
@@ -36,14 +33,8 @@ public class OrderService implements IOrderService {
         if (orderExport == null) {
             throw new ResourceNotFoundException(String.format("Order with id = %d does not exist!", id));
         }
-        EbookOrderListDTO ebookOrderListDTO = getEbookOrderList(id);
-        Long totalPrice = 0L;
-        for(EbookOrderDTO ebookOrderDTO : ebookOrderListDTO.getEbookOrderDTOs())
-        {
-            totalPrice += ebookOrderDTO.getPrice() * ebookOrderDTO.getCopiesSold();
-        }
-        orderExport.setItemList(ebookOrderListDTO);
-        orderExport.setTotalPrice(totalPrice);
+        List<EbookOrderDTO> ebookOrderList = getEbookOrderList(id);
+        orderExport.setItemList(ebookOrderList);
         return orderExport;
     }
 }

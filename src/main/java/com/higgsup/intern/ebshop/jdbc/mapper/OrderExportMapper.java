@@ -17,6 +17,7 @@ public class OrderExportMapper implements RowMapper<OrderExportDTO> {
         orderExportDTO.setCustomerLastName(rs.getString("customer.lastname"));
         orderExportDTO.setEmail(rs.getString("customer.email"));
         orderExportDTO.setPhone(rs.getString("customer.phone"));
+        orderExportDTO.setTotalPrice(rs.getDouble("total_price"));
         return orderExportDTO;
     }
 }

@@ -5,7 +5,7 @@ public class EbookOrderDTO {
     private String authorFirstName;
     private String authorLastName;
     private String publisherName;
-    private Long price;
+    private Double price;
     private Integer copiesSold;
 
     public String getTitle() {
@@ -40,11 +40,11 @@ public class EbookOrderDTO {
         this.publisherName = publisherName;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

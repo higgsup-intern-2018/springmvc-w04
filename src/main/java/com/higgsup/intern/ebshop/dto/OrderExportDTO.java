@@ -1,13 +1,15 @@
 package com.higgsup.intern.ebshop.dto;
 
+import java.util.List;
+
 public class OrderExportDTO {
     private Long id;
     private String customerFirstName;
     private String customerLastName;
     private String email;
     private String phone;
-    private EbookOrderListDTO itemList;
-    private Long totalPrice;
+    private List<EbookOrderDTO> itemList;
+    private Double totalPrice;
 
     public Long getId() {
         return id;
@@ -49,19 +51,19 @@ public class OrderExportDTO {
         this.phone = phone;
     }
 
-    public EbookOrderListDTO getItemList() {
+    public List<EbookOrderDTO> getItemList() {
         return itemList;
     }
 
-    public void setItemList(EbookOrderListDTO itemList) {
+    public void setItemList(List<EbookOrderDTO> itemList) {
         this.itemList = itemList;
     }
 
-    public Long getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }
