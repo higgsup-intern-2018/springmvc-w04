@@ -7,6 +7,5 @@ public interface IEbookService {
     void update(EbookDTO ebookDTO);
     EbookDTO findById(Long id);
     GenericResponseDTO create(EbookDTO ebookDTO);
-    void update(EbookDTO ebookDTO);
     void delete(Long id);
 }
