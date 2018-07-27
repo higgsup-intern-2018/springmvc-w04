@@ -18,6 +18,8 @@ public class CustomerMapper implements RowMapper<Customer> {
         customer.setEmail(rs.getString("email"));
         customer.setPhone(rs.getString("phone"));
         customer.setAddress(rs.getString("address"));
+        customer.setQuantity(rs.getInt("sum(order_details.quantity)"));
+        customer.setTotalPriceOfOrders(rs.getDouble("sum(ebook.price * order_details.quantity)"));
         return customer;
     }
 }
