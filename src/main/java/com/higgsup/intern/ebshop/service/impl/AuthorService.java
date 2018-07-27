@@ -39,9 +39,9 @@ public class AuthorService implements IAuthorService {
         List<Ebook> ebooks = authorDAO.getTop3BooksOfAuthor(id);
 
         List<EbookDTO> ebookDTOs = mapper.mapAsList(ebooks, EbookDTO.class);
-        for(EbookDTO ebookDTO : ebookDTOs){
+        for (EbookDTO ebookDTO : ebookDTOs) {
             Publisher publisher = ebookDAO.getPublisherByEbookId(ebookDTO.getId());
-            PublisherDTO publisherDTO = mapper.map(publisher,PublisherDTO.class);
+            PublisherDTO publisherDTO = mapper.map(publisher, PublisherDTO.class);
             ebookDTO.setPublisherDTO(publisherDTO);
         }
 
@@ -77,6 +77,5 @@ public class AuthorService implements IAuthorService {
         } else {
             throw new ServiceException(String.format("Not deleted! Because the author with id = %d has some ebooks!", id));
         }
-
-
     }
+}

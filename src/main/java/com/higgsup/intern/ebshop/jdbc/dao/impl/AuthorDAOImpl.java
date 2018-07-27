@@ -26,13 +26,14 @@ public class AuthorDAOImpl implements AuthorDAO {
     private final EbookMapper ebookMapper;
     private final PublisherMapper publisherMapper;
 
-    public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, AuthorMapper authorMapper) {
+    public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, AuthorMapper authorMapper, EbookMapper ebookMapper, PublisherMapper publisherMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.authorMapper = authorMapper;
         this.ebookMapper = ebookMapper;
         this.publisherMapper = publisherMapper;
     }
+
 
     @Override
     public Integer countEbooksOfAAuthor(Long id) {
@@ -47,9 +48,8 @@ public class AuthorDAOImpl implements AuthorDAO {
         }
     }
 
-
     @Override
-    public Author findbyId(Long id) {
+    public Author findById(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
             String sql = "select * from author where id = :id";
@@ -83,7 +83,6 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     }
 
-
     @Override
     public void delete(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
@@ -92,14 +91,12 @@ public class AuthorDAOImpl implements AuthorDAO {
         if (countEbooksOfAAuthor(id) == 0) {
             namedParameterJdbcTemplate.update(sql, paramSource);
         }
-
     }
-}
 
     @Override
     public List<Ebook> getTop3BooksOfAuthor(Long id) {
         String sql = "select ebook.* from ebook, author,order_details " +
-                "where author.id = "+id+" "+
+                "where author.id = " + id + " " +
                 "and author.id = ebook.author_id " +
                 "and ebook.id = order_details.ebook_id " +
                 "group by order_details.ebook_id " +
@@ -110,12 +107,12 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public Integer getBookCount(Long id) {
-    SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
-       String sql = " select count(ebook.author_id) as booksAuthor " +
-               "from ebook " +
-               "JOIN author ON ebook.author_id = author.id " +
-               "where author.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, parameterSource,Integer.class);
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
+        String sql = " select count(ebook.author_id) as booksAuthor " +
+                "from ebook " +
+                "JOIN author ON ebook.author_id = author.id " +
+                "where author.id = :id;";
+        return namedParameterJdbcTemplate.queryForObject(sql, parameterSource, Integer.class);
     }
 
     public Publisher getPublisherByEbookId(Long id) {
@@ -126,3 +123,4 @@ public class AuthorDAOImpl implements AuthorDAO {
                 "where ebook.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
+}
