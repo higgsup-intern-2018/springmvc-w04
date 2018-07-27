@@ -33,7 +33,7 @@ public class AuthorService implements IAuthorService {
     @Override
     public void update(AuthorDTO authorDTO) {
         Long id = authorDTO.getId();
-        if (authorDAO.findbyId(id) == null) {
+        if (authorDAO.findById(id) == null) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
         Author author = mapper.map(authorDTO, Author.class);
