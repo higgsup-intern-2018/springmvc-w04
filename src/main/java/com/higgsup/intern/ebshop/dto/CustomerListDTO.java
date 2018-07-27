@@ -4,22 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerListDTO {
-    private List<CustomerDTO> customerDTOS = new ArrayList<>();
-    private Long totalPrice;
+    private List<CustomerDTO> customerDTOs = new ArrayList<>();
 
-    public List<CustomerDTO> getCustomerDTOS() {
-        return customerDTOS;
+
+    public List<CustomerDTO> getCustomerDTOs() {
+        return customerDTOs;
     }
 
-    public void setCustomerDTOS(List<CustomerDTO> customerDTOS) {
-        this.customerDTOS = customerDTOS;
+    public void setCustomerDTOs(List<CustomerDTO> customerDTOs) {
+        this.customerDTOs = customerDTOs;
     }
 
-    public Long getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Long totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 }
