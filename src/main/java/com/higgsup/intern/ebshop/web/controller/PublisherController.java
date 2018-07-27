@@ -6,6 +6,8 @@ import com.higgsup.intern.ebshop.service.IPublisherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @RestController
 @RequestMapping("/publishers")
@@ -13,8 +15,8 @@ public class PublisherController
 {
     private final IPublisherService publisherService;
 
-    public PublisherController(IPublisherService publisherService)
-    {
+    @Autowired
+    public PublisherController(IPublisherService publisherService) {
         this.publisherService = publisherService;
     }
 
@@ -34,5 +36,16 @@ public class PublisherController
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.deleted());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PublisherDTO> getPersonById(@PathVariable("id") Long id) {
+        PublisherDTO publisherDTO = publisherService.findById(id);
+        return ResponseEntity.ok(publisherDTO);
+    }
+    @PutMapping
+    public ResponseEntity<GenericResponseDTO> updatePublisher(@RequestBody PublisherDTO publisherDTO) {
+        publisherService.update(publisherDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(GenericResponseDTO.updated());
     }
 }
