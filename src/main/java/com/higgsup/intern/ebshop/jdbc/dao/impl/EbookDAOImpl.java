@@ -1,5 +1,9 @@
 package com.higgsup.intern.ebshop.jdbc.dao.impl;
 
+import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
+import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
