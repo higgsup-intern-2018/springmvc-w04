@@ -25,13 +25,15 @@ public class EbookDAOImpl implements EbookDAO {
     private final EbookMapper ebookMapper;
     private final PublisherMapper publisherMapper;
     private final AuthorMapper authorMapper;
-    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                        EbookMapper ebookMapper, AuthorMapper authorMapper) {
+
+    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, EbookMapper ebookMapper, PublisherMapper publisherMapper, AuthorMapper authorMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.ebookMapper = ebookMapper;
+        this.publisherMapper = publisherMapper;
         this.authorMapper = authorMapper;
     }
+
 
     @Override
     public Ebook findById(Long id) {    // check if the book existed on db
