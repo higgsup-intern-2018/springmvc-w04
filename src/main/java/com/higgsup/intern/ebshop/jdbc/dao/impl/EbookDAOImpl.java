@@ -2,9 +2,16 @@ package com.higgsup.intern.ebshop.jdbc.dao.impl;
 
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
+import com.higgsup.intern.ebshop.jdbc.model.Ebook;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class EbookDAOImpl implements EbookDAO {
@@ -52,7 +59,17 @@ public class EbookDAOImpl implements EbookDAO {
 
     }
 
- @Override
+    @Override
+    public List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn) {
+        return null;
+    }
+
+    @Override
+    public List<Ebook> findTop10BestSellerEbooks() {
+        return null;
+    }
+
+    @Override
     public Ebook findByIsbn(String isbn) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("isbn", isbn);
