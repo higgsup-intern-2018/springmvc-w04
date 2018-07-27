@@ -1,7 +1,6 @@
 package com.higgsup.intern.ebshop.jdbc.mapper;
 
 import com.higgsup.intern.ebshop.jdbc.model.Author;
-import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

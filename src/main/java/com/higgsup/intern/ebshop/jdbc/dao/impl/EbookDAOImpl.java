@@ -1,8 +1,10 @@
 package com.higgsup.intern.ebshop.jdbc.dao.impl;
 
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
+import com.higgsup.intern.ebshop.jdbc.mapper.AuthorMapper;
 import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
 import com.higgsup.intern.ebshop.jdbc.mapper.PublisherMapper;
+import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,12 +24,13 @@ public class EbookDAOImpl implements EbookDAO {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final EbookMapper ebookMapper;
     private final PublisherMapper publisherMapper;
-
-    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, EbookMapper ebookMapper, PublisherMapper publisherMapper) {
+    private final AuthorMapper authorMapper;
+    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                        EbookMapper ebookMapper, AuthorMapper authorMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.ebookMapper = ebookMapper;
-        this.publisherMapper = publisherMapper;
+        this.authorMapper = authorMapper;
     }
 
     @Override
@@ -111,6 +114,14 @@ public class EbookDAOImpl implements EbookDAO {
                 "WHERE isbn = :isbn;";
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
-
+    @Override
+    public Author infoOfAuthor(Long id) {
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+        String sql = " select author.*" +
+                " from ebook" +
+                " left join author on ebook.author_id = author.id" +
+                " where ebook.id = :id";
+        return namedParameterJdbcTemplate.queryForObject(sql,paramSource,authorMapper);
+    }
 
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 
+
+
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class EbookDTO {
     private Long id;
@@ -17,6 +19,7 @@ public class EbookDTO {
     private Double price;
     private Integer quantity;
     private Boolean deleted = false;
+    private AuthorListDTO authorListDTO;
 
     public Long getId() {
         return id;
@@ -103,5 +106,12 @@ public class EbookDTO {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+    public AuthorListDTO getAuthorListDTO() {
+        return authorListDTO;
+    }
+
+    public void setAuthorListDTO(AuthorListDTO authorListDTO) {
+        this.authorListDTO = authorListDTO;
     }
 }
