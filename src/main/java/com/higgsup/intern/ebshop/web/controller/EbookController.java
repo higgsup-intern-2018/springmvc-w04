@@ -4,9 +4,9 @@ import com.higgsup.intern.ebshop.dto.EbookDTO;
 import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 import com.higgsup.intern.ebshop.service.IEbookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ebooks")
@@ -17,12 +17,7 @@ public class EbookController {
     public EbookController(IEbookService ebookService) {
         this.ebookService = ebookService;
     }
-
-    @PostMapping
-    public ResponseEntity<GenericResponseDTO> createEbook() {
-        return createEbook();
-    }
-
+    
     @PostMapping
     public ResponseEntity<GenericResponseDTO> createEbook(@RequestBody EbookDTO ebookDTO) {
         GenericResponseDTO responseDTO = ebookService.create(ebookDTO);

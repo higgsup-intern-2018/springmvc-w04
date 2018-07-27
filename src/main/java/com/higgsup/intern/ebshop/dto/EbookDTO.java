@@ -1,5 +1,7 @@
 package com.higgsup.intern.ebshop.dto;
 
+import java.util.Date;
+
 public class EbookDTO {
     private Long id;
     private String title;
