@@ -13,18 +13,4 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/ebooks")
 public class EbookController {
-    private final IEbookService ebookService;
-
-    @Autowired
-    public EbookController(IEbookService ebookService) {
-        this.ebookService = ebookService;
-    }
-
-    @PutMapping
-    public ResponseEntity<GenericResponseDTO> updateEbook(@RequestBody EbookDTO ebookDTO) {
-        ebookService.update(ebookDTO);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(GenericResponseDTO.updated());
-    }
 }

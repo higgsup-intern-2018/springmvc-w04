@@ -11,24 +11,5 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/authors")
 public class AuthorController {
-    private final IAuthorService authorService;
 
-    @Autowired
-    public AuthorController(IAuthorService authorService) {
-        this.authorService = authorService;
-    }
-
-    @PutMapping
-    public ResponseEntity<GenericResponseDTO> updateAuthor(@RequestBody AuthorDTO authorDTO) {
-        authorService.update(authorDTO);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(GenericResponseDTO.updated());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AuthorDTO> getPersonById(@PathVariable("id") Long id) {
-        AuthorDTO authorDTO = authorService.findbyId(id);
-        return ResponseEntity.ok(authorDTO);
-    }
 }
