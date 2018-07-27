@@ -52,7 +52,6 @@ public class EbookDAOImpl implements EbookDAO{
     public void delete(Long id) {
 
     }
-
     @Override
     public Author infoOfAuthor(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
