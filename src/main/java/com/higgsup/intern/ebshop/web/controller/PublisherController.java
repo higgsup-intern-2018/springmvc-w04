@@ -22,9 +22,5 @@ public class PublisherController {
         PublisherDTO publisherDTO = publisherService.findById(id);
         return ResponseEntity.ok(publisherDTO);
     }
-    @GetMapping ("/top-5-best-selling-publishers")
-    public ResponseEntity<PublisherListDTO> getAllPersons() {
-        PublisherListDTO top5Publisher = publisherService.top5BestSellingPublisher();
-        return ResponseEntity.ok(top5Publisher);
-    }
+
 }
