@@ -37,7 +37,6 @@ public class PublisherDAOImpl implements PublisherDAO {
         this.ebookMapper = ebookMapper;
     }
 
-
     @Override
     public void create(Publisher publisher) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(publisher);
@@ -72,6 +71,7 @@ public class PublisherDAOImpl implements PublisherDAO {
     public List<Publisher> findTop5BestSellingPublishers() {
         return null;
     }
+
     @Override
     public Integer countBookOfPublisher(Long id) {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);

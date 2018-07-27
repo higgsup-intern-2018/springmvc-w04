@@ -36,8 +36,16 @@ public class PublisherService implements IPublisherService{
 
     @Override
     public void delete(Long id) {
+        if (publisherDAO.findById(id) == null) {
+            throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
+        }
+        if(publisherDAO.countBookOfPublisher(id) > 0)
+        {
+            throw new ServiceException(String.format("Publisher with id = %d still have book in it!", id));
+        }
         publisherDAO.delete(id);
     }
+
     @Override
     public void update(PublisherDTO publisherDTO) {
         Long id = publisherDTO.getId();
