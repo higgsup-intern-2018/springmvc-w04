@@ -31,4 +31,10 @@ public class AuthorController {
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.updated());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthorDTO> getPersonById(@PathVariable("id") Long id) {
+        AuthorDTO authorDTO = authorService.findbyId(id);
+        return ResponseEntity.ok(authorDTO);
+    }
 }

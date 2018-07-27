@@ -8,6 +8,8 @@ public class AuthorDTO {
     private String description;
     private String website;
     private String organization;
+    private EbookListDTO ebookListDTO;
+    private  Integer allBookOfAuthor;
 
     public Long getId() {
         return id;
@@ -63,5 +65,21 @@ public class AuthorDTO {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public EbookListDTO getEbookListDTO() {
+        return ebookListDTO;
+    }
+
+    public void setEbookListDTO(EbookListDTO ebookListDTO) {
+        this.ebookListDTO = ebookListDTO;
+    }
+
+    public Integer getAllBookOfAuthor() {
+        return allBookOfAuthor;
+    }
+
+    public void setAllBookOfAuthor(Integer allBookOfAuthor) {
+        this.allBookOfAuthor = allBookOfAuthor;
     }
 }

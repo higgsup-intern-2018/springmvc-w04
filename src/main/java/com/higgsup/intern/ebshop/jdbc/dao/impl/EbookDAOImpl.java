@@ -2,7 +2,9 @@ package com.higgsup.intern.ebshop.jdbc.dao.impl;
 
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
+import com.higgsup.intern.ebshop.jdbc.mapper.PublisherMapper;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
+import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -19,11 +21,13 @@ public class EbookDAOImpl implements EbookDAO {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final EbookMapper ebookMapper;
+    private final PublisherMapper publisherMapper;
 
-    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, EbookMapper ebookMapper) {
+    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, EbookMapper ebookMapper, PublisherMapper publisherMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.ebookMapper = ebookMapper;
+        this.publisherMapper = publisherMapper;
     }
 
     @Override
@@ -57,6 +61,16 @@ public class EbookDAOImpl implements EbookDAO {
     @Override
     public void delete(Long id) {
 
+    }
+
+    @Override
+    public Publisher getPublisherByEbookId(Long id) {
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+        String sql = "select publisher.*, ebook.* from ebook\n" +
+                "join publisher\n" +
+                "on ebook.publisher_id = publisher.id\n" +
+                "where ebook.id = :id;";
+        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
 
     @Override

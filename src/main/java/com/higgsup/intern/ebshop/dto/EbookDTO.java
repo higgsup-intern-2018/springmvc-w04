@@ -1,14 +1,17 @@
 package com.higgsup.intern.ebshop.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class EbookDTO {
     private Long id;
     private String title;
     private String isbn;
     private String description;
-    private Long authorId;
-    private Long publisherId;
+    private AuthorDTO authorDTO;
+    private PublisherDTO publisherDTO;
     private Date publicationDate;
     private Integer pages;
     private Double price;
@@ -54,20 +57,20 @@ public class EbookDTO {
         this.description = description;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public AuthorDTO getAuthorDTO() {
+        return authorDTO;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthorDTO(AuthorDTO authorDTO) {
+        this.authorDTO = authorDTO;
     }
 
-    public Long getPublisherId() {
-        return publisherId;
+    public PublisherDTO getPublisherDTO() {
+        return publisherDTO;
     }
 
-    public void setPublisherId(Long publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisherDTO(PublisherDTO publisherDTO) {
+        this.publisherDTO = publisherDTO;
     }
 
     public Date getPublicationDate() {
