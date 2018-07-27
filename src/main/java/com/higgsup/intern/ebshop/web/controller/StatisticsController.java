@@ -17,7 +17,7 @@ public class StatisticsController {
     }
 
     @GetMapping("/top-5-best-selling-publishers")
-    public ResponseEntity<PublisherListDTO> getAllPersons() {
+    public ResponseEntity<PublisherListDTO> getTop5Publisher() {
         PublisherListDTO top5Publisher = publisherService.top5BestSellingPublisher();
         return ResponseEntity.ok(top5Publisher);
     }
