@@ -11,10 +11,12 @@ import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import com.higgsup.intern.ebshop.jdbc.model.Person;
 import com.higgsup.intern.ebshop.service.IEbookService;
 import ma.glasnost.orika.MapperFacade;
+import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
+
 import org.springframework.stereotype.Service;
 
 @Service
-public class EbookService implements IEbookService {
+public class EbookService {
 
     private final EbookDAO ebookDAO;
     private final MapperFacade mapper;
@@ -42,5 +44,22 @@ public class EbookService implements IEbookService {
 
         Ebook ebook = mapper.map(ebookDTO, Ebook.class);
         ebookDAO.update(ebook);
+    }
+
+    @Override
+    public GenericResponseDTO create(EbookDTO ebookDTO) {
+        String isbn = ebookDTO.getIsbn();
+        Integer newQuantity = ebookDTO.getQuantity();
+        Ebook ebook = mapper.map(ebookDTO, Ebook.class);
+        if (ebookDAO.findById(isbn)== null){
+            ebookDAO.create(ebook);
+            return GenericResponseDTO.created();
+        }else{
+            Ebook originalEbook = ebookDAO.findById(isbn);
+            ebook.setQuantity(newQuantity + originalEbook.getQuantity());
+            ebookDAO.updateAddedEbook(ebook);
+            return GenericResponseDTO.updated()
+                    .addAdditionalInfo(String.format("Ebook with isbn = %s exists! The ebook is updated. ", isbn));
+        }
     }
 }

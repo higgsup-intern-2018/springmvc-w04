@@ -1,7 +1,5 @@
 package com.higgsup.intern.ebshop.dto;
 
-import java.util.Date;
-
 public class EbookDTO {
     private Long id;
     private String title;
@@ -13,6 +11,7 @@ public class EbookDTO {
     private Integer pages;
     private Double price;
     private Integer quantity;
+    private Boolean deleted = false;
 
     public Long getId() {
         return id;
@@ -38,6 +37,13 @@ public class EbookDTO {
         this.isbn = isbn;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
     public String getDescription() {
         return description;
     }

@@ -1,7 +1,11 @@
 package com.higgsup.intern.ebshop.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GenericResponseDTO {
     private String message;
+    private List<Object> additionalInfos = new ArrayList<>();
 
     private GenericResponseDTO(String message) {
         this.message = message;
@@ -33,5 +37,23 @@ public class GenericResponseDTO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<Object> getAdditionalInfos() {
+        return additionalInfos;
+    }
+
+    public void setAdditionalInfos(List<Object> additionalInfos) {
+        this.additionalInfos = additionalInfos;
+    }
+
+    public GenericResponseDTO addAdditionalInfo(Object info) {
+        this.additionalInfos.add(info);
+        return this;
+    }
+
+    public GenericResponseDTO addAdditionalInfo(List<Object> infos) {
+        this.additionalInfos.addAll(infos);
+        return this;
     }
 }

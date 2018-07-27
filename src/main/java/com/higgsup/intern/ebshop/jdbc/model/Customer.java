@@ -7,6 +7,8 @@ public class Customer {
     private String email;
     private String phone;
     private String address;
+    private Integer quantity;
+    private Double totalPriceOfOrders;
 
     public Long getId() {
         return id;
@@ -54,5 +56,21 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getTotalPriceOfOrders() {
+        return totalPriceOfOrders;
+    }
+
+    public void setTotalPriceOfOrders(Double totalPriceOfOrders) {
+        this.totalPriceOfOrders = totalPriceOfOrders;
     }
 }
