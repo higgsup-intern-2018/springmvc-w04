@@ -24,15 +24,13 @@ public class AuthorDAOImpl implements AuthorDAO {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final AuthorMapper authorMapper;
     private final EbookMapper ebookMapper;
-    private final PublisherMapper publisherMapper;
 
     public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                         AuthorMapper authorMapper, EbookMapper ebookMapper, PublisherMapper publisherMapper) {
+                         AuthorMapper authorMapper, EbookMapper ebookMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.authorMapper = authorMapper;
         this.ebookMapper = ebookMapper;
-        this.publisherMapper = publisherMapper;
     }
 
     @Override
@@ -95,14 +93,5 @@ public class AuthorDAOImpl implements AuthorDAO {
                "JOIN author ON ebook.author_id = author.id " +
                "where author.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, parameterSource,Integer.class);
-    }
-
-    public Publisher getPublisherByEbookId(Long id) {
-        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook\n" +
-                "join publisher\n" +
-                "on ebook.publisher_id = publisher.id\n" +
-                "where ebook.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
 }
