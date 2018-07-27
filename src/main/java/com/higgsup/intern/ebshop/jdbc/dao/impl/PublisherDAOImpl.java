@@ -41,7 +41,14 @@ public class PublisherDAOImpl implements PublisherDAO {
 
     @Override
     public List<Publisher> findTop5BestSellingPublishers() {
-        return null;
+        String sql = " select publisher.*, sum(order_details.quantity) countOfBook " +
+                " from publisher " +
+                " join ebook on publisher.id = ebook.publisher_id " +
+                " join order_details on ebook.id = order_details.ebook_id " +
+                " group by publisher.id " +
+                " order by countOfBook DESC " +
+                " limit 5;";
+        return jdbcTemplate.query(sql ,publisherMapper);
     }
 
     @Override
@@ -61,25 +68,12 @@ public class PublisherDAOImpl implements PublisherDAO {
 
     @Override
     public Integer countBookOfPublisher(Long id) {
-        SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
-        String sql = " select  count(publisher_id)" +
-                " from ebook " +
-                " left join publisher on publisher.id = ebook.publisher_id " +
-                " where publisher.id = :id " ;
-        return namedParameterJdbcTemplate.queryForObject(sql , parameterSource,Integer.class);
+      return null;
     }
 
     @Override
     public List<Ebook> top5BookOfPublisher(Long id) {
-        String sql = " select  ebook.*  " +
-                    " from ebook " +
-                    " left join publisher ON ebook.publisher_id = publisher.id" +
-                    " left join order_details On ebook.id = order_details.ebook_id" +
-                    " where publisher.id = " +id +
-                    " group by ebook_id" +
-                    " order by count(ebook_id) desc " +
-                    " limit 5;";
-        return jdbcTemplate.query(sql ,ebookMapper);
+       return null;
     }
 
 }

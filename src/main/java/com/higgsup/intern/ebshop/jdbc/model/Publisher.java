@@ -7,7 +7,7 @@ public class Publisher {
     private String founder;
     private Integer foundedYear;
     private String address;
-
+    private Integer countOfBook;
     public Long getId() {
         return id;
     }
@@ -54,5 +54,13 @@ public class Publisher {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getCountOfBook() {
+        return countOfBook;
+    }
+
+    public void setCountOfBook(Integer countOfBook) {
+        this.countOfBook = countOfBook;
     }
 }

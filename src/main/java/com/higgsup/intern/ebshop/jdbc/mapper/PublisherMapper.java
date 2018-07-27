@@ -18,6 +18,7 @@ public class PublisherMapper implements RowMapper<Publisher> {
         publisher.setFounder(rs.getString("founder"));
         publisher.setFoundedYear(rs.getInt("founded_year"));
         publisher.setAddress(rs.getString("address"));
+        publisher.setCountOfBook(rs.getInt("countOfBook"));
         return publisher;
     }
 }
