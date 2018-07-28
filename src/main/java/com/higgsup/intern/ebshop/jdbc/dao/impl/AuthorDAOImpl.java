@@ -34,7 +34,17 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public List<Author> findTop5BestSellingAuthors() {
-    return null;
+        String sql = "select author.*, " +
+                "sum(order_details.quantity) countOfBooks " +
+                "from author " +
+                "join ebook " +
+                "on author.id = ebook.author_id " +
+                "join order_details " +
+                "on ebook.id = order_details.ebook_id " +
+                "group by author.id " +
+                "order by countOfBooks DESC " +
+                "limit 5;";
+        return jdbcTemplate.query(sql,authorMapper);
     }
 
     @Override
