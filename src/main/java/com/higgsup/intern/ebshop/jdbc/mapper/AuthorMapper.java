@@ -20,6 +20,7 @@ public class AuthorMapper implements RowMapper<Author> {
         author.setDescription(rs.getString("description"));
         author.setWebsite(rs.getString("website"));
         author.setOrganization(rs.getString("organization"));
+        author.setCountOfBooks(rs.getInt("countOfBooks"));
         return  author;
     }
 }
