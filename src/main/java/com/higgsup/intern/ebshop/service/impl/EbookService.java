@@ -1,6 +1,7 @@
 package com.higgsup.intern.ebshop.service.impl;
 
 import com.higgsup.intern.ebshop.dto.EbookDTO;
+import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
@@ -10,6 +11,8 @@ import ma.glasnost.orika.MapperFacade;
 import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EbookService implements IEbookService {
@@ -62,5 +65,14 @@ public class EbookService implements IEbookService {
     @Override
     public void delete(Long id) {
 
+    }
+
+    public EbookOrderListDTO top10BestSellers() {
+        List<EbookOrderDTO> ebookOrderDTOS = ebookDAO.top10BestSeller();
+
+        EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
+        ebookOrderListDTO.setEbookOrderDTOs(ebookOrderDTOS);
+
+        return ebookOrderListDTO;
     }
 }
