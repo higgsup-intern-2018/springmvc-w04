@@ -1,10 +1,5 @@
 package com.higgsup.intern.ebshop.web.controller;
 
-import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
-import com.higgsup.intern.ebshop.dto.PublisherDTO;
-import com.higgsup.intern.ebshop.service.IPublisherService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
