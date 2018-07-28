@@ -78,4 +78,10 @@ public class AuthorService implements IAuthorService {
             throw new ServiceException(String.format("Not deleted! Because the author with id = %d has some ebooks!", id));
         }
     }
+
+    @Override
+    public void create(AuthorDTO authorDTO) {
+        Author author = mapper.map(authorDTO, Author.class);
+        authorDAO.create(author);
+    }
 }

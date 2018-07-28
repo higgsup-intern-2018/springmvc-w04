@@ -80,7 +80,10 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public void create(Author author) {
-
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
+        String sql = "insert into author(id, firstname, lastname , year_of_birth , description, website ,organization)" +
+                " values(:id, :firstName, :lastName , :yearOfBirth, :description, :website, :organization);";
+        namedParameterJdbcTemplate.update(sql, parameterSource);
     }
 
     @Override

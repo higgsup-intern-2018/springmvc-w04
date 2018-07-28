@@ -37,4 +37,12 @@ public class AuthorController {
         AuthorDTO authorDTO = authorService.findById(id);
         return ResponseEntity.ok(authorDTO);
     }
+
+    @PostMapping
+    public ResponseEntity<GenericResponseDTO> createAuthor(@RequestBody AuthorDTO authorDTO) {
+        authorService.create(authorDTO);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(GenericResponseDTO.created());
+    }
 }

@@ -8,4 +8,5 @@ public interface IAuthorService {
     void delete(Long id);
     AuthorDTO findById(Long id);
 
+    void create(AuthorDTO authorDTO);
 }
