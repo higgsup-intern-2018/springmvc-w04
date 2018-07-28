@@ -21,6 +21,17 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public CustomerListDTO findTop5HighestOrderPriceCustomers() {
+        List<CustomerDTO> customers = customerDAO.findTop5HighestOrderPriceCustomers();
+
+        List<CustomerDTO> customerDTOList = mapper.mapAsList(customers,CustomerDTO.class);
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+
+        customerListDTO.setCustomerDTOList(customerDTOList);
+
+        return customerListDTO;
+    }
+    @Override
     public CustomerListDTO findTop5BestBuyCustomers() {
         List<Customer> customers = customerDAO.findTop5BestBuyCustomers();
 

@@ -13,8 +13,6 @@ import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class EbookService implements IEbookService {
 
@@ -27,9 +25,9 @@ public class EbookService implements IEbookService {
     }
 
     @Override
-    public EbookDTO findById(Long id) {
+    public EbookDTO findById(Long id) {     //check is book existed
         Ebook ebook = ebookDAO.findById(id);
-        if (ebook == null) {
+        if (ebook == null) {    //if this book not existed => throw exception
             throw new ResourceNotFoundException(String.format("Ebook with id = %d does not exist!", id));
         }
         return mapper.map(ebook, EbookDTO.class);

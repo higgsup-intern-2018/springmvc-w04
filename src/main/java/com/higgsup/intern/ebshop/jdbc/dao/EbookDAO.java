@@ -19,5 +19,4 @@ public interface EbookDAO {
     void update(Ebook ebook);
     void updateAddedEbook(Ebook ebook);
     void delete(Long id);
-
 }

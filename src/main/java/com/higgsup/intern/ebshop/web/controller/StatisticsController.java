@@ -3,6 +3,7 @@ package com.higgsup.intern.ebshop.web.controller;
 import com.higgsup.intern.ebshop.dto.CustomerListDTO;
 import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
 import com.higgsup.intern.ebshop.dto.PublisherListDTO;
+import com.higgsup.intern.ebshop.service.IAuthorService;
 import com.higgsup.intern.ebshop.service.ICustomerService;
 import com.higgsup.intern.ebshop.service.IEbookService;
 import com.higgsup.intern.ebshop.service.IPublisherService;
@@ -15,6 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/statistics")
 public class StatisticsController {
+    private final IEbookService ebookService;
+    private final ICustomerService customerService;
+    private final IPublisherService publisherService;
+
+    @Autowired
+    public StatisticsController(IEbookService ebookService, ICustomerService customerService, IPublisherService publisherService) {
+        this.ebookService = ebookService;
+        this.customerService = customerService;
+        this.publisherService = publisherService;
+    }
+
+    @GetMapping("/top-5-highest-order-price-customers")
+    public ResponseEntity<CustomerListDTO> findTop5HighestOrderPriceCustomers() {
+        CustomerListDTO customerListDTO = customerService.findTop5HighestOrderPriceCustomers();
+        return ResponseEntity.ok(customerListDTO);
+    }
+
     private final IEbookService ebookService;
     private final ICustomerService customerService;
     private final IPublisherService publisherService;

@@ -1,5 +1,7 @@
 package com.higgsup.intern.ebshop.dto;
 
+import java.util.function.DoubleUnaryOperator;
+
 public class CustomerDTO {
     private Long id;
     private String firstName;
@@ -7,8 +9,11 @@ public class CustomerDTO {
     private String email;
     private String phone;
     private String address;
+    private Integer countOfBooks;
+    private Double totalPrice;
     private Integer quantity;
     private Double totalPriceOfOrders;
+
 
     public Long getId() {
         return id;
@@ -56,6 +61,22 @@ public class CustomerDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getCountOfBooks() {
+        return countOfBooks;
+    }
+
+    public void setCountOfBooks(Integer countOfBooks) {
+        this.countOfBooks = countOfBooks;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Integer getQuantity() {
