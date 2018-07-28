@@ -64,15 +64,16 @@ public class EbookService implements IEbookService {
 
     @Override
     public void delete(Long id) {
-
+        if (ebookDAO.findById(id) == null) {
+            throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
+        }
+        ebookDAO.delete(id);
     }
 
-    public EbookOrderListDTO top10BestSellers() {
-        List<EbookOrderDTO> ebookOrderDTOS = ebookDAO.top10BestSeller();
 
-        EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
-        ebookOrderListDTO.setEbookOrderDTOs(ebookOrderDTOS);
+    public List<EbookOrderDTO> findTop10BestSellers() {
+        List<EbookOrderDTO> top10BestSellerEbooks = ebookDAO.findTop10BestSellerEbooks();
 
-        return ebookOrderListDTO;
+        return top10BestSellerEbooks;
     }
 }
