@@ -44,12 +44,12 @@ public class PublisherDAOImpl implements PublisherDAO {
         namedParameterJdbcTemplate.update(sql, parameterSource);
     }
 
-    public void delete(Long id)
-    {
+    public void delete(Long id) {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         String sql = "delete from publisher where id = :id;";
         namedParameterJdbcTemplate.update(sql, parameterSource);
     }
+
     @Override
     public Publisher findById(Long id) {
         try {
@@ -70,13 +70,9 @@ public class PublisherDAOImpl implements PublisherDAO {
                 " group by publisher.id " +
                 " order by countOfBook DESC " +
                 " limit 5;";
-        return jdbcTemplate.query(sql ,publisherMapper);
+        return jdbcTemplate.query(sql, publisherMapper);
     }
 
-    @Override
-    public void create(Publisher publisher) {
-
-    }
 
     @Override
     public void update(Publisher publisher) {
@@ -85,32 +81,28 @@ public class PublisherDAOImpl implements PublisherDAO {
                 " where id = :id ; ";
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
-    @Override
-    public void delete(Long id) {
-
-    }
 
     @Override
     public Integer countBookOfPublisher(Long id) {
-        SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         String sql = " select  count(publisher_id)" +
                 " from ebook " +
                 " left join publisher on publisher.id = ebook.publisher_id " +
-                " where publisher.id = :id " ;
-        return namedParameterJdbcTemplate.queryForObject(sql , parameterSource,Integer.class);
+                " where publisher.id = :id ";
+        return namedParameterJdbcTemplate.queryForObject(sql, parameterSource, Integer.class);
     }
 
     @Override
     public List<Ebook> top5BookOfPublisher(Long id) {
         String sql = " select  ebook.*  " +
-                    " from ebook " +
-                    " left join publisher ON ebook.publisher_id = publisher.id" +
-                    " left join order_details On ebook.id = order_details.ebook_id" +
-                    " where publisher.id = " +id +
-                    " group by ebook_id" +
-                    " order by count(ebook_id) desc " +
-                    " limit 5;";
-        return jdbcTemplate.query(sql ,ebookMapper);
+                " from ebook " +
+                " left join publisher ON ebook.publisher_id = publisher.id" +
+                " left join order_details On ebook.id = order_details.ebook_id" +
+                " where publisher.id = " + id +
+                " group by ebook_id" +
+                " order by count(ebook_id) desc " +
+                " limit 5;";
+        return jdbcTemplate.query(sql, ebookMapper);
     }
 
 }

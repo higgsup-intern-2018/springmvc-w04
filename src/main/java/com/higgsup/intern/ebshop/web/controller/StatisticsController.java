@@ -32,12 +32,12 @@ public class StatisticsController {
         return ResponseEntity.ok(ebookOrderListDTO);
     }
 
-
     @GetMapping("/top-5-best-buy-customers")
     public ResponseEntity<CustomerListDTO> getTop5BestBuyCustomers() {
         CustomerListDTO customerListDTO = customerService.findTop5BestBuyCustomers();
         return ResponseEntity.ok(customerListDTO);
     }
+
     @GetMapping("/top-5-best-selling-publishers")
     public ResponseEntity<PublisherListDTO> getTop5Publisher() {
         PublisherListDTO top5Publisher = publisherService.top5BestSellingPublisher();

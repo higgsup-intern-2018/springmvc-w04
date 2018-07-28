@@ -1,7 +1,5 @@
 package com.higgsup.intern.ebshop.dto;
 
-import java.util.List;
-
 public class PublisherDTO {
     private Long id;
     private String name;
@@ -12,16 +10,6 @@ public class PublisherDTO {
     private Integer allBookOfPublisher;
     private EbookListDTO ebookListDTO;
     private Integer countOfBook;
-
-    public PublisherDTO(Long id, String name, String website, String founder, Integer foundedYear, String address, Integer countOfBook) {
-        this.id = id;
-        this.name = name;
-        this.website = website;
-        this.founder = founder;
-        this.foundedYear = foundedYear;
-        this.address = address;
-        this.countOfBook = countOfBook;
-    }
 
     public Long getId() {
         return id;
@@ -70,6 +58,7 @@ public class PublisherDTO {
     public void setAddress(String address) {
         this.address = address;
     }
+
     public Integer getAllBookOfPublisher() {
         return allBookOfPublisher;
     }
@@ -80,6 +69,11 @@ public class PublisherDTO {
 
     public EbookListDTO getEbookListDTO() {
         return ebookListDTO;
+    }
+
+    public void setEbookListDTO(EbookListDTO ebookListDTO) {
+        this.ebookListDTO = ebookListDTO;
+    }
 
     public Integer getCountOfBook() {
         return countOfBook;
