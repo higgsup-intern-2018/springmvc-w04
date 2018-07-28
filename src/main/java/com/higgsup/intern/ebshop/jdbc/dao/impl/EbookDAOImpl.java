@@ -4,6 +4,7 @@ import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.AuthorMapper;
 import com.higgsup.intern.ebshop.jdbc.mapper.EbookMapper;
+import com.higgsup.intern.ebshop.jdbc.mapper.EbookOrderMapper;
 import com.higgsup.intern.ebshop.jdbc.mapper.PublisherMapper;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
@@ -26,15 +27,16 @@ public class EbookDAOImpl implements EbookDAO {
     private final EbookMapper ebookMapper;
     private final PublisherMapper publisherMapper;
     private final AuthorMapper authorMapper;
+    private final EbookOrderMapper ebookOrderMapper;
 
-    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, EbookMapper ebookMapper, PublisherMapper publisherMapper, AuthorMapper authorMapper) {
+    public EbookDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, EbookMapper ebookMapper, PublisherMapper publisherMapper, AuthorMapper authorMapper, EbookOrderMapper ebookOrderMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.ebookMapper = ebookMapper;
         this.publisherMapper = publisherMapper;
         this.authorMapper = authorMapper;
+        this.ebookOrderMapper = ebookOrderMapper;
     }
-
 
     @Override
     public Ebook findById(Long id) {    // check if the book existed on db
@@ -66,7 +68,9 @@ public class EbookDAOImpl implements EbookDAO {
 
     @Override
     public void delete(Long id) {
-
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+        String sql ="UPDATE ebook SET deleted = TRUE where id = :id";
+        namedParameterJdbcTemplate.update(sql,paramSource);
     }
 
     @Override
@@ -84,8 +88,8 @@ public class EbookDAOImpl implements EbookDAO {
         return null;
     }
 
-    public List<EbookOrderDTO> top10BestSeller() {
-        String sql = "SELECT ebook.id, ebook.title, author.firstname, author.lastname, publisher.`name`, ebook.price, SUM(order_details.quantity) AS \"copies_sold\" " +
+    public List<EbookOrderDTO> findTop10BestSellerEbooks() {
+        String sql = "SELECT ebook.id, ebook.title, author.firstname, author.lastname, publisher.`name`, ebook.price, SUM(order_details.quantity) copies_sold " +
                 "FROM order_details JOIN ebook ON order_details.ebook_id = ebook.id " +
                 "JOIN author ON ebook.author_id = author.id " +
                 "JOIN publisher ON ebook.publisher_id = publisher.id " +
