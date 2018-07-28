@@ -2,6 +2,7 @@ package com.higgsup.intern.ebshop.dto;
 
 import java.util.List;
 
+//Truy xuat hoa don
 public class OrderExportDTO {
     private Long id;
     private String customerFirstName;
