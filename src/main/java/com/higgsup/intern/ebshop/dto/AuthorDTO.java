@@ -9,7 +9,7 @@ public class AuthorDTO {
     private String website;
     private String organization;
     private EbookListDTO ebookListDTO;
-    private  Integer allBookOfAuthor;
+    private Integer allBookOfAuthor;
 
     public Long getId() {
         return id;

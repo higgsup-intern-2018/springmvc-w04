@@ -5,11 +5,8 @@ import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.AuthorDAO;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
-import com.higgsup.intern.ebshop.jdbc.dao.impl.AuthorDAOImpl;
-import com.higgsup.intern.ebshop.jdbc.dao.impl.EbookDAOImpl;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
-import com.higgsup.intern.ebshop.jdbc.model.Person;
 import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import com.higgsup.intern.ebshop.service.IAuthorService;
 import ma.glasnost.orika.MapperFacade;
@@ -72,7 +69,7 @@ public class AuthorService implements IAuthorService {
         if (authorDAO.findById(id) == null) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
-        if (authorDAO.countEbooksOfAAuthor(id) == 0) {
+        if (authorDAO.countEbooksOfAnAuthor(id) == 0) {
             authorDAO.delete(id);
         } else {
             throw new ServiceException(String.format("Not deleted! Because the author with id = %d has some ebooks!", id));

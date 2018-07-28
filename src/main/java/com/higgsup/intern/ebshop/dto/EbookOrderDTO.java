@@ -1,6 +1,5 @@
 package com.higgsup.intern.ebshop.dto;
 
-//List ebook trong hoa don
 public class EbookOrderDTO {
     private String title;
     private String authorFirstName;

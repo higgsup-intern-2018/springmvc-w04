@@ -2,6 +2,7 @@ package com.higgsup.intern.ebshop.service.impl;
 
 import com.higgsup.intern.ebshop.dto.EbookDTO;
 import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
+import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
@@ -26,9 +27,9 @@ public class EbookService implements IEbookService {
     }
 
     @Override
-    public EbookDTO findById(Long id) {     //check is book existed
+    public EbookDTO findById(Long id) {
         Ebook ebook = ebookDAO.findById(id);
-        if (ebook == null) {    //if this book not existed => throw exception
+        if (ebook == null) {
             throw new ResourceNotFoundException(String.format("Ebook with id = %d does not exist!", id));
         }
         return mapper.map(ebook, EbookDTO.class);
@@ -36,8 +37,8 @@ public class EbookService implements IEbookService {
 
     @Override
     public void update(EbookDTO ebookDTO) {
-        Long id = ebookDTO.getId();     //get id of book
-        if (ebookDAO.findById(id) == null) {    //if book isnot existed in db
+        Long id = ebookDTO.getId();
+        if (ebookDAO.findById(id) == null) {
             throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
         }
 
@@ -70,10 +71,14 @@ public class EbookService implements IEbookService {
         ebookDAO.delete(id);
     }
 
+    @Override
+    public EbookOrderListDTO top10BestSellers() {
+        List<EbookOrderDTO> ebookOrderDTOS = ebookDAO.top10BestSeller();
 
-    public List<EbookOrderDTO> findTop10BestSellers() {
-        List<EbookOrderDTO> top10BestSellerEbooks = ebookDAO.findTop10BestSellerEbooks();
+        EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
+        ebookOrderListDTO.setEbookOrderDTOs(ebookOrderDTOS);
 
-        return top10BestSellerEbooks;
+        return ebookOrderListDTO;
     }
+
 }

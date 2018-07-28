@@ -6,7 +6,7 @@ import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import java.util.List;
 
 public interface AuthorDAO {
-    Integer countEbooksOfAAuthor(Long id);
+    Integer countEbooksOfAnAuthor(Long id);
     Author findById(Long id);
     List<Author> findTop5BestSellingAuthors();
     void create(Author author);

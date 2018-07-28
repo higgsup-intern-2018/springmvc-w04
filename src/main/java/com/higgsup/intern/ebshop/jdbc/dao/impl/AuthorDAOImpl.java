@@ -36,7 +36,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 
     @Override
-    public Integer countEbooksOfAAuthor(Long id) {
+    public Integer countEbooksOfAnAuthor(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("author_id", id);
             String sql = "SELECT COUNT(ebook.id) " +
@@ -91,7 +91,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
         String sql = "DELETE FROM author WHERE id = :id;";
 
-        if (countEbooksOfAAuthor(id) == 0) {
+        if (countEbooksOfAnAuthor(id) == 0) {
             namedParameterJdbcTemplate.update(sql, paramSource);
         }
     }
