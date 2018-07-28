@@ -1,7 +1,7 @@
 package com.higgsup.intern.ebshop.jdbc.dao;
 
-import org.springframework.core.annotation.Order;
+import com.higgsup.intern.ebshop.jdbc.model.Orders;
 
 public interface OrderDAO {
-    Order exportOrder(Long id);
+    void createOrder(Orders orders);
 }

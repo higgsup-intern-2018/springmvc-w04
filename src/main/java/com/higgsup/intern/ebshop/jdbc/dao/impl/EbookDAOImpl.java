@@ -38,21 +38,6 @@ public class EbookDAOImpl implements EbookDAO {
     }
 
     @Override
-    public List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn) {
-        return null;
-    }
-
-    @Override
-    public List<Ebook> findTop10BestSellerEbooks() {
-        return null;
-    }
-
-    @Override
-    public void create(Ebook ebook) {
-
-    }
-
-    @Override
     public void update(Ebook ebook) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(ebook);
         String sql = "UPDATE ebook " +
@@ -69,8 +54,13 @@ public class EbookDAOImpl implements EbookDAO {
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
 
-    @Override
-    public void delete(Long id) {
-
+    public Ebook findByIsbn(String isbn) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("isbn", isbn);
+            String sql = "SELECT * FROM ebook WHERE isbn = :isbn;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, ebookMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 }
