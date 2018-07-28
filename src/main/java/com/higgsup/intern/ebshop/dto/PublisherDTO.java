@@ -11,6 +11,18 @@ public class PublisherDTO {
     private String address;
     private Integer allBookOfPublisher;
     private EbookListDTO ebookListDTO;
+    private Integer countOfBook;
+
+    public PublisherDTO(Long id, String name, String website, String founder, Integer foundedYear, String address, Integer countOfBook) {
+        this.id = id;
+        this.name = name;
+        this.website = website;
+        this.founder = founder;
+        this.foundedYear = foundedYear;
+        this.address = address;
+        this.countOfBook = countOfBook;
+    }
+
     public Long getId() {
         return id;
     }
@@ -68,9 +80,12 @@ public class PublisherDTO {
 
     public EbookListDTO getEbookListDTO() {
         return ebookListDTO;
+
+    public Integer getCountOfBook() {
+        return countOfBook;
     }
 
-    public void setEbookListDTO(EbookListDTO ebookListDTO) {
-        this.ebookListDTO = ebookListDTO;
+    public void setCountOfBook(Integer countOfBook) {
+        this.countOfBook = countOfBook;
     }
 }
