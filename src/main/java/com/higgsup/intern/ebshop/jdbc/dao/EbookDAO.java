@@ -7,6 +7,7 @@ import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 import java.util.List;
 
 public interface EbookDAO {
+    Ebook findById(Long id);
     List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn);
     List<Ebook> findTop10BestSellerEbooks();
     Ebook findByIsbn(String isbn);

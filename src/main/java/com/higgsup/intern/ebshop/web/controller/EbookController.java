@@ -7,6 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
+import com.higgsup.intern.ebshop.service.IEbookService;
+import com.higgsup.intern.ebshop.service.IPersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/ebooks")
@@ -17,7 +27,7 @@ public class EbookController {
     public EbookController(IEbookService ebookService) {
         this.ebookService = ebookService;
     }
-    
+
     @PostMapping
     public ResponseEntity<GenericResponseDTO> createEbook(@RequestBody EbookDTO ebookDTO) {
         GenericResponseDTO responseDTO = ebookService.create(ebookDTO);
@@ -32,6 +42,14 @@ public class EbookController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.updated());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GenericResponseDTO> deleteEbookById(@PathVariable("id") Long id) {
+        ebookService.delete(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(GenericResponseDTO.deleted());
     }
 }
 
