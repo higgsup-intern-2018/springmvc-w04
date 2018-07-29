@@ -9,8 +9,9 @@ import java.sql.SQLException;
 
 @Component
 public class AuthorMapper implements RowMapper<Author> {
+
     @Override
-    public Author mapRow(ResultSet rs, int i) throws SQLException {
+    public Author mapRow(ResultSet rs, int rowNum) throws SQLException{
         Author author = new Author();
         author.setId(rs.getLong("id"));
         author.setFirstName(rs.getString("firstname"));
@@ -19,6 +20,7 @@ public class AuthorMapper implements RowMapper<Author> {
         author.setDescription(rs.getString("description"));
         author.setWebsite(rs.getString("website"));
         author.setOrganization(rs.getString("organization"));
-       return author;
+        author.setCountOfBooks(rs.getInt("countOfBooks"));
+        return  author;
     }
 }

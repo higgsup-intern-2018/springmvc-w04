@@ -8,6 +8,7 @@ public class Author {
     private String description;
     private String website;
     private String organization;
+    private Integer countOfBooks;
 
     public Long getId() {
         return id;
@@ -63,6 +64,14 @@ public class Author {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public Integer getCountOfBooks() {
+        return countOfBooks;
+    }
+
+    public void setCountOfBooks(Integer countOfBooks) {
+        this.countOfBooks = countOfBooks;
     }
 }
 

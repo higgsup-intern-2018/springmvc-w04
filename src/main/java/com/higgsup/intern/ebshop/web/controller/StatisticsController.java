@@ -1,5 +1,6 @@
 package com.higgsup.intern.ebshop.web.controller;
 
+import com.higgsup.intern.ebshop.dto.AuthorListDTO;
 import com.higgsup.intern.ebshop.dto.CustomerListDTO;
 import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
 import com.higgsup.intern.ebshop.dto.PublisherListDTO;
@@ -19,6 +20,7 @@ public class StatisticsController {
     private final IEbookService ebookService;
     private final ICustomerService customerService;
     private final IPublisherService publisherService;
+    private final IAuthorService authorService;
 
     @Autowired
     public StatisticsController(IEbookService ebookService, ICustomerService customerService, IPublisherService publisherService) {
@@ -49,5 +51,11 @@ public class StatisticsController {
     public ResponseEntity<PublisherListDTO> getTop5Publisher() {
         PublisherListDTO top5Publisher = publisherService.top5BestSellingPublisher();
         return ResponseEntity.ok(top5Publisher);
+    }
+
+    @GetMapping("/top-5-best-selling-authors")
+    public ResponseEntity<AuthorListDTO> getTop5Author() {
+        AuthorListDTO top5Author = authorService.findTop5BestSellingAuthors();
+        return ResponseEntity.ok(top5Author);
     }
 }

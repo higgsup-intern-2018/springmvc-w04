@@ -19,7 +19,6 @@ import java.util.List;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
-
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final AuthorMapper authorMapper;
@@ -75,7 +74,17 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     @Override
     public List<Author> findTop5BestSellingAuthors() {
-        return null;
+        String sql = "select author.*, " +
+                "sum(order_details.quantity) countOfBooks " +
+                "from author " +
+                "join ebook " +
+                "on author.id = ebook.author_id " +
+                "join order_details " +
+                "on ebook.id = order_details.ebook_id " +
+                "group by author.id " +
+                "order by countOfBooks DESC " +
+                "limit 5;";
+        return jdbcTemplate.query(sql,authorMapper);
     }
 
     @Override
@@ -83,7 +92,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
         String sql = "insert into author(id, firstname, lastname , year_of_birth , description, website ,organization)" +
                 " values(:id, :firstName, :lastName , :yearOfBirth, :description, :website, :organization);";
-        namedParameterJdbcTemplate.update(sql, parameterSource);
+               namedParameterJdbcTemplate.update(sql, parameterSource);
     }
 
     @Override

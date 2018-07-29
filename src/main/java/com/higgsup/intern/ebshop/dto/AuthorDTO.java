@@ -10,6 +10,7 @@ public class AuthorDTO {
     private String organization;
     private EbookListDTO ebookListDTO;
     private Integer allBookOfAuthor;
+    private Integer countOfBooks;
 
     public Long getId() {
         return id;
@@ -65,6 +66,14 @@ public class AuthorDTO {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public Integer getCountOfBooks() {
+        return countOfBooks;
+    }
+
+    public void setCountOfBooks(Integer countOfBooks) {
+        this.countOfBooks = countOfBooks;
     }
 
     public EbookListDTO getEbookListDTO() {

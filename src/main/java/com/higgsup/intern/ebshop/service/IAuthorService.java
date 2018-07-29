@@ -2,6 +2,7 @@ package com.higgsup.intern.ebshop.service;
 
 import com.higgsup.intern.ebshop.dto.AuthorDTO;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
+import com.higgsup.intern.ebshop.dto.AuthorListDTO;
 
 public interface IAuthorService {
     void update(AuthorDTO authorDTO);
@@ -9,4 +10,5 @@ public interface IAuthorService {
     AuthorDTO findById(Long id);
 
     void create(AuthorDTO authorDTO);
+    AuthorListDTO findTop5BestSellingAuthors();
 }
