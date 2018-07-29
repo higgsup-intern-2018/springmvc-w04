@@ -33,17 +33,6 @@ public class StatisticsController {
         return ResponseEntity.ok(customerListDTO);
     }
 
-    private final IEbookService ebookService;
-    private final ICustomerService customerService;
-    private final IPublisherService publisherService;
-
-    @Autowired
-    public StatisticsController(IEbookService ebookService, ICustomerService customerService, IPublisherService publisherService) {
-        this.ebookService = ebookService;
-        this.customerService = customerService;
-        this.publisherService = publisherService;
-    }
-
     @GetMapping("/top-10-best-seller-ebooks")
     public ResponseEntity<EbookOrderListDTO> top10BestSellers(){
         EbookOrderListDTO ebookOrderListDTO = ebookService.top10BestSellers();
