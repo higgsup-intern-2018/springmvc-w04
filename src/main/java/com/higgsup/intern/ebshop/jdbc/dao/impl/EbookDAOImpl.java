@@ -1,5 +1,6 @@
 package com.higgsup.intern.ebshop.jdbc.dao.impl;
 
+import com.higgsup.intern.ebshop.dto.EbookListDTO;
 import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.AuthorMapper;
@@ -50,6 +51,55 @@ public class EbookDAOImpl implements EbookDAO {
     }
 
     @Override
+    public List<EbookListDTO> find(String title, Long authorId, Long publisherId,
+                                   Long priceFrom, Long priceTo, String isbn) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource()
+                    .addValue("title", title)
+                    .addValue("authorId", authorId)
+                    .addValue("publisherId", publisherId)
+                    .addValue("priceFrom", priceFrom)
+                    .addValue("priceTo", priceTo)
+                    .addValue("isbn", isbn);
+            String condition= " ";
+            if (title != null){
+                condition = "title = :title ORDER BY title ASC ;";
+            }
+            if (authorId != null){
+                condition = "authorId = :authorId ORDER BY title ASC ; ";
+            }
+            if (isbn != null){
+                condition = " ";
+            }
+            if (priceFrom != null && priceTo != null){
+
+            }
+            String sql = "SELECT * FROM ebook WHERE " + condition;
+
+
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, ebookMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return null;
+    }
+
+    @Override
     public void update(Ebook ebook) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(ebook);
         String sql = "UPDATE ebook " +
@@ -74,18 +124,47 @@ public class EbookDAOImpl implements EbookDAO {
     }
 
     @Override
-    public Publisher getPublisherByEbookId(Long id) {
-        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook\n" +
-                "join publisher\n" +
-                "on ebook.publisher_id = publisher.id\n" +
-                "where ebook.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
+    public Ebook findByTitle(String title) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("title", title);
+            String sql = "SELECT * FROM ebook WHERE title = :title ORDER BY title ASC ;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, ebookMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
-    public List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn) {
-        return null;
+    public Ebook findByAuthorId(Long id) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+            String sql = "SELECT * FROM ebook WHERE id = :id ORDER BY title ASC ;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, ebookMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public Ebook findByRangeOfPrice(Double priceFrom, Double priceTo) {
+        try {
+            SqlParameterSource paramSource = new MapSqlParameterSource().addValue("priceFrom", priceFrom)
+                    .addValue("priceTo", priceTo);
+            String sql = "SELECT * FROM ebook WHERE price BETWEEN priceFrom AND priceTo ORDER BY price DESC;";
+            return namedParameterJdbcTemplate.queryForObject(sql, paramSource, ebookMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public Publisher getPublisherByEbookId(Long id) {
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
+        String sql = "select publisher.*, ebook.* from ebook " +
+                "join publisher " +
+                "on ebook.publisher_id = publisher.id " +
+                "where ebook.id = :id;";
+        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.higgsup.intern.ebshop.jdbc.dao;
 
+import com.higgsup.intern.ebshop.dto.EbookListDTO;
 import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface EbookDAO {
     Ebook findById(Long id);
-    List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn);
+    List<EbookListDTO> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn);
     Ebook findByIsbn(String isbn);
     List<EbookOrderDTO> findTop10BestSellerEbooks();
     Publisher getPublisherByEbookId(Long id);
@@ -19,5 +20,9 @@ public interface EbookDAO {
     void update(Ebook ebook);
     void updateAddedEbook(Ebook ebook);
     void delete(Long id);
+    Ebook findByTitle(String title);
+    Ebook findByAuthorId(Long id);
+    Ebook findByRangeOfPrice(Double priceFrom, Double priceTo);
+    Ebook findByIsbn(Long id);
 
 }
