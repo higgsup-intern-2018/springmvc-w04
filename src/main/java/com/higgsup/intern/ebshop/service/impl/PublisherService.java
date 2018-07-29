@@ -34,7 +34,7 @@ public class PublisherService implements IPublisherService {
 
     @Override
     public void delete(Long id) {
-        if (publisherDAO.findById(id) == null) {
+        if (publisherDAO.findById(id).getName() == null) {
             throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
         }
         if (publisherDAO.countBookOfPublisher(id) > 0) {
@@ -46,7 +46,7 @@ public class PublisherService implements IPublisherService {
     @Override
     public void update(PublisherDTO publisherDTO) {
         Long id = publisherDTO.getId();
-        if (publisherDAO.findById(id) == null) {
+        if (publisherDAO.findById(id).getName() == null) {
             throw new ServiceException(String.format("Person with id = %d does not exist!", id));
         }
 

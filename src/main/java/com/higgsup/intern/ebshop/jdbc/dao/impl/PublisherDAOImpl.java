@@ -11,14 +11,6 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import com.higgsup.intern.ebshop.jdbc.dao.PublisherDAO;
-import com.higgsup.intern.ebshop.jdbc.mapper.PersonMapper;
-import com.higgsup.intern.ebshop.jdbc.model.Publisher;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -54,7 +46,10 @@ public class PublisherDAOImpl implements PublisherDAO {
     public Publisher findById(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-            String sql = "select * from publisher where id = :id;";
+            String sql = "select publisher.*, sum(order_details.quantity) countOfBook from publisher " +
+                    "join ebook on publisher.id = ebook.publisher_id " +
+                    "join order_details on ebook.id = order_details.ebook_id " +
+                    "where publisher.id = :id;";
             return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
         } catch (EmptyResultDataAccessException ex) {
             return null;
