@@ -23,10 +23,11 @@ public class StatisticsController {
     private final IAuthorService authorService;
 
     @Autowired
-    public StatisticsController(IEbookService ebookService, ICustomerService customerService, IPublisherService publisherService) {
+    public StatisticsController(IEbookService ebookService, ICustomerService customerService, IPublisherService publisherService, IAuthorService authorService) {
         this.ebookService = ebookService;
         this.customerService = customerService;
         this.publisherService = publisherService;
+        this.authorService = authorService;
     }
 
     @GetMapping("/top-5-highest-order-price-customers")

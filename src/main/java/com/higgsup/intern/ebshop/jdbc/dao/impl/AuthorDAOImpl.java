@@ -90,7 +90,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public void create(Author author) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
-        String sql = "insert into author(id, firstname, lastname , year_of_birth , description, website ,organization)" +
+        String sql = "insert into author(id, firstname, lastname, year_of_birth, description, website, organization)" +
                 " values(:id, :firstName, :lastName , :yearOfBirth, :description, :website, :organization);";
                namedParameterJdbcTemplate.update(sql, parameterSource);
     }
@@ -129,9 +129,9 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     public Publisher getPublisherByEbookId(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook\n" +
-                "join publisher\n" +
-                "on ebook.publisher_id = publisher.id\n" +
+        String sql = "select publisher.*, ebook.* from ebook " +
+                "join publisher " +
+                "on ebook.publisher_id = publisher.id " +
                 "where ebook.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
