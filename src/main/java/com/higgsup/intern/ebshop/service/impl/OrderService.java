@@ -16,6 +16,8 @@ import com.higgsup.intern.ebshop.service.IOrderService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -39,6 +41,7 @@ public class OrderService implements IOrderService {
         verifyOrder(orderDTO);
         Orders orders = new Orders();
         Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         orders.setCreatedDate(date);
 
         Long customerId = customerDAO.getId(orderDTO.getEmail());
@@ -54,6 +57,8 @@ public class OrderService implements IOrderService {
             customerId = customerDAO.getId(orderDTO.getEmail());
         }
         orders.setCustomerId(customerId);
+        orderDAO.createOrder(orders);
+        Long orderId = orderDAO.getId(dateFormat.format(date));
 
         for(ItemDTO itemDTO : orderDTO.getItemList())
         {
@@ -61,11 +66,12 @@ public class OrderService implements IOrderService {
             Ebook ebook = ebookDAO.findByIsbn(itemDTO.getIsbn());
             ebook.setQuantity(ebook.getQuantity() - itemDTO.getQuantity());
             ebookDAO.update(ebook);
+            orderDetails.setOrderId(orderId);
             orderDetails.setEbookId(ebook.getId());
             orderDetails.setQuantity(itemDTO.getQuantity());
             orderDetailsDAO.createOrderDetails(orderDetails);
         }
-        orderDAO.createOrder(orders);
+
     }
 
     public void verifyOrder(OrderDTO orderDTO)
