@@ -9,8 +9,6 @@ public class CustomerDTO {
     private String email;
     private String phone;
     private String address;
-    private Integer countOfBooks;
-    private Double totalPrice;
     private Integer quantity;
     private Double totalPriceOfOrders;
 
@@ -61,22 +59,6 @@ public class CustomerDTO {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Integer getCountOfBooks() {
-        return countOfBooks;
-    }
-
-    public void setCountOfBooks(Integer countOfBooks) {
-        this.countOfBooks = countOfBooks;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public Integer getQuantity() {

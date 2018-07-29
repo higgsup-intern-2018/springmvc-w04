@@ -21,6 +21,7 @@ public class CustomerMapper implements RowMapper<Customer> {
         customer.setAddress(rs.getString("address"));
         customer.setQuantity(rs.getInt("totalQuantity"));
         customer.setTotalPriceOfOrders(rs.getDouble("totalPrice"));
+
         return customer;
     }
 }

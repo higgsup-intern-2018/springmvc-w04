@@ -20,8 +20,8 @@ public class CustomerDTOMapper implements RowMapper<CustomerDTO>{
         customerDTO.setEmail(resultSet.getString("email"));
         customerDTO.setPhone(resultSet.getString("phone"));
         customerDTO.setAddress(resultSet.getString("address"));
-        customerDTO.setTotalPrice(resultSet.getDouble("totalPrice"));
-        customerDTO.setCountOfBooks(resultSet.getInt("countOfBooks"));
+        customerDTO.setTotalPriceOfOrders(resultSet.getDouble("totalPriceOfOrder"));
+        customerDTO.setQuantity(resultSet.getInt("quantity"));
         return customerDTO;
     }
 }

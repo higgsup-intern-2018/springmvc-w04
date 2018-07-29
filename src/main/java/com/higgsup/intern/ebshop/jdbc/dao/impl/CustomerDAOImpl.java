@@ -32,14 +32,14 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public List<CustomerDTO> findTop5HighestOrderPriceCustomers() {    //top 5 KH co tong gia tri hoa don cao nhat
         String sql = "select customer.*, " +
-                        "sum(ebook.price * order_details.quantity) TotalPrice, " +
-                        "sum(order_details.quantity) countOfBooks " +
+                        "sum(ebook.price * order_details.quantity) totalPriceOfOrder, " +
+                        "sum(order_details.quantity) quantity " +
                     "from customer " +
                     "join orders on customer.id = orders.customer_id " +
                     "join order_details on orders.id = order_details.order_id " +
                     "join ebook on order_details.ebook_id = ebook.id " +
                     "group by customer.email  " +
-                    "order by TotalPrice DESC " +
+                    "order by totalPriceOfOrder DESC " +
                     "limit 5;";
         return namedParameterJdbcTemplate.query(sql,customerDTOMapper);
     }
