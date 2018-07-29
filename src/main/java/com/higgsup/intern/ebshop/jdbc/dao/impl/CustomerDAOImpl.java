@@ -17,18 +17,16 @@ public class CustomerDAOImpl implements CustomerDAO {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final CustomerDTOMapper customerDTOMapper;
+    private final CustomerMapper customerMapper;
 
     public CustomerDAOImpl(JdbcTemplate jdbcTemplate,
                            NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                           CustomerDTOMapper customerDTOMapper) {
+                           CustomerDTOMapper customerDTOMapper,
+                           CustomerMapper customerMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.customerDTOMapper = customerDTOMapper;
-    }
-
-    @Override
-    public List<Customer> findTop5BestBuyCustomers() {
-        return null;
+        this.customerMapper = customerMapper;
     }
 
     @Override
