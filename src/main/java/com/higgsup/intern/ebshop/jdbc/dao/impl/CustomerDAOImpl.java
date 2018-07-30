@@ -48,10 +48,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         return namedParameterJdbcTemplate.query(sql,customerDTOMapper);
     }
 
-    @Override
-    public Integer countBook(Long id) {
-        return null;
-    }
 
     @Override
     public List<Customer> findTop5BestBuyCustomers() {
@@ -67,7 +63,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public void createCustomer(Customer customer) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(customer);
-        String sql = "insert into order_details(id, firstname, lastname, email, phone, address) values (:id, :firstName, :lastName, :email, :phone, :address);";
+        String sql = "insert into customer(id, firstname, lastname, email, phone, address) values (:id, :firstName, :lastName, :email, :phone, :address);";
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
 

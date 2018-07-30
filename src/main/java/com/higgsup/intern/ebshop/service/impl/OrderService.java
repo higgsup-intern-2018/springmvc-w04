@@ -11,14 +11,11 @@ import com.higgsup.intern.ebshop.exception.NotEnoughResourceException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.CustomerDAO;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
-import com.higgsup.intern.ebshop.jdbc.dao.OrderDAO;
 import com.higgsup.intern.ebshop.jdbc.dao.OrderDetailsDAO;
 import com.higgsup.intern.ebshop.jdbc.model.Customer;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import com.higgsup.intern.ebshop.jdbc.model.OrderDetails;
 import com.higgsup.intern.ebshop.jdbc.model.Orders;
-import com.higgsup.intern.ebshop.service.IOrderService;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,11 +33,14 @@ public class OrderService implements IOrderService {
     private final CustomerDAO customerDAO;
     private final MapperFacade mapper;
 
-    public OrderService(OrderDAO orderDAO, MapperFacade mapper)
-    {
+    public OrderService(EbookDAO ebookDAO, OrderDAO orderDAO, OrderDetailsDAO orderDetailsDAO, CustomerDAO customerDAO, MapperFacade mapper) {
+        this.ebookDAO = ebookDAO;
         this.orderDAO = orderDAO;
+        this.orderDetailsDAO = orderDetailsDAO;
+        this.customerDAO = customerDAO;
         this.mapper = mapper;
     }
+
 
     @Override
     public List<EbookOrderDTO> getEbookOrderList(Long id)

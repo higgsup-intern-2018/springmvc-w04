@@ -23,6 +23,14 @@ public class OrderDAOImpl implements OrderDAO {
     private final EbookOrderMapper ebookOrderMapper;
     private final OrderMapper orderMapper;
 
+    public OrderDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, OrderExportMapper orderExportMapper, EbookOrderMapper ebookOrderMapper, OrderMapper orderMapper) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.orderExportMapper = orderExportMapper;
+        this.ebookOrderMapper = ebookOrderMapper;
+        this.orderMapper = orderMapper;
+    }
+
     @Override
     public OrderExportDTO exportOrder(Long id) {
         try {
