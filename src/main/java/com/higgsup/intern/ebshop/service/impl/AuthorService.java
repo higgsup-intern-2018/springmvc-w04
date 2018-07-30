@@ -54,8 +54,6 @@ public class AuthorService implements IAuthorService {
         AuthorDTO authorDTO = mapper.map(author, AuthorDTO.class);
         authorDTO.setEbookListDTO(ebookListDTO);
 
-
-        authorDTO.setAllBookOfAuthor(authorDAO.getBookCount(id));
         return authorDTO;
     }
 

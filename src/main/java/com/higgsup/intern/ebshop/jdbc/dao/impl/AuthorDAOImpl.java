@@ -51,7 +51,10 @@ public class AuthorDAOImpl implements AuthorDAO {
     public Author findById(Long id) {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-            String sql = "select * from author where id = :id";
+            String sql = "select author.*, count(ebook.author_id) countOfBooks " +
+                    "from ebook " +
+                    "JOIN author ON ebook.author_id = author.id " +
+                    "where author.id = :id;";
             return namedParameterJdbcTemplate.queryForObject(sql, paramSource, authorMapper);
         } catch (EmptyResultDataAccessException ex) {
             return null;

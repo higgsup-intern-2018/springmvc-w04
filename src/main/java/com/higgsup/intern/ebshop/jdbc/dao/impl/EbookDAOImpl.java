@@ -76,9 +76,9 @@ public class EbookDAOImpl implements EbookDAO {
     @Override
     public Publisher getPublisherByEbookId(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook\n" +
-                "join publisher\n" +
-                "on ebook.publisher_id = publisher.id\n" +
+        String sql = "select publisher.*, count(ebook.publisher_id) countOfBook from ebook " +
+                "join publisher " +
+                "on ebook.publisher_id = publisher.id " +
                 "where ebook.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
@@ -131,10 +131,10 @@ public class EbookDAOImpl implements EbookDAO {
     @Override
     public Author infoOfAuthor(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = " select author.*" +
-                " from ebook" +
-                " left join author on ebook.author_id = author.id" +
-                " where ebook.id = :id";
+        String sql = "select author.*, count(ebook.author_id) countOfBooks " +
+                "from ebook " +
+                "JOIN author ON ebook.author_id = author.id " +
+                "where ebook.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql,paramSource,authorMapper);
     }
 
