@@ -27,7 +27,7 @@ public class CustomerService implements ICustomerService {
         List<CustomerDTO> customerDTOList = mapper.mapAsList(customers,CustomerDTO.class);
         CustomerListDTO customerListDTO = new CustomerListDTO();
 
-        customerListDTO.setCustomerDTOList(customerDTOList);
+        customerListDTO.setCustomerDTOs(customerDTOList);
 
         return customerListDTO;
     }

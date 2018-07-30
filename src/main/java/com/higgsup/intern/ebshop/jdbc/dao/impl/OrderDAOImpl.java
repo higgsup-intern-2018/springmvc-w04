@@ -48,7 +48,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<EbookOrderDTO> findByOrderId(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("order_id", id);
-        String sql = "SELECT ebook.title, author.firstname, author.lastname, publisher.`name`, ebook.price, order_details.quantity as'copied_sold' " +
+        String sql = "SELECT ebook.title, author.firstname, author.lastname, publisher.`name`, ebook.price, order_details.quantity as copies_sold " +
                 "FROM orders JOIN order_details ON orders.id = order_details.order_id " +
                 "JOIN ebook ON order_details.ebook_id = ebook.id " +
                 "JOIN author ON ebook.author_id = author.id " +

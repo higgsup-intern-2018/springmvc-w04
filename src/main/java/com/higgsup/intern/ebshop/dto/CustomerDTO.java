@@ -1,6 +1,5 @@
 package com.higgsup.intern.ebshop.dto;
 
-import java.util.function.DoubleUnaryOperator;
 
 public class CustomerDTO {
     private Long id;
