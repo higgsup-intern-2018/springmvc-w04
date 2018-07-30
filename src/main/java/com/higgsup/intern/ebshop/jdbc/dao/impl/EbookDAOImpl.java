@@ -89,7 +89,7 @@ public class EbookDAOImpl implements EbookDAO {
     }
 
     @Override
-    public List<EbookOrderDTO> findTop10BestSellerEbooks() {
+    public List<EbookOrderDTO> top10BestSeller() {
         String sql = "SELECT ebook.id, ebook.title, author.firstname, author.lastname, publisher.`name`, ebook.price, SUM(order_details.quantity) copies_sold " +
                 "FROM order_details JOIN ebook ON order_details.ebook_id = ebook.id " +
                 "JOIN author ON ebook.author_id = author.id " +
@@ -139,16 +139,5 @@ public class EbookDAOImpl implements EbookDAO {
         return namedParameterJdbcTemplate.queryForObject(sql, paramSource, authorMapper);
     }
 
-    @Override
-    public List<EbookOrderDTO> top10BestSeller() {
-        String sql = "SELECT ebook.id, ebook.title, author.firstname, author.lastname, publisher.`name`, ebook.price, SUM(order_details.quantity) AS \"copies_sold\" " +
-                "FROM order_details JOIN ebook ON order_details.ebook_id = ebook.id " +
-                "JOIN author ON ebook.author_id = author.id " +
-                "JOIN publisher ON ebook.publisher_id = publisher.id " +
-                "GROUP BY(ebook_id) " +
-                "ORDER BY SUM(order_details.quantity) DESC " +
-                "LIMIT 10;";
-        return jdbcTemplate.query(sql, ebookOrderMapper);
-    }
 
 }

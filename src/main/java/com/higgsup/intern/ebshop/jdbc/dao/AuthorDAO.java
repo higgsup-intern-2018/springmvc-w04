@@ -2,6 +2,7 @@ package com.higgsup.intern.ebshop.jdbc.dao;
 
 import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
+import com.higgsup.intern.ebshop.jdbc.model.Publisher;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface AuthorDAO {
     void update(Author author);
     void delete(Long id);
     List<Ebook> getTop3BooksOfAuthor(Long id);
+    /*Integer getBookCount(Long id);
+    Publisher getPublisherByEbookId(Long id);*/
 }

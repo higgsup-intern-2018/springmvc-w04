@@ -120,22 +120,4 @@ public class AuthorDAOImpl implements AuthorDAO {
         return jdbcTemplate.query(sql, ebookMapper);
     }
 
-    @Override
-    public Integer getBookCount(Long id) {
-        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        String sql = " select count(ebook.author_id) as booksAuthor " +
-                "from ebook " +
-                "JOIN author ON ebook.author_id = author.id " +
-                "where author.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, parameterSource, Integer.class);
-    }
-
-    public Publisher getPublisherByEbookId(Long id) {
-        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook " +
-                "join publisher " +
-                "on ebook.publisher_id = publisher.id " +
-                "where ebook.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
-    }
 }
