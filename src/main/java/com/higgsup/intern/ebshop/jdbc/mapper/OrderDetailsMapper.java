@@ -8,14 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class OrderDetailMapper  implements RowMapper<OrderDetails>{
+public class OrderDetailsMapper implements RowMapper<OrderDetails> {
+
     @Override
-    public OrderDetails mapRow(ResultSet rs, int i) throws SQLException {
+    public OrderDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setId(rs.getLong("id"));
         orderDetails.setOrderId(rs.getLong("order_id"));
-        orderDetails.setOrderId(rs.getLong("ebook_id"));
-        orderDetails.setOrderId(rs.getLong("quantity"));
+        orderDetails.setEbookId(rs.getLong("ebook_id"));
+        orderDetails.setQuantity(rs.getInt("quantity"));
         return orderDetails;
     }
 }

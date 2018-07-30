@@ -1,0 +1,510 @@
+{
+	"info": {
+		"_postman_id": "cd21dcd0-5c15-a15e-adc6-f32c97a8515f",
+		"name": "Ebshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "2b5a5906-97fa-4591-8cc2-8428f23e8d10",
+			"name": "1. Create an ebook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Performance iOS Apps\",\r\n    \"isbn\": \"14919110078X\",\r\n    \"description\": \"You 'll learn how to design and optimize iOS apps that deliver a smooth experience even when the network is poor and memory is low.\",\r\n    \"authorId\": 6,\r\n    \"publisherId\": 3,\r\n    \"publicationDate\": 1461110400,\r\n    \"pages\": 464,\r\n    \"price\": 39.61,\r\n    \"quantity\": 2\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ebooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ebooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "3813009d-03f4-4ad4-81c4-5b87b7ffb606",
+			"name": "2. Update an ebook",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": 5,\r\n    \"title\": \"Performance iOS Apps\",\r\n    \"isbn\": \"14919110078X\",\r\n    \"description\": \"You 'll learn how to design and optimize iOS apps that deliver a smooth experience even when the network is poor and memory is low.\",\r\n    \"authorId\": 6,\r\n    \"publisherId\": 3,\r\n    \"publicationDate\": 1461110400,\r\n    \"pages\": 464,\r\n    \"price\": 39.61,\r\n    \"quantity\": 3\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ebooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ebooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "2efa9f00-70dc-474d-bb5a-a04841688092",
+			"name": "3. Delete an ebook",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/ebooks/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ebooks",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "737a8493-a81c-487a-8c87-623f7e9cba62",
+			"name": "5. Create an Author",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Tu\",\r\n    \"lastName\": \"Thieu\",\r\n    \"yearOfBirth\": \"1994\",\r\n    \"description\": \"Nothing\",\r\n    \"website\": \"www\",\r\n    \"organization\": \"Higgsup\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/authors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a25d6012-4dfe-435b-8b6e-95518ccf2829",
+			"name": "6. Update an author",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"id\": 5,\r\n            \"firstName\": \"Anna\",\r\n            \"lastName\": \"Lee\",\r\n            \"yearOfBirth\": 1996,\r\n            \"description\": \"Test update for author 1\",\r\n            \"website\": \"www.test1.com\",\r\n            \"organization\": \"free\"\r\n        }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/authors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "7ab67e38-b21a-4fa1-8899-1244e180a789",
+			"name": "7. Delete an author",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/authors/22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors",
+						"22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "ff0fee4b-5e73-4041-9fa5-14c77d5eec98",
+			"name": "8. Get an author by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/authors/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "7f0ab320-3a34-4750-bec9-fb8492111368",
+			"name": "9. Create a publisher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Art Publisher\",\n    \"website\": \"art.com\",\n    \"founder\": \"Art\",\n    \"foundedYear\": 1998,\n    \"address\": \"New York\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/publishers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"publishers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "e8e9476a-169a-4d0a-9da4-3d804dcc0521",
+			"name": "10. Update a publisher",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"id\": 1,\n\"name\": \"No Starch Pressed \",\n\"website\": \"https://nostarch.com/\",\n\"founder\": \"Jame Pollocka\",\n\"foundedYear\": 1995,\n\"address\": \"San Francisc California, America\" \n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/publishers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"publishers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "5537d91d-d621-404a-8d91-95460b12bdb2",
+			"name": "11. Delete a publisher",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/publishers/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"publishers",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "1ca679aa-e26c-4fc9-86db-96ddf029680c",
+			"name": "12. Get a publisher",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"id\": 1,\n\"name\": \"No Starch Pressed \",\n\"website\": \"https://nostarch.com/\",\n\"founder\": \"Jame Pollocka\",\n\"foundedYear\": 1995,\n\"address\": \"San Francisc California, America\" \n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/publishers/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"publishers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "d3002b75-4075-44e7-91d5-49e40036686a",
+			"name": "13. Create an order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itemList\": [\r\n          {\r\n             \"isbn\": \"123456789X\",\r\n             \"quantity\": 1\r\n          },\r\n          {\r\n            \"isbn\": \"1593275994\",\r\n            \"quantity\": 1\r\n          }\r\n     ],\r\n     \"firstName\": \"Ti\",\r\n     \"lastName\": \"Thieu\",\r\n     \"email\": \"thieuthanh@gmail.com\",\r\n     \"phone\": \"0983652369\",\r\n     \"address\": \"HN\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "b0faf7c3-092f-484a-9e65-8d135c994393",
+			"name": "14. Export a bill",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/orders/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "36cfd926-76d4-4b01-976b-aebd71361495",
+			"name": "15.1. Get Top 10 best seller ebooks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/statistics/top-10-best-seller-ebooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"statistics",
+						"top-10-best-seller-ebooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "ecd1aba1-e4d6-4b72-a19f-afac35fe1a5e",
+			"name": "15.2. Get Top 5 best-selling authors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/statistics/top-5-best-selling-authors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"statistics",
+						"top-5-best-selling-authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "b31ff99f-1ca4-4fb7-aa28-6fb01f8a8884",
+			"name": "15.3. Get Top 5 best-selling publishers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/statistics/top-5-best-selling-publishers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"statistics",
+						"top-5-best-selling-publishers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "d811bcac-bf49-476b-852e-17db3dfcbf0d",
+			"name": "15.4. Get Top 5 Best Buy Customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/statistics/top-5-best-buy-customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"statistics",
+						"top-5-best-buy-customers"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "0063d595-82cf-45cb-b2a6-f7ddf903ab82",
+					"name": "Get Top-5-best-buy-customers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/statistics/top-5-best-buy-customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"statistics",
+								"top-5-best-buy-customers"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Fri, 27 Jul 2018 07:09:12 GMT",
+							"description": ""
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": ""
+						}
+					],
+					"cookie": [],
+					"body": "{\"customerDTOs\":[{\"id\":1,\"firstName\":\"Anh\",\"lastName\":\"Pham\",\"email\":\"anhpth@gmail.com\",\"phone\":\"0987117234\",\"address\":\"Ha Noi\",\"quantity\":330,\"totalPriceOfOrders\":10920.03},{\"id\":3,\"firstName\":\"Thanh\",\"lastName\":\"Tong\",\"email\":\"thanhtong@gmail.com\",\"phone\":\"0983453948\",\"address\":\"Ha Noi\",\"quantity\":78,\"totalPriceOfOrders\":3515.73},{\"id\":4,\"firstName\":\"Hiep\",\"lastName\":\"Tuan\",\"email\":\"tuanhiep@gmail.com\",\"phone\":\"0123874958\",\"address\":\"Ha Noi\",\"quantity\":42,\"totalPriceOfOrders\":1252.98},{\"id\":2,\"firstName\":\"Tu\",\"lastName\":\"Thieu\",\"email\":\"tutt@gmail.com\",\"phone\":\"0987127328\",\"address\":\"Thai Binh\",\"quantity\":23,\"totalPriceOfOrders\":863.33},{\"id\":5,\"firstName\":\"Thuy\",\"lastName\":\"Ngo\",\"email\":\"ngothuy@gmail.com\",\"phone\":\"01682233242\",\"address\":\"Thanh Hoa\",\"quantity\":3,\"totalPriceOfOrders\":105.0}]}"
+				}
+			]
+		},
+		{
+			"_postman_id": "247650e7-a656-4cf4-afd6-6c691b6086ee",
+			"name": "15.5. Get Top 5 highest order price customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/statistics/top-5-highest-order-price-customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"statistics",
+						"top-5-highest-order-price-customers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
