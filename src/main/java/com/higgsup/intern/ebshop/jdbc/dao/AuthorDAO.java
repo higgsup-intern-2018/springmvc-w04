@@ -13,5 +13,4 @@ public interface AuthorDAO {
     void update(Author author);
     void delete(Long id);
     List<Ebook> getTop3BooksOfAuthor(Long id);
-    Integer getBookCount(Long id);
 }

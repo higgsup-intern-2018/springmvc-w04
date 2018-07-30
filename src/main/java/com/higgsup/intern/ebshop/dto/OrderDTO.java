@@ -1,7 +1,5 @@
 package com.higgsup.intern.ebshop.dto;
 
-import java.util.Date;
-
 import java.util.List;
 
 public class OrderDTO {

@@ -27,9 +27,9 @@ public class EbookService implements IEbookService {
     }
 
     @Override
-    public EbookDTO findById(Long id) {     //check is book existed
+    public EbookDTO findById(Long id) {
         Ebook ebook = ebookDAO.findById(id);
-        if (ebook == null) {    //if this book not existed => throw exception
+        if (ebook == null) {
             throw new ResourceNotFoundException(String.format("Ebook with id = %d does not exist!", id));
         }
         return mapper.map(ebook, EbookDTO.class);
@@ -51,10 +51,10 @@ public class EbookService implements IEbookService {
         String isbn = ebookDTO.getIsbn();
         Integer newQuantity = ebookDTO.getQuantity();
         Ebook ebook = mapper.map(ebookDTO, Ebook.class);
-        if (ebookDAO.findByIsbn(isbn)== null){
+        if (ebookDAO.findByIsbn(isbn) == null) {
             ebookDAO.create(ebook);
             return GenericResponseDTO.created();
-        }else{
+        } else {
             Ebook originalEbook = ebookDAO.findByIsbn(isbn);
             ebook.setQuantity(newQuantity + originalEbook.getQuantity());
             ebookDAO.updateAddedEbook(ebook);

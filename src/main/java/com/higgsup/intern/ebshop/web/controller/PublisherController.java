@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/publishers")
-public class PublisherController
-{
+public class PublisherController {
     private final IPublisherService publisherService;
 
     @Autowired
@@ -22,8 +21,7 @@ public class PublisherController
 
 
     @PostMapping
-    public ResponseEntity<GenericResponseDTO> createPublisher(@RequestBody PublisherDTO publisherDTO)
-    {
+    public ResponseEntity<GenericResponseDTO> createPublisher(@RequestBody PublisherDTO publisherDTO) {
         publisherService.create(publisherDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -43,6 +41,7 @@ public class PublisherController
         PublisherDTO publisherDTO = publisherService.findById(id);
         return ResponseEntity.ok(publisherDTO);
     }
+
     @PutMapping
     public ResponseEntity<GenericResponseDTO> updatePublisher(@RequestBody PublisherDTO publisherDTO) {
         publisherService.update(publisherDTO);

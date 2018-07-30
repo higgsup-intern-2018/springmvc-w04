@@ -17,6 +17,7 @@ public class AuthorController {
     public AuthorController(IAuthorService authorService) {
         this.authorService = authorService;
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<GenericResponseDTO> deleteAuthorById(@PathVariable("id") Long id) {
         authorService.delete(id);
@@ -24,6 +25,7 @@ public class AuthorController {
                 .status(HttpStatus.OK)
                 .body(GenericResponseDTO.deleted());
     }
+
     @PutMapping
     public ResponseEntity<GenericResponseDTO> updateAuthor(@RequestBody AuthorDTO authorDTO) {
         authorService.update(authorDTO);

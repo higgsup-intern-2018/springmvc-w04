@@ -70,7 +70,7 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public void delete(Long id) {
-        if (authorDAO.findById(id) == null) {
+        if (authorDAO.findById(id).getYearOfBirth() == 0) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
         if (authorDAO.countEbooksOfAnAuthor(id) == 0) {

@@ -11,7 +11,6 @@ public interface EbookDAO {
     Ebook findById(Long id);
     List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn);
     Ebook findByIsbn(String isbn);
-    List<EbookOrderDTO> findTop10BestSellerEbooks();
     Publisher getPublisherByEbookId(Long id);
     Author infoOfAuthor(Long id);
     List<EbookOrderDTO> top10BestSeller();

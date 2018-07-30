@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//mapper xuat hoa don
 @Component
 public class OrderExportMapper implements RowMapper<OrderExportDTO> {
     @Override

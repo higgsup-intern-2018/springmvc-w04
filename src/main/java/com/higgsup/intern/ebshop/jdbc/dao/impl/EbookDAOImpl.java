@@ -53,24 +53,24 @@ public class EbookDAOImpl implements EbookDAO {
     public void update(Ebook ebook) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(ebook);
         String sql = "UPDATE ebook " +
-                    "SET isbn = :isbn, " +
-                        "title = :title, " +
-                        "description = :description, " +
-                        "author_id = :authorId, " +
-                        "publisher_id = :publisherId, " +
-                        "publication_date = :publicationDate, " +
-                        "pages = :pages, " +
-                        "price = :price, " +
-                        "quantity = :quantity " +
-                    "WHERE id = :id";
+                "SET isbn = :isbn, " +
+                "title = :title, " +
+                "description = :description, " +
+                "author_id = :authorId, " +
+                "publisher_id = :publisherId, " +
+                "publication_date = :publicationDate, " +
+                "pages = :pages, " +
+                "price = :price, " +
+                "quantity = :quantity " +
+                "WHERE id = :id";
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
 
     @Override
     public void delete(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql ="UPDATE ebook SET deleted = TRUE where id = :id";
-        namedParameterJdbcTemplate.update(sql,paramSource);
+        String sql = "UPDATE ebook SET deleted = TRUE where id = :id";
+        namedParameterJdbcTemplate.update(sql, paramSource);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class EbookDAOImpl implements EbookDAO {
                 "JOIN author ON ebook.author_id = author.id " +
                 "JOIN publisher ON ebook.publisher_id = publisher.id " +
                 "GROUP BY(ebook_id) " +
-                "ORDER BY SUM(order_details.quantity) DESC " +
+                "ORDER BY copies_sold DESC " +
                 "LIMIT 10;";
         return jdbcTemplate.query(sql, ebookOrderMapper);
     }
@@ -124,10 +124,11 @@ public class EbookDAOImpl implements EbookDAO {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(ebook);
         String sql = "UPDATE ebook " +
                 "SET title = :title, description = :description, author_id = :authorId, publisher_id = :publisherId, " +
-                "publication_date = :publicationDate, pages = :pages, price = :price, deleted = :deleted, quantity = :quantity " +
+                "publication_date = :publicationDate, pages = :pages, price = :price, quantity = :quantity " +
                 "WHERE isbn = :isbn;";
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
+
     @Override
     public Author infoOfAuthor(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
@@ -135,7 +136,7 @@ public class EbookDAOImpl implements EbookDAO {
                 "from ebook " +
                 "JOIN author ON ebook.author_id = author.id " +
                 "where ebook.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql,paramSource,authorMapper);
+        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, authorMapper);
     }
 
     @Override

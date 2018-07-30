@@ -3,7 +3,8 @@ package com.higgsup.intern.ebshop.dto;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class EbookDTO {
     private Long id;
     private String title;
@@ -96,6 +97,7 @@ public class EbookDTO {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
     public AuthorListDTO getAuthorListDTO() {
         return authorListDTO;
     }

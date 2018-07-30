@@ -52,8 +52,8 @@ public class AuthorDAOImpl implements AuthorDAO {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
             String sql = "select author.*, count(ebook.author_id) countOfBooks " +
-                    "from ebook " +
-                    "JOIN author ON ebook.author_id = author.id " +
+                    "from author " +
+                    "left join ebook on ebook.author_id = author.id " +
                     "where author.id = :id;";
             return namedParameterJdbcTemplate.queryForObject(sql, paramSource, authorMapper);
         } catch (EmptyResultDataAccessException ex) {
@@ -87,7 +87,7 @@ public class AuthorDAOImpl implements AuthorDAO {
                 "group by author.id " +
                 "order by countOfBooks DESC " +
                 "limit 5;";
-        return jdbcTemplate.query(sql,authorMapper);
+        return jdbcTemplate.query(sql, authorMapper);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
         String sql = "insert into author(id, firstname, lastname, year_of_birth, description, website, organization)" +
                 " values(:id, :firstName, :lastName , :yearOfBirth, :description, :website, :organization);";
-               namedParameterJdbcTemplate.update(sql, parameterSource);
+        namedParameterJdbcTemplate.update(sql, parameterSource);
     }
 
     @Override

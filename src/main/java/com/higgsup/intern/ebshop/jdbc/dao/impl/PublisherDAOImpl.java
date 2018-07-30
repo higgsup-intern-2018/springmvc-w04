@@ -47,8 +47,8 @@ public class PublisherDAOImpl implements PublisherDAO {
         try {
             SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
             String sql = "select publisher.*, sum(order_details.quantity) countOfBook from publisher " +
-                    "join ebook on publisher.id = ebook.publisher_id " +
-                    "join order_details on ebook.id = order_details.ebook_id " +
+                    "left join ebook on publisher.id = ebook.publisher_id " +
+                    "left join order_details on ebook.id = order_details.ebook_id " +
                     "where publisher.id = :id;";
             return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
         } catch (EmptyResultDataAccessException ex) {

@@ -9,7 +9,6 @@ import com.higgsup.intern.ebshop.jdbc.model.Orders;
 public interface OrderDAO {
     OrderExportDTO exportOrder(Long id);
     List<EbookOrderDTO> findByOrderId(Long id);
-
     void createOrder(Orders orders);
     Long getId(String date);
 }

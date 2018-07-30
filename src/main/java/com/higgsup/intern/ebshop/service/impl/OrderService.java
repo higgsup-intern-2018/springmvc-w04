@@ -43,8 +43,7 @@ public class OrderService implements IOrderService {
 
 
     @Override
-    public List<EbookOrderDTO> getEbookOrderList(Long id)
-    {
+    public List<EbookOrderDTO> getEbookOrderList(Long id) {
         List<EbookOrderDTO> ebookOrders = orderDAO.findByOrderId(id);
 
         return ebookOrders;
@@ -53,15 +52,16 @@ public class OrderService implements IOrderService {
     @Override
     public OrderExportDTO exportById(Long id) {
         OrderExportDTO orderExport = orderDAO.exportOrder(id);
-        if (orderExport == null) {
+        if (orderExport.getId() == 0) {
             throw new ResourceNotFoundException(String.format("Order with id = %d does not exist!", id));
         }
         List<EbookOrderDTO> ebookOrderList = getEbookOrderList(id);
         orderExport.setItemList(ebookOrderList);
         return orderExport;
     }
+
     @Override
-    public void createOrder(OrderDTO orderDTO){
+    public void createOrder(OrderDTO orderDTO) {
         verifyOrder(orderDTO);
         Orders orders = new Orders();
         Date date = new Date();
@@ -69,8 +69,7 @@ public class OrderService implements IOrderService {
         orders.setCreatedDate(date);
 
         Long customerId = customerDAO.getId(orderDTO.getEmail());
-        if(customerId == null)
-        {
+        if (customerId == null) {
             Customer customer = new Customer();
             customer.setFirstName(orderDTO.getFirstName());
             customer.setLastName(orderDTO.getLastName());
@@ -84,8 +83,7 @@ public class OrderService implements IOrderService {
         orderDAO.createOrder(orders);
         Long orderId = orderDAO.getId(dateFormat.format(date));
 
-        for(ItemDTO itemDTO : orderDTO.getItemList())
-        {
+        for (ItemDTO itemDTO : orderDTO.getItemList()) {
             OrderDetails orderDetails = new OrderDetails();
             Ebook ebook = ebookDAO.findByIsbn(itemDTO.getIsbn());
             ebook.setQuantity(ebook.getQuantity() - itemDTO.getQuantity());
@@ -98,17 +96,13 @@ public class OrderService implements IOrderService {
 
     }
 
-    public void verifyOrder(OrderDTO orderDTO)
-    {
-        for(ItemDTO itemDTO : orderDTO.getItemList())
-        {
+    public void verifyOrder(OrderDTO orderDTO) {
+        for (ItemDTO itemDTO : orderDTO.getItemList()) {
             Ebook ebook = ebookDAO.findByIsbn(itemDTO.getIsbn());
-            if(ebook == null || ebook.getDeleted() == true)
-            {
+            if (ebook == null || ebook.getDeleted() == true) {
                 throw new ServiceException(String.format("Book with isbn = %s does not exist!", itemDTO.getIsbn()));
             }
-            if(ebook.getQuantity() < itemDTO.getQuantity())
-            {
+            if (ebook.getQuantity() < itemDTO.getQuantity()) {
                 throw new NotEnoughResourceException(String.format("Book with isbn = %s does not have enough quantity!", itemDTO.getIsbn()));
             }
         }

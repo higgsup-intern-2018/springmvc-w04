@@ -1,7 +1,5 @@
 package com.higgsup.intern.ebshop.dto;
 
-import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 

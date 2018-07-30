@@ -34,7 +34,7 @@ public class PublisherService implements IPublisherService {
 
     @Override
     public void delete(Long id) {
-        if (publisherDAO.findById(id).getName() == null) {
+        if (publisherDAO.findById(id).getFoundedYear() == 0) {
             throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
         }
         if (publisherDAO.countBookOfPublisher(id) > 0) {

@@ -8,7 +8,6 @@ public interface IAuthorService {
     void update(AuthorDTO authorDTO);
     void delete(Long id);
     AuthorDTO findById(Long id);
-
     void create(AuthorDTO authorDTO);
     AuthorListDTO findTop5BestSellingAuthors();
 }
