@@ -36,16 +36,16 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public List<CustomerDTO> findTop5HighestOrderPriceCustomers() {    //top 5 KH co tong gia tri hoa don cao nhat
         String sql = "select customer.*, " +
-                        "sum(ebook.price * order_details.quantity) totalPriceOfOrder, " +
-                        "sum(order_details.quantity) quantity " +
-                    "from customer " +
-                    "join orders on customer.id = orders.customer_id " +
-                    "join order_details on orders.id = order_details.order_id " +
-                    "join ebook on order_details.ebook_id = ebook.id " +
-                    "group by customer.email  " +
-                    "order by totalPriceOfOrder DESC " +
-                    "limit 5;";
-        return namedParameterJdbcTemplate.query(sql,customerDTOMapper);
+                "sum(ebook.price * order_details.quantity) totalPriceOfOrder, " +
+                "sum(order_details.quantity) quantity " +
+                "from customer " +
+                "join orders on customer.id = orders.customer_id " +
+                "join order_details on orders.id = order_details.order_id " +
+                "join ebook on order_details.ebook_id = ebook.id " +
+                "group by customer.email  " +
+                "order by totalPriceOfOrder DESC " +
+                "limit 5;";
+        return namedParameterJdbcTemplate.query(sql, customerDTOMapper);
     }
 
 
@@ -54,12 +54,13 @@ public class CustomerDAOImpl implements CustomerDAO {
         String sql = "SELECT customer.*, sum(order_details.quantity) totalQuantity , sum(ebook.price * order_details.quantity) totalPrice FROM customer " +
                 "JOIN orders ON customer.id = orders.customer_id " +
                 "JOIN order_details ON orders.id = order_details.order_id " +
-                "JOIN ebook ON order_details.ebook_id = ebook.id "+
+                "JOIN ebook ON order_details.ebook_id = ebook.id " +
                 "GROUP BY customer.id " +
                 "ORDER BY totalQuantity DESC " +
                 "limit 5;";
         return jdbcTemplate.query(sql, customerMapper);
     }
+
     @Override
     public void createCustomer(Customer customer) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(customer);
