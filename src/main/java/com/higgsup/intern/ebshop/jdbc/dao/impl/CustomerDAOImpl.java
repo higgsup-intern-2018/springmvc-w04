@@ -28,7 +28,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public void createCustomer(Customer customer) {
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(customer);
-        String sql = "insert into order_details(id, firstname, lastname, email, phone, address) values (:id, :firstName, :lastName, :email, :phone, :address);";
+        String sql = "insert into customer(id, firstname, lastname, email, phone, address) values (:id, :firstName, :lastName, :email, :phone, :address);";
         namedParameterJdbcTemplate.update(sql, paramSource);
     }
 
