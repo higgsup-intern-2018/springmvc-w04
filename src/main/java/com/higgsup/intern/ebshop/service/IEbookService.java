@@ -1,9 +1,7 @@
 package com.higgsup.intern.ebshop.service;
 
-import com.higgsup.intern.ebshop.dto.EbookDTO;
-import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
-import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
-import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
+import com.higgsup.intern.ebshop.dto.*;
+import com.higgsup.intern.ebshop.jdbc.model.Search;
 
 import java.util.List;
 
@@ -13,4 +11,5 @@ public interface IEbookService {
     GenericResponseDTO create(EbookDTO ebookDTO);
     void delete(Long id);
     EbookOrderListDTO top10BestSellers();
+    EbookListDTO searchEbook(String name, Long authorId, Long publisherId, Double priceFrom, Double priceTo, String isbn);
 }

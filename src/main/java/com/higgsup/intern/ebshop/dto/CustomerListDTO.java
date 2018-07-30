@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CustomerListDTO {
     private List<CustomerDTO> customerDTOList = new ArrayList<CustomerDTO>();
+    private List<CustomerDTO> customerDTOs = new ArrayList<>();
 
     public List<CustomerDTO> getCustomerDTOList() {
         return customerDTOList;
@@ -13,7 +14,6 @@ public class CustomerListDTO {
     public void setCustomerDTOList(List<CustomerDTO> customerDTOList) {
         this.customerDTOList = customerDTOList;
     }
-    private List<CustomerDTO> customerDTOs = new ArrayList<>();
 
     public List<CustomerDTO> getCustomerDTOs() {
         return customerDTOs;

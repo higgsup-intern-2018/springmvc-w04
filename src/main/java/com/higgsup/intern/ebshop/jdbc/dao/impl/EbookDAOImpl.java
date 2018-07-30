@@ -1,5 +1,6 @@
 package com.higgsup.intern.ebshop.jdbc.dao.impl;
 
+import com.higgsup.intern.ebshop.dto.EbookDTO;
 import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
 import com.higgsup.intern.ebshop.jdbc.mapper.AuthorMapper;
@@ -76,16 +77,42 @@ public class EbookDAOImpl implements EbookDAO {
     @Override
     public Publisher getPublisherByEbookId(Long id) {
         SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook\n" +
-                "join publisher\n" +
-                "on ebook.publisher_id = publisher.id\n" +
+        String sql = "select publisher.* from ebook " +
+                "join publisher " +
+                "on ebook.publisher_id = publisher.id " +
                 "where ebook.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
 
     @Override
-    public List<Ebook> find(String name, Long authorId, Long publisherId, Long priceFrom, Long priceTo, String isbn) {
-        return null;
+    public List<Ebook> find(String name, Long authorId, Long publisherId, Double priceFrom, Double priceTo, String isbn) {
+        String strConditional = "";
+        String sql = "select ebook.* from ebook where ";
+
+        String conditional1 = "and title = '" + name + "'";
+        String conditional2 = " and publisher_id = "+publisherId;
+        String conditional3 = " and publisher_id = "+publisherId;
+        String conditional4 = " and (price BETWEEN "+priceFrom+" AND "+priceTo+")";
+        String conditional5 = " and isbn = '"+isbn+"'";
+
+        if (name != null){
+            strConditional += conditional1;
+        }
+        if (authorId != null){
+            strConditional += conditional2;
+        }
+        if (publisherId != null){
+            strConditional += conditional3;
+        }
+        if (priceFrom != null && priceTo != null){
+            strConditional += conditional4;
+        }
+        if (isbn != null){
+            strConditional += conditional5;
+        }
+        strConditional = strConditional.substring(3, strConditional.length());
+        sql += strConditional;
+        return jdbcTemplate.query(sql, ebookMapper);
     }
 
     @Override

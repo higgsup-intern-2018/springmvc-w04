@@ -47,7 +47,7 @@ public class PublisherService implements IPublisherService {
     public void update(PublisherDTO publisherDTO) {
         Long id = publisherDTO.getId();
         if (publisherDAO.findById(id).getName() == null) {
-            throw new ServiceException(String.format("Person with id = %d does not exist!", id));
+            throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
         }
 
         Publisher publisher = mapper.map(publisherDTO, Publisher.class);

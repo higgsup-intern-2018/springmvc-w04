@@ -96,6 +96,7 @@ public class EbookDTO {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
     public AuthorListDTO getAuthorListDTO() {
         return authorListDTO;
     }

@@ -23,14 +23,12 @@ public class AuthorDAOImpl implements AuthorDAO {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final AuthorMapper authorMapper;
     private final EbookMapper ebookMapper;
-    private final PublisherMapper publisherMapper;
 
-    public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, AuthorMapper authorMapper, EbookMapper ebookMapper, PublisherMapper publisherMapper) {
+    public AuthorDAOImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, AuthorMapper authorMapper, EbookMapper ebookMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.authorMapper = authorMapper;
         this.ebookMapper = ebookMapper;
-        this.publisherMapper = publisherMapper;
     }
 
 
@@ -75,15 +73,15 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public List<Author> findTop5BestSellingAuthors() {
         String sql = "select author.*, " +
-                "sum(order_details.quantity) countOfBooks " +
-                "from author " +
-                "join ebook " +
-                "on author.id = ebook.author_id " +
-                "join order_details " +
-                "on ebook.id = order_details.ebook_id " +
-                "group by author.id " +
-                "order by countOfBooks DESC " +
-                "limit 5;";
+                        "sum(order_details.quantity) countOfBooks " +
+                    "from author " +
+                    "join ebook " +
+                    "on author.id = ebook.author_id " +
+                    "join order_details " +
+                    "on ebook.id = order_details.ebook_id " +
+                    "group by author.id " +
+                    "order by countOfBooks DESC " +
+                    "limit 5;";
         return jdbcTemplate.query(sql,authorMapper);
     }
 
@@ -125,14 +123,5 @@ public class AuthorDAOImpl implements AuthorDAO {
                 "JOIN author ON ebook.author_id = author.id " +
                 "where author.id = :id;";
         return namedParameterJdbcTemplate.queryForObject(sql, parameterSource, Integer.class);
-    }
-
-    public Publisher getPublisherByEbookId(Long id) {
-        SqlParameterSource paramSource = new MapSqlParameterSource("id", id);
-        String sql = "select publisher.*, ebook.* from ebook " +
-                "join publisher " +
-                "on ebook.publisher_id = publisher.id " +
-                "where ebook.id = :id;";
-        return namedParameterJdbcTemplate.queryForObject(sql, paramSource, publisherMapper);
     }
 }

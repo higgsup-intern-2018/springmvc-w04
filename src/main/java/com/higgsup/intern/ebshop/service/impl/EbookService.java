@@ -1,15 +1,13 @@
 package com.higgsup.intern.ebshop.service.impl;
 
-import com.higgsup.intern.ebshop.dto.EbookDTO;
-import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
-import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
+import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
+import com.higgsup.intern.ebshop.jdbc.model.Author;
 import com.higgsup.intern.ebshop.jdbc.model.Ebook;
 import com.higgsup.intern.ebshop.service.IEbookService;
 import ma.glasnost.orika.MapperFacade;
-import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -81,4 +79,12 @@ public class EbookService implements IEbookService {
         return ebookOrderListDTO;
     }
 
+    @Override
+    public EbookListDTO searchEbook(String name, Long authorId, Long publisherId, Double priceFrom, Double priceTo, String isbn) {
+        List<Ebook> ebooks = ebookDAO.find(name, authorId, publisherId, priceFrom, priceTo, isbn);
+        List<EbookDTO> ebookDTOS = mapper.mapAsList(ebooks, EbookDTO.class);
+        EbookListDTO ebookListDTO = new EbookListDTO();
+        ebookListDTO.setEbookDTOList(ebookDTOS);
+        return ebookListDTO;
+    }
 }

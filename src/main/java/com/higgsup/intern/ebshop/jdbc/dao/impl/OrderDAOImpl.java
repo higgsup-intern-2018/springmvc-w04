@@ -15,16 +15,13 @@ import java.util.List;
 
 @Repository
 public class OrderDAOImpl implements OrderDAO {
-    private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final OrderExportMapper orderExportMapper;
     private final EbookOrderMapper ebookOrderMapper;
 
-    public OrderDAOImpl(JdbcTemplate jdbcTemplate,
-                        NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+    public OrderDAOImpl( NamedParameterJdbcTemplate namedParameterJdbcTemplate,
                         OrderExportMapper orderExportMapper,
                         EbookOrderMapper ebookOrderMapper) {
-        this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.orderExportMapper = orderExportMapper;
         this.ebookOrderMapper = ebookOrderMapper;
