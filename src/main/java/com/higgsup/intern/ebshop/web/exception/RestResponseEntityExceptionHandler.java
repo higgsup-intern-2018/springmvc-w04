@@ -1,7 +1,6 @@
 package com.higgsup.intern.ebshop.web.exception;
 
 import com.higgsup.intern.ebshop.dto.ApiErrorDTO;
-import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import org.springframework.http.HttpHeaders;
