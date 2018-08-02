@@ -16,9 +16,9 @@ This repository is used for team members to commit their Spring MVC Exercise on 
 * https://www.martinfowler.com/eaaCatalog/dataTransferObject.html
 * http://www.dossier-andreas.net/software_architecture/layers.html
 
-#### Spring JDBC Template ####
-* http://www.baeldung.com/spring-jdbc-jdbctemplate
-* https://www.journaldev.com/17053/spring-jdbctemplate-example
+#### Spring Data JPA + Hibernate ####
+* https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-part-one-configuration/
+* http://www.javasavvy.com/spring-4-mvc-hibernate-jpa-java-config-tutorial/
 
 #### JDBC Connection Pool ####
 * http://www.baeldung.com/hikaricp
