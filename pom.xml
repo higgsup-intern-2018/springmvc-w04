@@ -30,11 +30,21 @@
         </dependency>
         <!-- / end Spring MVC -->
 
-        <!--Spring JDBC-->
+        <!--Spring Data JPA-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -46,7 +56,7 @@
             <artifactId>HikariCP</artifactId>
             <version>${hikari-cp.version}</version>
         </dependency>
-        <!-- / end Spring JDBC-->
+        <!-- / end Spring Data JPA-->
 
         <!-- Utils -->
         <dependency>
@@ -79,5 +89,8 @@
         <jackson.version>2.9.6</jackson.version>
         <orika-mapper.version>1.5.2</orika-mapper.version>
         <hikari-cp.version>3.2.0</hikari-cp.version>
+        <hibernate.version>5.3.3.Final</hibernate.version>
+        <spring-data-jpa.version>1.11.14.RELEASE</spring-data-jpa.version>
+        <mysql.version>8.0.11</mysql.version>
     </properties>
 </project>
