@@ -21,7 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:jdbc.properties")
-@ComponentScan("com.higgsup.intern.ebshop.jdbc")
+@ComponentScan("com.higgsup.intern.ebshop.jpa")
 @EnableTransactionManagement
 @EnableJpaRepositories("com.higgsup.intern.ebshop.jpa.repo")
 public class DataSourceConfig {

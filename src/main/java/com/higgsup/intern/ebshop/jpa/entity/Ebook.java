@@ -1,14 +1,21 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Entity
 public class Ebook {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private String isbn;
     private String description;
-    private Long authorId;
-    private Long publisherId;
+    @OneToMany
+    @JoinColumn(name = "author_id")
+    private Author author;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
     private Date publicationDate;
     private Integer pages;
     private Double price;
@@ -47,20 +54,20 @@ public class Ebook {
         this.description = description;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Long getPublisherId() {
-        return publisherId;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setPublisherId(Long publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public Date getPublicationDate() {

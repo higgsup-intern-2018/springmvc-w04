@@ -1,9 +1,18 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class OrderDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long orderId;
-    private Long ebookId;
+    @OneToOne
+    @Column(name = "order_id")
+    private Orders orders;
+    @OneToMany
+    @Column(name = "ebook_id")
+    private Ebook ebook;
     private Integer quantity;
 
     public Long getId() {
@@ -14,20 +23,20 @@ public class OrderDetails {
         this.id = id;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Orders getOrders() {
+        return orders;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setOrders(Orders orders) {
+        this.orders = orders;
     }
 
-    public Long getEbookId() {
-        return ebookId;
+    public Ebook getEbook() {
+        return ebook;
     }
 
-    public void setEbookId(Long ebookId) {
-        this.ebookId = ebookId;
+    public void setEbook(Ebook ebook) {
+        this.ebook = ebook;
     }
 
     public Integer getQuantity() {

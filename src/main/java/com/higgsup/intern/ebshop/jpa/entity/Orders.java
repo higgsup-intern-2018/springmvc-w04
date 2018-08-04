@@ -1,10 +1,15 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Entity
 public class Orders {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long customerId;
+    @ManyToOne
+    @Column(name = "customer_id")
+    private Customer customer;
     private Date createdDate;
 
     public Long getId() {
@@ -15,12 +20,12 @@ public class Orders {
         this.id = id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Date getCreatedDate() {

@@ -13,6 +13,7 @@ public class AuthorMapper implements RowMapper<Author> {
     @Override
     public Author mapRow(ResultSet rs, int rowNum) throws SQLException{
         Author author = new Author();
+
         author.setId(rs.getLong("id"));
         author.setFirstName(rs.getString("firstname"));
         author.setLastName(rs.getString("lastname"));
@@ -21,6 +22,6 @@ public class AuthorMapper implements RowMapper<Author> {
         author.setWebsite(rs.getString("website"));
         author.setOrganization(rs.getString("organization"));
         author.setCountOfBooks(rs.getInt("countOfBooks"));
-        return  author;
+        return author;
     }
 }

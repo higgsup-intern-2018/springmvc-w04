@@ -1,6 +1,11 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class Publisher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String website;
@@ -8,6 +13,7 @@ public class Publisher {
     private Integer foundedYear;
     private String address;
     private Integer countOfBook;
+
     public Long getId() {
         return id;
     }
