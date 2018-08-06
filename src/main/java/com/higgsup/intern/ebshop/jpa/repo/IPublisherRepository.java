@@ -30,7 +30,6 @@ public interface IPublisherRepository extends JpaRepository<Publisher, Long> {
             "ORDER by COUNT(ebook_id) DESC ")
     List<Ebook> top5BookOfPublisher(Long id);
 
-    //Todo: set limit
 
     @Query( "SELECT publisher.id, publisher.name, publisher.website, publisher.founder, publisher.founded_year, publisher.address," +
             "SUM(order_details.quantity) AS countOfBook " +
@@ -40,5 +39,4 @@ public interface IPublisherRepository extends JpaRepository<Publisher, Long> {
             "GROUP BY publisher.id " +
             "ORDER by countOfBook DESC ")
     List<Publisher> findTop5BestSellingPublishers();
-    //Todo: set limit
 }

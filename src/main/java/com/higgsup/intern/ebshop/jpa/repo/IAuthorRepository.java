@@ -26,7 +26,7 @@ public interface IAuthorRepository extends JpaRepository<Author, Long> {
             "GROUP BY order_details.ebook_id " +
             "ORDER BY SUM(order_details.quantity) DESC ")
     List<Ebook> getTop3BooksOfAuthor(Long id);
-    //Todo: set limit
+
 
     @Query( "SELECT COUNT(ebook.id) " +
             "FROM ebook INNER JOIN author ON ebook.author_id = author.id " +
@@ -43,5 +43,5 @@ public interface IAuthorRepository extends JpaRepository<Author, Long> {
             "GROUP BY author.id " +
             "ORDER BY countOfBooks DESC ")
     List<Author> findTop5BestSellingAuthors();
-    //Todo: set limit
+
 }

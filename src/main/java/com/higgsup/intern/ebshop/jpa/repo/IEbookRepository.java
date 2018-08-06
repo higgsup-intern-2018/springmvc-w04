@@ -24,7 +24,6 @@ public interface IEbookRepository extends JpaRepository<Ebook, Long> {
             "GROUP BY(ebook_id) " +
             "ORDER BY copies_sold DESC")
     List<EbookOrderDTO> top10BestSeller();
-    //Todo: set limit 10
 
     @Query( "SELECT author.id, author.firstname, author.lastname, author.year_of_birth, author.description, author.website, author.organization, " +
             "COUNT(ebook.author_id) AS countOfBooks " +

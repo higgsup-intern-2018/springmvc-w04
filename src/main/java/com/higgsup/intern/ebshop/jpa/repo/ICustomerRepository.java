@@ -19,7 +19,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "ORDER BY totalPriceOfOrder DESC ")
     List<CustomerDTO> findTop5HighestOrderPriceCustomers();
 
-    //Todo: set limit
 
     @Query( "SELECT customer.id, customer.firstname, customer.lastname, customer. email, customer.phone, customer.address, " +
             "SUM(order_details.quantity) AS totalQuantity , " +
@@ -31,7 +30,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "ORDER BY totalQuantity DESC ")
     List<Customer> findTop5BestBuyCustomers();
 
-    //Todo: set limit
 
     @Query("SELECT id FROM customer where email = :email")
     Long getId(String email);
