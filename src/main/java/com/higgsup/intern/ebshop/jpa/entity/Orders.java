@@ -1,14 +1,24 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 @Entity
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     @ManyToOne
-    @Column(name = "customer_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
     private Date createdDate;
 

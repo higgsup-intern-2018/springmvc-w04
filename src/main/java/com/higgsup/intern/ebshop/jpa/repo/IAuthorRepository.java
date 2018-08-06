@@ -10,37 +10,29 @@ import java.util.List;
 
 public interface IAuthorRepository extends JpaRepository<Author, Long> {
 
-    @Query( "SELECT author.id, author.firstname, author.lastname, author.year_of_birth, author.description, author.website, author.organization, " +
-            "COUNT(ebook.author_id) AS countOfBooks " +
-            "FROM author " +
-            "LEFT JOIN ebook ON ebook.author_id = author.id " +
-            "WHERE author.id = :id")
+    @Query( "SELECT a, COUNT(a) AS countOfBooks " +
+            "FROM Ebook e " +
+            "LEFT JOIN e.author a " +
+            "WHERE a.id = :id")
     AuthorDTO findById(Long id);
 
-    @Query( "SELECT ebook.id, ebook.isbn, ebook.title, ebook.description, ebook.author_id," +
-            "ebook.publisher_id, ebook.publication_date, ebook.pages, ebook.price, ebook.quantity, ebook.deleted " +
-            "FROM ebook, author, order_details " +
-            "WHERE author.id = :id " +
-            "AND author.id = ebook.author_id " +
-            "AND ebook.id = order_details.ebook_id " +
-            "GROUP BY order_details.ebook_id " +
-            "ORDER BY SUM(order_details.quantity) DESC ")
+    @Query( "SELECT e " +
+            "FROM OrderDetails.ebook e, e.author a " +
+            "WHERE a.id = :id " +
+            "GROUP BY e " +
+            "ORDER BY SUM(OrderDetails.quantity) DESC ")
     List<Ebook> getTop3BooksOfAuthor(Long id);
 
 
-    @Query( "SELECT COUNT(ebook.id) " +
-            "FROM ebook INNER JOIN author ON ebook.author_id = author.id " +
-            "WHERE author.id = :author_id" )
+    @Query( "SELECT COUNT(a) " +
+            "FROM Ebook e INNER JOIN e.author a " +
+            "WHERE a.id = :author_id" )
     Integer countEbooksOfAnAuthor(Long author_id);
 
-    @Query( "SELECT author.id, author.firstname, author.lastname, author.year_of_birth, author.description, author.website, author.organization, " +
-            "SUM(order_details.quantity) AS countOfBooks " +
-            "FROM author " +
-            "JOIN ebook " +
-            "ON author.id = ebook.author_id " +
-            "JOIN order_details " +
-            "ON ebook.id = order_details.ebook_id " +
-            "GROUP BY author.id " +
+    @Query( "SELECT a, SUM(OrderDetails.quantity) AS countOfBooks FROM Ebook " +
+            "JOIN Ebook.author a " +
+            "JOIN OrderDetails.ebook e " +
+            "GROUP BY a " +
             "ORDER BY countOfBooks DESC ")
     List<Author> findTop5BestSellingAuthors();
 

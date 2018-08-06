@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
-    @Query( "SELECT customer.id, customer.firstname, customer.lastname, customer. email, customer.phone, customer.address, " +
+    @Query( "SELECT customer.id, customer.first_name, customer.last_name, customer. email, customer.phone, customer.address, " +
             "SUM(ebook.price * order_details.quantity) AS totalPriceOfOrder, " +
             "SUM(order_details.quantity) AS quantity " +
             "FROM customer " +
@@ -20,7 +20,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     List<CustomerDTO> findTop5HighestOrderPriceCustomers();
 
 
-    @Query( "SELECT customer.id, customer.firstname, customer.lastname, customer. email, customer.phone, customer.address, " +
+    @Query( "SELECT customer.id, customer.first_name, customer.last_name, customer. email, customer.phone, customer.address, " +
             "SUM(order_details.quantity) AS totalQuantity , " +
             "SUM(ebook.price * order_details.quantity) AS totalPrice FROM customer " +
             "JOIN orders ON customer.id = orders.customer_id " +

@@ -1,17 +1,27 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 public class OrderDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     @OneToOne
-    @Column(name = "order_id")
+    @JoinColumn(name = "order_id")
     private Orders orders;
-    @OneToMany
-    @Column(name = "ebook_id")
+    @OneToOne
+    @JoinColumn(name = "ebook_id")
     private Ebook ebook;
     private Integer quantity;
 

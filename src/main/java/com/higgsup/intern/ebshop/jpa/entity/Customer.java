@@ -1,19 +1,29 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
-    private Integer quantity;
-    private Double totalPriceOfOrders;
+    //private Integer quantity;
+    //private Double totalPriceOfOrders;
 
     public Long getId() {
         return id;
@@ -63,19 +73,19 @@ public class Customer {
         this.address = address;
     }
 
-    public Integer getQuantity() {
+   /* public Integer getQuantity() {
         return quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
+    }*/
 
-    public Double getTotalPriceOfOrders() {
+    /*public Double getTotalPriceOfOrders() {
         return totalPriceOfOrders;
     }
 
     public void setTotalPriceOfOrders(Double totalPriceOfOrders) {
         this.totalPriceOfOrders = totalPriceOfOrders;
-    }
+    }*/
 }

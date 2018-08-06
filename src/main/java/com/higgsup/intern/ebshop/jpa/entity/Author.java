@@ -1,11 +1,21 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     private String firstName;
     private String lastName;
@@ -13,7 +23,7 @@ public class Author {
     private String description;
     private String website;
     private String organization;
-    private Integer countOfBooks;
+    //private Integer countOfBooks;
 
     public Long getId() {
         return id;
@@ -71,11 +81,11 @@ public class Author {
         this.organization = organization;
     }
 
-    public Integer getCountOfBooks() {
-        return countOfBooks;
-    }
-
-    public void setCountOfBooks(Integer countOfBooks) {
-        this.countOfBooks = countOfBooks;
-    }
+//    public Integer getCountOfBooks() {
+//        return countOfBooks;
+//    }
+//
+//    public void setCountOfBooks(Integer countOfBooks) {
+//        this.countOfBooks = countOfBooks;
+//    }
 }

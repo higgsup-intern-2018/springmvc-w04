@@ -1,18 +1,28 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 public class Publisher {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     private String name;
     private String website;
     private String founder;
     private Integer foundedYear;
     private String address;
-    private Integer countOfBook;
+    //private Integer countOfBook;
 
     public Long getId() {
         return id;
@@ -62,11 +72,11 @@ public class Publisher {
         this.address = address;
     }
 
-    public Integer getCountOfBook() {
+    /*public Integer getCountOfBook() {
         return countOfBook;
     }
 
     public void setCountOfBook(Integer countOfBook) {
         this.countOfBook = countOfBook;
-    }
+    }*/
 }

@@ -1,16 +1,28 @@
 package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 @Entity
 public class Ebook {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     private String title;
     private String isbn;
     private String description;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
     @ManyToOne
@@ -18,8 +30,10 @@ public class Ebook {
     private Publisher publisher;
     private Date publicationDate;
     private Integer pages;
-    private Double price;
+    private BigDecimal price;
     private Integer quantity;
+    @Column(columnDefinition = "TINYINT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean deleted;
 
     public Long getId() {
@@ -86,11 +100,11 @@ public class Ebook {
         this.pages = pages;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -7,7 +7,6 @@ import com.higgsup.intern.ebshop.jpa.entity.Author;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import com.higgsup.intern.ebshop.jpa.entity.Publisher;
 import com.higgsup.intern.ebshop.jpa.repo.AuthorRepository;
-import com.higgsup.intern.ebshop.jpa.repo.EbookRepositoy;
 import com.higgsup.intern.ebshop.jpa.repo.IAuthorRepository;
 import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.service.IAuthorService;
@@ -23,14 +22,12 @@ import java.util.List;
 public class AuthorService implements IAuthorService {
     private final AuthorRepository authorRepository;
     private final MapperFacade mapper;
-    private final EbookRepositoy ebookRepositoy;
     private final IAuthorRepository iAuthorRepository;
     private final IEbookRepository iEbookRepository;
 
-    public AuthorService(AuthorRepository authorRepository, MapperFacade mapper, EbookRepositoy ebookRepositoy, IAuthorRepository iAuthorRepository, IEbookRepository iEbookRepository) {
+    public AuthorService(AuthorRepository authorRepository, MapperFacade mapper, IAuthorRepository iAuthorRepository, IEbookRepository iEbookRepository) {
         this.authorRepository = authorRepository;
         this.mapper = mapper;
-        this.ebookRepositoy = ebookRepositoy;
         this.iAuthorRepository = iAuthorRepository;
         this.iEbookRepository = iEbookRepository;
     }
@@ -39,8 +36,8 @@ public class AuthorService implements IAuthorService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public AuthorDTO findById(Long id) {
-        Author author = authorRepository.findOne(id);
-        if (author == null) {
+        AuthorDTO authorDTO = iAuthorRepository.findById(id);
+        if (authorDTO == null) {
             throw new ResourceNotFoundException(String.format("Author with id = %d does not exist!", id));
         }
         List<Ebook> ebooks = iAuthorRepository.getTop3BooksOfAuthor(id);
@@ -55,7 +52,6 @@ public class AuthorService implements IAuthorService {
         EbookListDTO ebookListDTO = new EbookListDTO();
         ebookListDTO.setEbookDTOList(ebookDTOs);
 
-        AuthorDTO authorDTO = mapper.map(author, AuthorDTO.class);
         authorDTO.setEbookListDTO(ebookListDTO);
 
         return authorDTO;
