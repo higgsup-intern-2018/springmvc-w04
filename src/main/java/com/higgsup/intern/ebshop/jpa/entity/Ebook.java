@@ -1,18 +1,39 @@
-package com.higgsup.intern.ebshop.jdbc.model;
+package com.higgsup.intern.ebshop.jpa.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
-
+@Entity
 public class Ebook {
+    @Id
+   // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     private Long id;
     private String title;
     private String isbn;
     private String description;
-    private Long authorId;
-    private Long publisherId;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
     private Date publicationDate;
     private Integer pages;
-    private Double price;
+    private BigDecimal price;
     private Integer quantity;
+    @Column(columnDefinition = "TINYINT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean deleted;
 
     public Long getId() {
@@ -47,20 +68,20 @@ public class Ebook {
         this.description = description;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Long getPublisherId() {
-        return publisherId;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setPublisherId(Long publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public Date getPublicationDate() {
@@ -79,11 +100,11 @@ public class Ebook {
         this.pages = pages;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

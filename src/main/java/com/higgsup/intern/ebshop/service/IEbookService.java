@@ -10,7 +10,7 @@ import java.util.List;
 public interface IEbookService {
     void update(EbookDTO ebookDTO);
     EbookDTO findById(Long id);
-    GenericResponseDTO create(EbookDTO ebookDTO);
+   GenericResponseDTO create(EbookDTO ebookDTO);
     void delete(Long id);
-    EbookOrderListDTO top10BestSellers();
+   EbookOrderListDTO top10BestSellers();
 }

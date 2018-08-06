@@ -3,51 +3,50 @@ package com.higgsup.intern.ebshop.service.impl;
 import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
-import com.higgsup.intern.ebshop.jdbc.dao.AuthorDAO;
-import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
-import com.higgsup.intern.ebshop.jdbc.model.Author;
-import com.higgsup.intern.ebshop.jdbc.model.Ebook;
-import com.higgsup.intern.ebshop.jdbc.model.Publisher;
-import com.higgsup.intern.ebshop.service.IAuthorService;
-import ma.glasnost.orika.MapperFacade;
-import com.higgsup.intern.ebshop.dto.AuthorDTO;
-import com.higgsup.intern.ebshop.dto.AuthorListDTO;
-import com.higgsup.intern.ebshop.jdbc.dao.AuthorDAO;
-import com.higgsup.intern.ebshop.jdbc.model.Author;
+import com.higgsup.intern.ebshop.jpa.entity.Author;
+import com.higgsup.intern.ebshop.jpa.entity.Ebook;
+import com.higgsup.intern.ebshop.jpa.entity.Publisher;
+import com.higgsup.intern.ebshop.jpa.repo.IAuthorRepository;
+import com.higgsup.intern.ebshop.jpa.repo.EbookRepository;
+import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.service.IAuthorService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class AuthorService implements IAuthorService {
-    private final AuthorDAO authorDAO;
+    private final IAuthorRepository authorRepository;
     private final MapperFacade mapper;
-    private final EbookDAO ebookDAO;
+    private final EbookRepository ebookRepository;
+    private final IEbookRepository iEbookRepository;
+    private final IAuthorRepository iAuthorRepository;
 
-    public AuthorService(AuthorDAO authorDAO,
-                         MapperFacade mapper, EbookDAO ebookDAO) {
-        this.authorDAO = authorDAO;
+    public AuthorService(IAuthorRepository authorRepository, MapperFacade mapper, EbookRepository ebookRepository, IEbookRepository iEbookRepository, IAuthorRepository iAuthorRepository) {
+        this.authorRepository = authorRepository;
         this.mapper = mapper;
-        this.ebookDAO = ebookDAO;
+        this.ebookRepository = ebookRepository;
+        this.iEbookRepository = iEbookRepository;
+        this.iAuthorRepository = iAuthorRepository;
     }
 
+
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public AuthorDTO findById(Long id) {
-        Author author = authorDAO.findById(id);
+        Author author = authorRepository.findOne(id);
         if (author == null) {
             throw new ResourceNotFoundException(String.format("Author with id = %d does not exist!", id));
         }
-        List<Ebook> ebooks = authorDAO.getTop3BooksOfAuthor(id);
-
+        List<Ebook> ebooks = iAuthorRepository.getTop3BooksOfAuthor(id);
         List<EbookDTO> ebookDTOs = mapper.mapAsList(ebooks, EbookDTO.class);
         for (EbookDTO ebookDTO : ebookDTOs) {
-            Publisher publisher = ebookDAO.getPublisherByEbookId(ebookDTO.getId());
+            Publisher publisher = iEbookRepository.getPublisherByEbookId(ebookDTO.getId());
             PublisherDTO publisherDTO = mapper.map(publisher, PublisherDTO.class);
             ebookDTO.setPublisherDTO(publisherDTO);
         }
-
         EbookListDTO ebookListDTO = new EbookListDTO();
         ebookListDTO.setEbookDTOList(ebookDTOs);
 
@@ -58,37 +57,37 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void update(AuthorDTO authorDTO) {
         Long id = authorDTO.getId();
-        if (authorDAO.findById(id) == null) {
+        if (authorRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
         Author author = mapper.map(authorDTO, Author.class);
-        authorDAO.update(author);
+        authorRepository.save(author);
 
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (authorDAO.findById(id).getYearOfBirth() == 0) {
+        if (authorRepository.findOne(id).getYearOfBirth() == 0) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
-        if (authorDAO.countEbooksOfAnAuthor(id) == 0) {
-            authorDAO.delete(id);
-        } else {
-            throw new ServiceException(String.format("Not deleted! Because the author with id = %d has some ebooks!", id));
-        }
+        authorRepository.delete(id);
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void create(AuthorDTO authorDTO) {
         Author author = mapper.map(authorDTO, Author.class);
-        authorDAO.create(author);
+        authorRepository.save(author);
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public AuthorListDTO findTop5BestSellingAuthors() {
-        List<Author> authors = authorDAO.findTop5BestSellingAuthors();
+        List<Author> authors = iAuthorRepository.findTop5BestSellingAuthors();
         List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);
         AuthorListDTO authorListDTO = new AuthorListDTO();
         authorListDTO.setAuthorDTOs(authorDTOs);

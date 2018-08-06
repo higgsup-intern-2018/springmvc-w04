@@ -30,7 +30,7 @@ public class StatisticsController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/top-5-highest-order-price-customers")
+  @GetMapping("/top-5-highest-order-price-customers")
     public ResponseEntity<CustomerListDTO> findTop5HighestOrderPriceCustomers() {
         CustomerListDTO customerListDTO = customerService.findTop5HighestOrderPriceCustomers();
         return ResponseEntity.ok(customerListDTO);
