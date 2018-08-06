@@ -5,6 +5,7 @@ import com.higgsup.intern.ebshop.dto.OrderExportDTO;
 import com.higgsup.intern.ebshop.jpa.entity.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface IOrderRepository extends JpaRepository<Orders, Long> {
             "JOIN e.author a " +
             "JOIN e.publisher p " +
             "WHERE o.id = :id")
-    List<EbookOrderDTO> findByOrderId(Long id);
+    List<EbookOrderDTO> findByOrderId(@Param("id") Long id);
 
     @Query( "SELECT o, c, " +
             "SUM(e.price * od.quantity) AS total_price " +
@@ -29,5 +30,5 @@ public interface IOrderRepository extends JpaRepository<Orders, Long> {
     OrderExportDTO exportOrder(Long id);
 
     @Query("SELECT o FROM Orders o WHERE o.createdDate = :date")
-    Long getId(String date);
+    Long getId(@Param("date") String date);
 }

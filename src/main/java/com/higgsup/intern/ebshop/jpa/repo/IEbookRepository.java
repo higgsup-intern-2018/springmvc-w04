@@ -31,11 +31,11 @@ public interface IEbookRepository extends JpaRepository<Ebook, Long> {
             "FROM Ebook e " +
             "JOIN e.author a  " +
             "WHERE e.id = :id")
-    Author infoOfAuthor(Long id);
+    Author infoOfAuthor(@Param("id") Long id);
 
     @Query( "SELECT p, " +
             "COUNT(p.id) AS countOfBook FROM Ebook e " +
             "JOIN e.publisher p " +
             "WHERE e.id = :id")
-    Publisher getPublisherByEbookId(Long id);
+    Publisher getPublisherByEbookId(@Param("id") Long id);
 }

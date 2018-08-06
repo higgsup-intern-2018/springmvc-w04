@@ -4,6 +4,7 @@ import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import com.higgsup.intern.ebshop.jpa.entity.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ public interface IPublisherRepository extends JpaRepository<Publisher, Long> {
             "LEFT JOIN od.ebook e " +
             "LEFT JOIN e.publisher p " +
             "WHERE p.id = :id")
-    Publisher findById(Long id);
+    Publisher findById(@Param("id") Long id);
 
     @Query( "SELECT COUNT(p.id) " +
             "FROM Ebook e " +
             "LEFT JOIN e.publisher p " +
             "WHERE p.id = :id")
-    Integer countBookOfPublisher(Long id);
+    Integer countBookOfPublisher(@Param("id") Long id);
 
     @Query( "SELECT e, e.author, p " +
             "FROM OrderDetails od " +
@@ -28,7 +29,7 @@ public interface IPublisherRepository extends JpaRepository<Publisher, Long> {
             "WHERE p.id = :id " +
             "GROUP BY e.id " +
             "ORDER by COUNT(e.id) DESC ")
-    List<Ebook> top5BookOfPublisher(Long id);
+    List<Ebook> top5BookOfPublisher(@Param("id") Long id);
 
 
     @Query( "SELECT p," +
