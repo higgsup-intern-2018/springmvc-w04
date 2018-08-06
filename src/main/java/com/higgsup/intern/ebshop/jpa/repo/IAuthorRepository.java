@@ -6,6 +6,7 @@ import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface IAuthorRepository extends JpaRepository<Author, Long> {
             "FROM Ebook e " +
             "LEFT JOIN e.author a " +
             "WHERE a.id = :id")
-    AuthorDTO findById(Long id);
+    AuthorDTO getById(@Param("id") Long id);
 
     //Top 3 sach ban chay cua tac gia
     @Query( "SELECT e " +
@@ -27,13 +28,13 @@ public interface IAuthorRepository extends JpaRepository<Author, Long> {
             "WHERE a.id = :id " +
             "GROUP BY e.id "+
             "ORDER BY SUM(od.quantity) DESC ")
-    List<Ebook> getTop3BooksOfAuthor(Long id);
+    List<Ebook> getTop3BooksOfAuthor(@Param("id") Long id);
 
     //Tong so sach cua tac gia
     @Query( "SELECT COUNT(e.id) " +
             "FROM Ebook e INNER JOIN e.author a  " +
-            "WHERE a.id = :author" )
-    Integer countEbooksOfAnAuthor(Long author_id);
+            "WHERE a.id = :author_id" )
+    Integer countEbooksOfAnAuthor(@Param("author_id") Long author_id);
 
     //Top 5 sach ban chay nhat cua tac gia
     @Query( "SELECT a ," +

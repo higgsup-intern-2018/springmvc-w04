@@ -13,9 +13,9 @@ import java.util.List;
 public interface IEbookRepository extends JpaRepository<Ebook,Long>{
     //Top 10 sach ban chay nhat
     @Query( "SELECT e.id, e.title, a.firstname, a.lastname, p.name, e.price, " +
-            "SUM(o.quantity) AS copies_sold " +
-            "FROM OrderDetails o "+
-            "JOIN o.ebook e  " +
+            "SUM(od.quantity) AS copies_sold " +
+            "FROM OrderDetails od "+
+            "JOIN od.ebook e  " +
             "JOIN e.author a  " +
             "JOIN e.publisher p " +
             "GROUP BY(e.id) " +
@@ -27,11 +27,11 @@ public interface IEbookRepository extends JpaRepository<Ebook,Long>{
             "FROM Ebook  e " +
             "JOIN e.author a " +
             "WHERE e.id = :id")
-    Author infoOfAuthor(Long id);
+    Author infoOfAuthor(@Param("id") Long id);
     //Thong tin cua nha xuat ban va so sach cua nxb trong he thong
     @Query( "SELECT p, " +
             "COUNT(p.id) AS countOfBook FROM Ebook e " +
             "JOIN e.publisher p " +
             "WHERE e.id = :id")
-    Publisher getPublisherByEbookId(Long id);
+    Publisher getPublisherByEbookId(@Param("id") Long id);
 }

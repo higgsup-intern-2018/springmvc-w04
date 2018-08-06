@@ -2,20 +2,17 @@ package com.higgsup.intern.ebshop.service.impl;
 
 import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
-import com.higgsup.intern.ebshop.jdbc.dao.OrderDAO;
+import com.higgsup.intern.ebshop.jpa.repo.*;
 import com.higgsup.intern.ebshop.service.IOrderService;
 import ma.glasnost.orika.MapperFacade;
 import com.higgsup.intern.ebshop.dto.ItemDTO;
 import com.higgsup.intern.ebshop.dto.OrderDTO;
 import com.higgsup.intern.ebshop.exception.NotEnoughResourceException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
-import com.higgsup.intern.ebshop.jdbc.dao.CustomerDAO;
-import com.higgsup.intern.ebshop.jdbc.dao.EbookDAO;
-import com.higgsup.intern.ebshop.jdbc.dao.OrderDetailsDAO;
-import com.higgsup.intern.ebshop.jdbc.model.Customer;
-import com.higgsup.intern.ebshop.jdbc.model.Ebook;
-import com.higgsup.intern.ebshop.jdbc.model.OrderDetails;
-import com.higgsup.intern.ebshop.jdbc.model.Orders;
+import com.higgsup.intern.ebshop.jpa.entity.Customer;
+import com.higgsup.intern.ebshop.jpa.entity.Ebook;
+import com.higgsup.intern.ebshop.jpa.entity.OrderDetails;
+import com.higgsup.intern.ebshop.jpa.entity.Orders;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,31 +24,37 @@ import java.util.Date;
 @Service
 public class OrderService implements IOrderService {
 
-    private final EbookDAO ebookDAO;
-    private final OrderDAO orderDAO;
-    private final OrderDetailsDAO orderDetailsDAO;
-    private final CustomerDAO customerDAO;
+    private final EbookRepository ebookRepository;
+    private final OrdersRepository orderRepository;
+    private final OrderDetailsRepository orderDetailsRepository;
+    private final CustomerRepository customerRepository;
+    private final ICustomerRepository iCustomerRepository;
+    private final IOrderRepository iOrderRepository;
     private final MapperFacade mapper;
 
-    public OrderService(EbookDAO ebookDAO, OrderDAO orderDAO, OrderDetailsDAO orderDetailsDAO, CustomerDAO customerDAO, MapperFacade mapper) {
-        this.ebookDAO = ebookDAO;
-        this.orderDAO = orderDAO;
-        this.orderDetailsDAO = orderDetailsDAO;
-        this.customerDAO = customerDAO;
+    public OrderService(EbookRepository ebookRepository, OrdersRepository orderRepository, OrderDetailsRepository orderDetailsRepository, CustomerRepository customerRepository,
+                        ICustomerRepository iCustomerRepository, IOrderRepository iOrderRepository, MapperFacade mapper) {
+        this.ebookRepository = ebookRepository;
+        this.orderRepository = orderRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
+        this.customerRepository = customerRepository;
+        this.iCustomerRepository = iCustomerRepository;
+        this.iOrderRepository = iOrderRepository;
         this.mapper = mapper;
     }
 
 
     @Override
     public List<EbookOrderDTO> getEbookOrderList(Long id) {
-        List<EbookOrderDTO> ebookOrders = orderDAO.findByOrderId(id);
+        List<EbookOrderDTO> ebookOrders = iOrderRepository.findByOrderId(id);
 
         return ebookOrders;
+
     }
 
     @Override
     public OrderExportDTO exportById(Long id) {
-        OrderExportDTO orderExport = orderDAO.exportOrder(id);
+        OrderExportDTO orderExport = iOrderRepository.exportOrder(id);
         if (orderExport.getId() == 0) {
             throw new ResourceNotFoundException(String.format("Order with id = %d does not exist!", id));
         }
@@ -59,6 +62,7 @@ public class OrderService implements IOrderService {
         orderExport.setItemList(ebookOrderList);
         return orderExport;
     }
+
 
     @Override
     public void createOrder(OrderDTO orderDTO) {
@@ -68,7 +72,7 @@ public class OrderService implements IOrderService {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         orders.setCreatedDate(date);
 
-        Long customerId = customerDAO.getId(orderDTO.getEmail());
+        Long customerId = iCustomerRepository.getId(orderDTO.getEmail());
         if (customerId == null) {
             Customer customer = new Customer();
             customer.setFirstName(orderDTO.getFirstName());
@@ -76,29 +80,29 @@ public class OrderService implements IOrderService {
             customer.setEmail(orderDTO.getEmail());
             customer.setPhone(orderDTO.getPhone());
             customer.setAddress(orderDTO.getAddress());
-            customerDAO.createCustomer(customer);
-            customerId = customerDAO.getId(orderDTO.getEmail());
+            customerId = iCustomerRepository.getId(orderDTO.getEmail());
+            customer.setId(customerId);
+            customerRepository.save(customer);
         }
-        orders.setCustomerId(customerId);
-        orderDAO.createOrder(orders);
-        Long orderId = orderDAO.getId(dateFormat.format(date));
+        orderRepository.save(orders);
 
+        Orders order = orderRepository.findOne(iOrderRepository.getId(dateFormat.format(date)));
         for (ItemDTO itemDTO : orderDTO.getItemList()) {
             OrderDetails orderDetails = new OrderDetails();
-            Ebook ebook = ebookDAO.findByIsbn(itemDTO.getIsbn());
+            Ebook ebook = ebookRepository.findOne(Long.valueOf(itemDTO.getIsbn()));
             ebook.setQuantity(ebook.getQuantity() - itemDTO.getQuantity());
-            ebookDAO.update(ebook);
-            orderDetails.setOrderId(orderId);
-            orderDetails.setEbookId(ebook.getId());
+            ebookRepository.save(ebook);
+            orderDetails.setOrders(order);
+            orderDetails.setEbook(ebook);
             orderDetails.setQuantity(itemDTO.getQuantity());
-            orderDetailsDAO.createOrderDetails(orderDetails);
+            orderDetailsRepository.save(orderDetails);
         }
-
     }
+
 
     public void verifyOrder(OrderDTO orderDTO) {
         for (ItemDTO itemDTO : orderDTO.getItemList()) {
-            Ebook ebook = ebookDAO.findByIsbn(itemDTO.getIsbn());
+            Ebook ebook = ebookRepository.findOne(Long.valueOf(itemDTO.getIsbn()));
             if (ebook == null || ebook.getDeleted() == true) {
                 throw new ServiceException(String.format("Book with isbn = %s does not exist!", itemDTO.getIsbn()));
             }
