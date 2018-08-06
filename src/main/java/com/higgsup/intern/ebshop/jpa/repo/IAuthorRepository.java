@@ -17,22 +17,25 @@ public interface IAuthorRepository extends JpaRepository<Author, Long> {
     AuthorDTO findById(Long id);
 
     @Query( "SELECT e " +
-            "FROM OrderDetails.ebook e, e.author a " +
+            "FROM OrderDetails o " +
+            "JOIN o.ebook e " +
+            "JOIN e.author a " +
             "WHERE a.id = :id " +
-            "GROUP BY e " +
-            "ORDER BY SUM(OrderDetails.quantity) DESC ")
+            "GROUP BY e.id " +
+            "ORDER BY SUM(o.quantity) DESC ")
     List<Ebook> getTop3BooksOfAuthor(Long id);
 
 
     @Query( "SELECT COUNT(a) " +
-            "FROM Ebook e INNER JOIN e.author a " +
+            "FROM Ebook e " +
+            "INNER JOIN e.author a " +
             "WHERE a.id = :author_id" )
     Integer countEbooksOfAnAuthor(Long author_id);
 
-    @Query( "SELECT a, SUM(OrderDetails.quantity) AS countOfBooks FROM Ebook " +
-            "JOIN Ebook.author a " +
-            "JOIN OrderDetails.ebook e " +
-            "GROUP BY a " +
+    @Query( "SELECT a, SUM(o.quantity) AS countOfBooks FROM OrderDetails o " +
+            "JOIN o.ebook e " +
+            "JOIN e.author a " +
+            "GROUP BY a.id " +
             "ORDER BY countOfBooks DESC ")
     List<Author> findTop5BestSellingAuthors();
 

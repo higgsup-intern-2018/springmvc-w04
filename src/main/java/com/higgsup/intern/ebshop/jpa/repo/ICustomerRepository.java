@@ -8,29 +8,29 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
-    @Query( "SELECT customer.id, customer.first_name, customer.last_name, customer. email, customer.phone, customer.address, " +
-            "SUM(ebook.price * order_details.quantity) AS totalPriceOfOrder, " +
-            "SUM(order_details.quantity) AS quantity " +
-            "FROM customer " +
-            "JOIN orders on customer.id = orders.customer_id " +
-            "JOIN order_details on orders.id = order_details.order_id " +
-            "JOIN ebook on order_details.ebook_id = ebook.id " +
-            "GROUP BY customer.email  " +
+    @Query( "SELECT c, " +
+            "SUM(od.quantity) AS quantity, " +
+            "SUM(e.price * quantity) AS totalPriceOfOrder " +
+            "FROM OrderDetails od " +
+            "JOIN od.orders o " +
+            "JOIN o.customer c " +
+            "JOIN od.ebook e " +
+            "GROUP BY c.email " +
             "ORDER BY totalPriceOfOrder DESC ")
     List<CustomerDTO> findTop5HighestOrderPriceCustomers();
 
 
-    @Query( "SELECT customer.id, customer.first_name, customer.last_name, customer. email, customer.phone, customer.address, " +
-            "SUM(order_details.quantity) AS totalQuantity , " +
-            "SUM(ebook.price * order_details.quantity) AS totalPrice FROM customer " +
-            "JOIN orders ON customer.id = orders.customer_id " +
-            "JOIN order_details ON orders.id = order_details.order_id " +
-            "JOIN ebook ON order_details.ebook_id = ebook.id " +
-            "GROUP BY customer.id " +
+    @Query( "SELECT c, " +
+            "SUM(od.quantity) AS totalQuantity, " +
+            "SUM(e.price * totalQuantity) AS totalPrice FROM OrderDetails od " +
+            "JOIN od.orders o " +
+            "JOIN o.customer c " +
+            "JOIN od.ebook e " +
+            "GROUP BY c.id " +
             "ORDER BY totalQuantity DESC ")
     List<Customer> findTop5BestBuyCustomers();
 
 
-    @Query("SELECT id FROM customer where email = :email")
+    @Query("SELECT c.id FROM Customer c where c.email = :email")
     Long getId(String email);
 }

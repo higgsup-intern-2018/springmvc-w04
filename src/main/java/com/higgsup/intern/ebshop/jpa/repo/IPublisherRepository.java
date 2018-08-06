@@ -8,35 +8,35 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface IPublisherRepository extends JpaRepository<Publisher, Long> {
-    @Query( "SELECT publisher.id, publisher.name, publisher.website, publisher.founder, publisher.founded_year, publisher.address, " +
-            "SUM(order_details.quantity) AS countOfBook FROM publisher " +
-            "LEFT JOIN ebook ON publisher.id = ebook.publisher_id " +
-            "LEFT JOIN order_details ON ebook.id = order_details.ebook_id " +
-            "WHERE publisher.id = :id")
+    @Query( "SELECT p, " +
+            "SUM(od.quantity) AS countOfBook FROM OrderDetails od " +
+            "LEFT JOIN od.ebook e " +
+            "LEFT JOIN e.publisher p " +
+            "WHERE p.id = :id")
     Publisher findById(Long id);
 
-    @Query( "SELECT COUNT(publisher_id) " +
-            "FROM ebook " +
-            "LEFT JOIN publisher ON publisher.id = ebook.publisher_id " +
-            "WHERE publisher.id = :id")
+    @Query( "SELECT COUNT(p.id) " +
+            "FROM Ebook e " +
+            "LEFT JOIN e.publisher p " +
+            "WHERE p.id = :id")
     Integer countBookOfPublisher(Long id);
 
-    @Query( "SELECT ebook.id, ebook.title, author.firstname, author.lastname, publisher.name, ebook.price " +
-            "FROM ebook " +
-            "LEFT JOIN publisher ON ebook.publisher_id = publisher.id " +
-            "LEFT JOIN order_details ON ebook.id = order_details.ebook_id " +
-            "where publisher.id = :id " +
-            "GROUP BY ebook_id " +
-            "ORDER by COUNT(ebook_id) DESC ")
+    @Query( "SELECT e, e.author, p " +
+            "FROM OrderDetails od " +
+            "LEFT JOIN od.ebook e " +
+            "LEFT JOIN e.publisher p " +
+            "WHERE p.id = :id " +
+            "GROUP BY e.id " +
+            "ORDER by COUNT(e.id) DESC ")
     List<Ebook> top5BookOfPublisher(Long id);
 
 
-    @Query( "SELECT publisher.id, publisher.name, publisher.website, publisher.founder, publisher.founded_year, publisher.address," +
-            "SUM(order_details.quantity) AS countOfBook " +
-            "FROM publisher " +
-            "JOIN ebook ON publisher.id = ebook.publisher_id " +
-            "JOIN order_details ON ebook.id = order_details.ebook_id " +
-            "GROUP BY publisher.id " +
+    @Query( "SELECT p," +
+            "SUM(od.quantity) AS countOfBook " +
+            "FROM OrderDetails od " +
+            "JOIN od.ebook e " +
+            "JOIN e.publisher p " +
+            "GROUP BY p.id " +
             "ORDER by countOfBook DESC ")
     List<Publisher> findTop5BestSellingPublishers();
 }

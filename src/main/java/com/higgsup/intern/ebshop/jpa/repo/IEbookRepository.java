@@ -13,29 +13,29 @@ import java.util.List;
 
 public interface IEbookRepository extends JpaRepository<Ebook, Long> {
 
-    @Query("UPDATE ebook SET deleted = TRUE where id = :id")
+    @Query("UPDATE Ebook e SET e.deleted = TRUE where e.id = :id")
     void deleteEbook(@Param("id") Long id);
 
-    @Query( "SELECT ebook.id, ebook.title, author.firstname, author.lastname, publisher.name, ebook.price, " +
-            "SUM(order_details.quantity) AS copies_sold " +
-            "FROM order_details JOIN ebook ON order_details.ebook_id = ebook.id " +
-            "JOIN author ON ebook.author_id = author.id " +
-            "JOIN publisher ON ebook.publisher_id = publisher.id " +
-            "GROUP BY(ebook_id) " +
+    @Query( "SELECT e, a, p, " +
+            "SUM(o.quantity) AS copies_sold " +
+            "FROM OrderDetails o " +
+            "JOIN o.ebook e " +
+            "JOIN e.author a " +
+            "JOIN e.publisher p " +
+            "GROUP BY(e.id) " +
             "ORDER BY copies_sold DESC")
     List<EbookOrderDTO> top10BestSeller();
 
-    @Query( "SELECT author.id, author.firstname, author.lastname, author.year_of_birth, author.description, author.website, author.organization, " +
-            "COUNT(ebook.author_id) AS countOfBooks " +
-            "FROM ebook " +
-            "JOIN author ON ebook.author_id = author.id " +
-            "WHERE ebook.id = :id")
+    @Query( "SELECT a, " +
+            "COUNT(a.id) AS countOfBooks " +
+            "FROM Ebook e " +
+            "JOIN e.author a  " +
+            "WHERE e.id = :id")
     Author infoOfAuthor(Long id);
 
-    @Query( "SELECT publisher.id, publisher.name, publisher.website, publisher.founde, publisher.founded_year, publisher.address, " +
-            "COUNT(ebook.publisher_id) AS countOfBook FROM ebook " +
-            "JOIN publisher " +
-            "ON ebook.publisher_id = publisher.id " +
-            "WHERE ebook.id = :id")
+    @Query( "SELECT p, " +
+            "COUNT(p.id) AS countOfBook FROM Ebook e " +
+            "JOIN e.publisher p " +
+            "WHERE e.id = :id")
     Publisher getPublisherByEbookId(Long id);
 }
