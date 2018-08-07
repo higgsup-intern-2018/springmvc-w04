@@ -5,6 +5,7 @@ import com.higgsup.intern.ebshop.dto.ItemDTO;
 import com.higgsup.intern.ebshop.dto.OrderDTO;
 import com.higgsup.intern.ebshop.dto.OrderExportDTO;
 import com.higgsup.intern.ebshop.exception.NotEnoughResourceException;
+import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Customer;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
@@ -72,30 +73,35 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderExportDTO exportById(Long id) {
-        Customer customer = ordersRepository.getCustomerByOrdersId(id);
-        List<Ebook> ebooks = ordersRepository.getEbookByOrdersId(id);
-        Double totalPrice = ordersRepository.totalPrice(id);
-        List<EbookInfoDTO> ebookInfoDTOs = new ArrayList<>();
-        for(Ebook e: ebooks)
+        if(ordersRepository.findOne(id) == null)
         {
-            EbookInfoDTO ebookInfoDTO = new EbookInfoDTO();
-            ebookInfoDTO.setTitle(e.getTitle());
-            ebookInfoDTO.setAuthorFirstName(e.getAuthor().getFirstName());
-            ebookInfoDTO.setAuthorLastName(e.getAuthor().getLastName());
-            ebookInfoDTO.setPublisher(e.getPublisher().getName());
-            ebookInfoDTO.setPrice(e.getPrice());
-            ebookInfoDTO.setCopiesSold(ordersRepository.getQuantityByEbookId(e.getId()));
-            ebookInfoDTOs.add(ebookInfoDTO);
-        }
+            throw new ResourceNotFoundException(String.format("Order with id = %d does not exist!", id));
+        }else {
+            Customer customer = ordersRepository.getCustomerByOrdersId(id);
+            List<Ebook> ebooks = ordersRepository.getEbookByOrdersId(id);
+            Double totalPrice = ordersRepository.totalPrice(id);
+            List<EbookInfoDTO> ebookInfoDTOs = new ArrayList<>();
+            for (Ebook e : ebooks) {
+                EbookInfoDTO ebookInfoDTO = new EbookInfoDTO();
+                ebookInfoDTO.setTitle(e.getTitle());
+                ebookInfoDTO.setAuthorFirstName(e.getAuthor().getFirstName());
+                ebookInfoDTO.setAuthorLastName(e.getAuthor().getLastName());
+                ebookInfoDTO.setPublisher(e.getPublisher().getName());
+                ebookInfoDTO.setPrice(e.getPrice());
+                ebookInfoDTO.setCopiesSold(ordersRepository.getQuantityByEbookId(e.getId(), id));
+                ebookInfoDTOs.add(ebookInfoDTO);
+            }
 
-        OrderExportDTO orderExportDTO = new OrderExportDTO();
-        orderExportDTO.setCustomerFirstName(customer.getFirstName());
-        orderExportDTO.setCustomerLastName(customer.getLastName());
-        orderExportDTO.setEmail(customer.getEmail());
-        orderExportDTO.setPhone(customer.getPhone());
-        orderExportDTO.setItemList(ebookInfoDTOs);
-        orderExportDTO.setTotalPrice(totalPrice);
-        return orderExportDTO;
+            OrderExportDTO orderExportDTO = new OrderExportDTO();
+            orderExportDTO.setId(id);
+            orderExportDTO.setCustomerFirstName(customer.getFirstName());
+            orderExportDTO.setCustomerLastName(customer.getLastName());
+            orderExportDTO.setEmail(customer.getEmail());
+            orderExportDTO.setPhone(customer.getPhone());
+            orderExportDTO.setItemList(ebookInfoDTOs);
+            orderExportDTO.setTotalPrice(totalPrice);
+            return orderExportDTO;
+        }
     }
 
     private void verifyOrder(OrderDTO orderDTO) {

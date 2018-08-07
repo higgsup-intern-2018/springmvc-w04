@@ -19,8 +19,8 @@ public interface OrdersRepository extends CrudRepository<Orders, Long> {
     @Query("select e from OrderDetails od join od.orders o join od.ebook e where o.id = :id")
     List<Ebook> getEbookByOrdersId(@Param("id") Long id);
 
-    @Query("select od.quantity from OrderDetails od join od.ebook e where e.id = :id")
-    Integer getQuantityByEbookId(@Param("id") Long id);
+    @Query("select od.quantity from OrderDetails od join od.orders o join od.ebook e where e.id = :ebookId and o.id = :ordersId")
+    Integer getQuantityByEbookId(@Param("ebookId") Long ebookId, @Param("ordersId") Long ordersId);
 
     @Query("select sum(e.price * od.quantity) from OrderDetails od join od.ebook e join od.orders o where o.id = :id")
     Double totalPrice(@Param("id") Long id);
