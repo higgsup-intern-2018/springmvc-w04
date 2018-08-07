@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ICustomerRepository extends CrudRepository<Customer, Long> {
+
+    Customer findByEmail(String email);
     @Query( "SELECT c, " +
             "SUM(od.quantity) AS quantity, " +
             "SUM(e.price * quantity) AS totalPriceOfOrder " +

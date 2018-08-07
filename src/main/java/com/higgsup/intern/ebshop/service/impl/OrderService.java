@@ -65,30 +65,29 @@ public class OrderService implements IOrderService {
         verifyOrder(orderDTO);
         Orders orders = new Orders();
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         orders.setCreatedDate(date);
-
-        Long customerId = iCustomerRepository.getId(orderDTO.getEmail());
-        if (customerId == null) {
-            Customer customer = new Customer();
+        Customer customer = new Customer();
+        String email = orderDTO.getEmail();
+        if (iCustomerRepository.findByEmail(email) == null) {
             customer.setFirstName(orderDTO.getFirstName());
             customer.setLastName(orderDTO.getLastName());
             customer.setEmail(orderDTO.getEmail());
             customer.setPhone(orderDTO.getPhone());
             customer.setAddress(orderDTO.getAddress());
-            customerId = iCustomerRepository.getId(orderDTO.getEmail());
-            customer.setId(customerId);
             iCustomerRepository.save(customer);
+        }else{
+            customer = iCustomerRepository.findByEmail(email);
         }
+        orders.setCustomer(customer);
         iOrderRepository.save(orders);
 
-        Orders order = iOrderRepository.findOne(iOrderRepository.getId(dateFormat.format(date)));
         for (ItemDTO itemDTO : orderDTO.getItemList()) {
             OrderDetails orderDetails = new OrderDetails();
             Ebook ebook = iEbookRepository.findByIsbn(itemDTO.getIsbn());
             ebook.setQuantity(ebook.getQuantity() - itemDTO.getQuantity());
             iEbookRepository.save(ebook);
-            orderDetails.setOrders(order);
+
+            orderDetails.setOrders(orders);
             orderDetails.setEbook(ebook);
             orderDetails.setQuantity(itemDTO.getQuantity());
             orderDetailsRepository.save(orderDetails);

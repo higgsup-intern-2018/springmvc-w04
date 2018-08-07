@@ -2,6 +2,7 @@ package com.higgsup.intern.ebshop.jpa.repo;
 
 import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
 import com.higgsup.intern.ebshop.dto.OrderExportDTO;
+import com.higgsup.intern.ebshop.jpa.entity.Customer;
 import com.higgsup.intern.ebshop.jpa.entity.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
