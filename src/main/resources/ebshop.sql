@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 07/08/2018 11:46:18
+ Date: 07/08/2018 14:03:42
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `author`  (
 -- Records of author
 -- ----------------------------
 INSERT INTO `author` VALUES (1, 'AI', 'Sweigart', 1970, 'Software developer. UI designer. Tech book author.', 'http://inventwithpython.com/', NULL);
-INSERT INTO `author` VALUES (2, 'Ken', 'Kousen', 1968, 'Java Champion and Oracle Developer Champion', 'https://www.linkedin.com/in/kenkousen', '\"        \r\nKousen IT, Inc., No Fluff Just Stuff, Rensselaer at Hartford\"');
+INSERT INTO `author` VALUES (2, 'Ken', 'Kousen', 1968, 'Java Champion and Oracle Developer Champion', 'https://www.linkedin.com/in/kenkousen', 'Kousen IT, Inc., No Fluff Just Stuff, Rensselaer at Hartford');
 INSERT INTO `author` VALUES (3, 'Anthony', ' Aragues', 1972, 'Data + Design + Security', 'https://www.linkedin.com/in/anthonyaragues/', 'Bluefin Payment Systems, SuddenDevelopment');
 INSERT INTO `author` VALUES (4, 'Craig', 'Walls', 1973, 'Software developer', 'https://www.linkedin.com/in/habuma', 'Pivotal');
 INSERT INTO `author` VALUES (5, 'Anna', 'Le', 1996, 'Test update for author 1', 'www.test1.com', 'free');
@@ -112,7 +112,7 @@ CREATE TABLE `ebook`  (
 INSERT INTO `ebook` VALUES (1, '1593278225', 'Cracking Codes with Python', 'Learn how to program in Python', 1, 1, '2018-05-02', 424, 19.33, 11, 0);
 INSERT INTO `ebook` VALUES (2, '1593275994', 'Automate the Boring Stuff with Python', 'Learn how to use Python to write programs that do in minutes ', 1, 1, '2015-04-12', 504, 23.96, 8, 0);
 INSERT INTO `ebook` VALUES (3, '1593278535', 'Coding with Minecraft', 'Step-by-step coding projects will show you how to write programs that automatically dig mines, collect materials, craft items, and build anything that you can imagine', 1, 1, '2018-06-13', 256, 26.95, 9, 0);
-INSERT INTO `ebook` VALUES (4, '	149197317X', 'Modern Java Recipes', 'For developers comfortable with previous Java versions, this guide covers nearly all of Java SE 8, and includes a chapter focused on changes coming in Java 9', 2, 2, '2017-08-12', 322, 39.27, 25, 0);
+INSERT INTO `ebook` VALUES (4, '149197317X', 'Modern Java Recipes', 'For developers comfortable with previous Java versions, this guide covers nearly all of Java SE 8, and includes a chapter focused on changes coming in Java 9', 2, 2, '2017-08-12', 322, 39.27, 25, 0);
 INSERT INTO `ebook` VALUES (5, '14919110078X', 'Performance iOS Apps', 'You \'ll learn how to design and optimize iOS apps that deliver a smooth experience even when the network is poor and memory is low.', 4, 8, '1970-01-18', 464, 39.61, 3, 0);
 INSERT INTO `ebook` VALUES (6, '1491978910', 'Learning PHP, MySQL & JavaScript, 5th Edition', 'Learning PHP, MySQL & JavaScript, 5th Edition', 7, 2, '2018-04-01', 832, 35.00, 45, 0);
 INSERT INTO `ebook` VALUES (7, '596804849', 'Ubuntu: Up and Running', ' You\'ll learn how Ubuntu works, how to quickly configure and maintain Ubuntu 10.04, and how to use this unique operating system for networking, business, and home entertainment.', 7, 2, '2010-07-15', 464, 32.54, 40, 0);
@@ -313,7 +313,7 @@ INSERT INTO `publisher` VALUES (2, 'O\'Reilly Media', 'https://www.oreilly.com/'
 INSERT INTO `publisher` VALUES (3, 'Prentice Hall', 'http://prenticehall.com/', 'Charles Gerstenberg', 1913, 'New Jersey');
 INSERT INTO `publisher` VALUES (4, 'Manning Publications', 'https://www.manning.com/', 'Marjan Bace', 1990, 'New York');
 INSERT INTO `publisher` VALUES (5, 'Apress', 'https://www.apress.com/us', 'Gary Cornell and Dan Appleman', 1999, 'New York');
-INSERT INTO `publisher` VALUES (6, 'MIT Press\r\n', 'https://mitpress.mit.edu', 'James R. Killian, Jr.', 1932, 'Cambridge, Massachusetts');
+INSERT INTO `publisher` VALUES (6, 'MIT Press', 'https://mitpress.mit.edu', 'James R. Killian, Jr.', 1932, 'Cambridge, Massachusetts');
 INSERT INTO `publisher` VALUES (7, 'Cambridge University Press', 'http://www.cambridge.org', 'King Henry VIII of England', 1534, 'Cambridge, England');
 INSERT INTO `publisher` VALUES (8, 'Penguin Books', 'www.penguin.com', 'Allen Lane, Richard Lane, John Lane', 1935, 'City of Westminster, London, England');
 INSERT INTO `publisher` VALUES (9, 'Routledge', 'https://www.routledge.com', 'George Routledge', 1835, 'Abingdon-on-Thames');
