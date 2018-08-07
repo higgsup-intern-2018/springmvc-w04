@@ -50,13 +50,23 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public OrderExportDTO exportById(Long id) {
-        OrderExportDTO orderExport = iOrderRepository.exportOrder(id);
+       Orders orderExport = iOrderRepository.exportOrder(id);
+
+       OrderExportDTO orderExportDTO = new OrderExportDTO();
         if (orderExport.getId() == 0) {
             throw new ResourceNotFoundException(String.format("Order with id = %d does not exist!", id));
         }
+
         List<EbookOrderDTO> ebookOrderList = getEbookOrderList(id);
-        orderExport.setItemList(ebookOrderList);
-        return orderExport;
+        orderExportDTO.setId(id);
+        orderExportDTO.setItemList(ebookOrderList);
+        orderExportDTO.setCustomerFirstName(orderExport.getCustomer().getFirstName());
+        orderExportDTO.setCustomerLastName(orderExport.getCustomer().getLastName());
+        orderExportDTO.setEmail(orderExport.getCustomer().getEmail());
+        orderExportDTO.setPhone(orderExport.getCustomer().getPhone());
+        orderExportDTO.setTotalPrice(iOrderRepository.totalPrice(id));
+
+        return orderExportDTO;
     }
 
     @Override

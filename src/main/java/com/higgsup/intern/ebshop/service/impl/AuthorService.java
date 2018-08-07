@@ -37,7 +37,7 @@ public class AuthorService implements IAuthorService {
         if (author == null) {
             throw new ResourceNotFoundException(String.format("Author with id = %d does not exist!", id));
         }
-        List<Ebook> ebooks = iAuthorRepository.getTop3BooksOfAuthor(id);
+        List<Ebook> ebooks = iAuthorRepository.getTop3BooksOfAuthor(id).subList(0, 3);
 
         List<EbookDTO> ebookDTOs = mapper.mapAsList(ebooks, EbookDTO.class);
         for (EbookDTO ebookDTO : ebookDTOs) {
