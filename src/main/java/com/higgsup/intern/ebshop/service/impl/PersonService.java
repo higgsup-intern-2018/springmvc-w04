@@ -62,7 +62,6 @@ public class PersonService implements IPersonService {
         if (personRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Person with id = %d does not exist!", id));
         }
-
         Person person = mapper.map(personDTO, Person.class);
         personRepository.save(person);
     }
@@ -73,7 +72,6 @@ public class PersonService implements IPersonService {
         if (personRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Person with id = %d does not exist!", id));
         }
-
         personRepository.delete(id);
     }
 }
