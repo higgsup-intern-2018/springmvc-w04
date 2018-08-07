@@ -45,6 +45,7 @@ public class EbookService implements IEbookService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public GenericResponseDTO create(EbookDTO ebookDTO) {
         String isbn = ebookDTO.getIsbn();
         Integer newQuantity = ebookDTO.getQuantity();
@@ -63,6 +64,7 @@ public class EbookService implements IEbookService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(EbookDTO ebookDTO) {
         Long id = ebookDTO.getId();
         if(ebookRepository.findOne(id) == null)
@@ -74,6 +76,7 @@ public class EbookService implements IEbookService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         if(ebookRepository.findOne(id) == null || ebookRepository.findOne(id).getDeleted())
         {

@@ -17,6 +17,7 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<EbookInfoDTO> findTop10BestSellingEbooks() {
         List<Ebook> top10EbooksBestSellings = ebookRepository.findTop10BestSellings(new PageRequest(0, 10));
         List<EbookInfoDTO> ebookInfoDTOs = new ArrayList<>();
@@ -58,6 +60,7 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<CustomerDTO> findTop5HighestPrice() {
         List<Customer> customers = customerRepository.getTop5HighestPrice(new PageRequest(0, 5));
         List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
@@ -70,6 +73,7 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<CustomerDTO> findTop5MostBuyCustomers() {
         List<Customer> customers = customerRepository.getTop5MostBuying(new PageRequest(0, 5));
         List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
@@ -82,6 +86,7 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<PublisherDTO> findTop5BestSellingPublisher() {
         List<Publisher> publishers = publisherRepository.findTop5PublisherSelling(new PageRequest(0, 5));
         List<PublisherDTO> publisherDTOs = mapper.mapAsList(publishers, PublisherDTO.class);
@@ -93,6 +98,7 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<AuthorDTO> findTop5BestSellingAuthors() {
         List<Author> authors = authorRepository.findTop5BestSelling(new PageRequest(0, 5));
         List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);

@@ -17,6 +17,7 @@ import com.higgsup.intern.ebshop.jpa.repo.OrderDetailsRepository;
 import com.higgsup.intern.ebshop.jpa.repo.OrdersRepository;
 import com.higgsup.intern.ebshop.service.IOrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void create(OrderDTO orderDTO) {
         verifyOrder(orderDTO);
         Orders orders = new Orders();
@@ -72,6 +74,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public OrderExportDTO exportById(Long id) {
         if(ordersRepository.findOne(id) == null)
         {

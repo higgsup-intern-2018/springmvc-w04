@@ -15,6 +15,7 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,12 +32,14 @@ public class PublisherService implements IPublisherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void create(PublisherDTO publisherDTO) {
         Publisher publisher = mapper.map(publisherDTO, Publisher.class);
         publisherRepository.save(publisher);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(PublisherDTO publisherDTO) {
         Long id = publisherDTO.getId();
         if(publisherRepository.findOne(id) == null)
@@ -48,6 +51,7 @@ public class PublisherService implements IPublisherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         if(publisherRepository.findOne(id) == null)
         {
@@ -61,6 +65,7 @@ public class PublisherService implements IPublisherService {
     }
 
     @Override
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PublisherDTO findById(Long id) {
         Publisher publisher = publisherRepository.findOne(id);
         if(publisher == null)

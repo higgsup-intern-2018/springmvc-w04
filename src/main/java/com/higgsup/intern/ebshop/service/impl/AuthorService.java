@@ -54,12 +54,14 @@ public class AuthorService implements IAuthorService {
         return authorDTO;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void create(AuthorDTO authorDTO)
     {
         Author author = mapper.map(authorDTO, Author.class);
         authorRepository.save(author);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void update(AuthorDTO authorDTO)
     {
         Long id = authorDTO.getId();
@@ -72,6 +74,7 @@ public class AuthorService implements IAuthorService {
         authorRepository.save(author);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         if (authorRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
