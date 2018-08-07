@@ -35,14 +35,13 @@ public interface ICustomerRepository extends CrudRepository<Customer, Long> {
     Integer quantity (@Param("id") Long id);
 
 
-    @Query( "SELECT c, " +
-            "SUM(od.quantity) AS totalQuantity, " +
-            "SUM(e.price * totalQuantity) AS totalPrice FROM OrderDetails od " +
+    @Query( "SELECT c " +
+            "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN o.customer c " +
             "JOIN od.ebook e " +
             "GROUP BY c.id " +
-            "ORDER BY totalQuantity DESC ")
+            "ORDER BY SUM (od.quantity) DESC ")
     List<Customer> findTop5BestBuyCustomers();
 
 

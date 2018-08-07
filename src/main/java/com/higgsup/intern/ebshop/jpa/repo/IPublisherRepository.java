@@ -33,12 +33,12 @@ public interface IPublisherRepository extends CrudRepository<Publisher, Long> {
     List<Ebook> top5BookOfPublisher(@Param("id") Long id);
 
 
-    @Query( "SELECT p," +
-            "SUM(od.quantity) AS countOfBook " +
+    @Query( "SELECT p " +
             "FROM OrderDetails od " +
             "JOIN od.ebook e " +
             "JOIN e.publisher p " +
             "GROUP BY p.id " +
-            "ORDER by countOfBook DESC ")
+            "ORDER by SUM(od.quantity) DESC ")
     List<Publisher> findTop5BestSellingPublishers();
+
 }

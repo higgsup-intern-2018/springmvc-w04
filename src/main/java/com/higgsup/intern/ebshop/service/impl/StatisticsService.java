@@ -4,8 +4,10 @@ import com.higgsup.intern.ebshop.dto.AuthorDTO;
 import com.higgsup.intern.ebshop.dto.CustomerDTO;
 import com.higgsup.intern.ebshop.dto.ItemInfoDTO;
 import com.higgsup.intern.ebshop.dto.PublisherDTO;
+import com.higgsup.intern.ebshop.jpa.entity.Author;
 import com.higgsup.intern.ebshop.jpa.entity.Customer;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
+import com.higgsup.intern.ebshop.jpa.entity.Publisher;
 import com.higgsup.intern.ebshop.jpa.repo.IAuthorRepository;
 import com.higgsup.intern.ebshop.jpa.repo.ICustomerRepository;
 import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
@@ -71,18 +73,39 @@ public class StatisticsService implements IStatisticsService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<CustomerDTO> findTop5MostBuyCustomers() {
-        return null;
+        List<Customer> customers = iCustomerRepository.findTop5BestBuyCustomers().subList(0, 5);
+        List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
+
+        for (CustomerDTO customerDTO : customerDTOs){
+            customerDTO.setTotalPriceOfOrders(iCustomerRepository.totalPrice(customerDTO.getId()));
+            customerDTO.setQuantity(iCustomerRepository.quantity(customerDTO.getId()));
+        }
+        return customerDTOs;
     }
 
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<PublisherDTO> findTop5BestSellingPublisher() {
-        return null;
+
+        List<Publisher> publishers = ipublisherRepository.findTop5BestSellingPublishers().subList(0, 5);
+        List<PublisherDTO> publisherDTOS = mapper.mapAsList(publishers, PublisherDTO.class);
+        for (PublisherDTO publisherDTO : publisherDTOS){
+            publisherDTO.setCountOfBook(iauthorRepository.countOfBooksByPublisherId(publisherDTO.getId()));
+        }
+        return publisherDTOS;
     }
 
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<AuthorDTO> findTop5BestSellingAuthors() {
-        return null;
+
+        List<Author> authors = iauthorRepository.findTop5BestSellingAuthors().subList(0, 5);
+
+        List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);
+
+        for (AuthorDTO authorDTO: authorDTOs){
+            authorDTO.setCountOfBooks(iauthorRepository.countOfBooks(authorDTO.getId()));
+        }
+        return authorDTOs;
     }
 }
