@@ -1,10 +1,7 @@
 package com.higgsup.intern.ebshop.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.math.BigDecimal;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ItemInfoDTO {
     private String title;
     private String authorFirstName;

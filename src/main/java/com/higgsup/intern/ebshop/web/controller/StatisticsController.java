@@ -28,8 +28,8 @@ public class StatisticsController {
 
     @GetMapping("/top-10-best-seller-ebooks")
     public ResponseEntity<List<ItemInfoDTO>> top10BestSellers() {
-        List<ItemInfoDTO> ebookOrderListDTO = statisticsService.findTop10BestSellingEbooks();
-        return ResponseEntity.ok(ebookOrderListDTO);
+        List<ItemInfoDTO> itemInfoDTOS = statisticsService.findTop10BestSellingEbooks();
+        return ResponseEntity.ok(itemInfoDTOS);
     }
 
     @GetMapping("/top-5-best-buy-customers")
