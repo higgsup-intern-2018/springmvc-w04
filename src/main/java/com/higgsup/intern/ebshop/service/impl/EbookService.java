@@ -27,19 +27,8 @@ public class EbookService implements IEbookService {
         this.mapper = mapper;
     }
 
-
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public EbookDTO findById(Long id) {
-        Ebook ebook = iEbookRepository.findOne(id);
-        if (ebook == null) {
-            throw new ResourceNotFoundException(String.format("Ebook with id = %d does not exist!", id));
-        }
-        return mapper.map(ebook, EbookDTO.class);
-    }
-
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void update(EbookDTO ebookDTO) {
         Long id = ebookDTO.getId();
         if (iEbookRepository.findOne(id) == null) {
@@ -51,7 +40,7 @@ public class EbookService implements IEbookService {
     }
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public GenericResponseDTO create(EbookDTO ebookDTO) {
         String isbn = ebookDTO.getIsbn();
         Integer newQuantity = ebookDTO.getQuantity();
@@ -61,6 +50,7 @@ public class EbookService implements IEbookService {
             return GenericResponseDTO.created();
         } else {
             Ebook originalEbook = iEbookRepository.findByIsbn(isbn);
+            ebook.setId(originalEbook.getId());
             ebook.setQuantity(newQuantity + originalEbook.getQuantity());
             iEbookRepository.save(ebook);
             return GenericResponseDTO.updated()
@@ -69,19 +59,21 @@ public class EbookService implements IEbookService {
     }
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void delete(Long id) {
         if (iEbookRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
-        }
-        iEbookRepository.deleteEbook(id);
+        }else{
+        Ebook ebook = iEbookRepository.findOne(id);
+        ebook.setDeleted(true);
+        iEbookRepository.save(ebook);}
     }
 
 
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public EbookOrderListDTO top10BestSellers() {
-        List<EbookOrderDTO> ebookOrderDTOS = iEbookRepository.top10BestSeller();
+        List<EbookOrderDTO> ebookOrderDTOS = iEbookRepository.top10BestSeller().subList(0, 9);
 
         EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
         ebookOrderListDTO.setEbookOrderDTOs(ebookOrderDTOS);

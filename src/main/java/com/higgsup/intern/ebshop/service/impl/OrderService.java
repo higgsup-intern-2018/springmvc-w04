@@ -60,7 +60,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void createOrder(OrderDTO orderDTO) {
         verifyOrder(orderDTO);
         Orders orders = new Orders();

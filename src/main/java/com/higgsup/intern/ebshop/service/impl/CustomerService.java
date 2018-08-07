@@ -25,7 +25,7 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public CustomerListDTO findTop5HighestOrderPriceCustomers() {
-        List<Customer> customers = iCustomerRepository.findTop5HighestOrderPriceCustomers();
+        List<Customer> customers = iCustomerRepository.findTop5HighestOrderPriceCustomers().subList(0, 4);
         List<CustomerDTO> customerDTOList = mapper.mapAsList(customers, CustomerDTO.class);
         CustomerListDTO customerListDTO = new CustomerListDTO();
         customerListDTO.setCustomerDTOs(customerDTOList);
@@ -35,7 +35,7 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public CustomerListDTO findTop5BestBuyCustomers() {
-        List<Customer> customers = iCustomerRepository.findTop5BestBuyCustomers();
+        List<Customer> customers = iCustomerRepository.findTop5BestBuyCustomers().subList(0, 4);
         List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
         CustomerListDTO customerListDTO = new CustomerListDTO();
         customerListDTO.setCustomerDTOs(customerDTOs);

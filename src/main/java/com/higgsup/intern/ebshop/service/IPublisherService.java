@@ -11,5 +11,5 @@ public interface IPublisherService {
     void delete(Long id);
     void update(PublisherDTO publisherDTO);
     PublisherListDTO top5BestSellingPublisher();
-    PublisherDTO findById(Long id);
+    PublisherDTO findPublisherById(Long id);
 }

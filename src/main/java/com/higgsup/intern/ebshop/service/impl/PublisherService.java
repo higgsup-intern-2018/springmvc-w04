@@ -38,7 +38,7 @@ public class PublisherService implements IPublisherService {
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (iPublisherRepository.findById(id).getFoundedYear() == 0) {
+        if (iPublisherRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
         }
         if (iPublisherRepository.countBookOfPublisher(id) > 0) {
@@ -51,7 +51,7 @@ public class PublisherService implements IPublisherService {
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void update(PublisherDTO publisherDTO) {
         Long id = publisherDTO.getId();
-        if (iPublisherRepository.findById(id).getName() == null) {
+        if (iPublisherRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Person with id = %d does not exist!", id));
         }
 
@@ -61,7 +61,7 @@ public class PublisherService implements IPublisherService {
 
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
-    public PublisherDTO findById(Long id) {
+    public PublisherDTO findPublisherById(Long id) {
         Publisher publisher = iPublisherRepository.findOne(id);
         if (publisher == null) {
             throw new ResourceNotFoundException(String.format("Publisher with id = %d does not exist!", id));
@@ -86,9 +86,9 @@ public class PublisherService implements IPublisherService {
     }
 
     @Override
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PublisherListDTO top5BestSellingPublisher() {
-        List<Publisher> publishers = iPublisherRepository.findTop5BestSellingPublishers();
+        List<Publisher> publishers = iPublisherRepository.findTop5BestSellingPublishers().subList(0, 5);
         List<PublisherDTO> publisherDTOS = mapper.mapAsList(publishers, PublisherDTO.class);
 
         PublisherListDTO publisherListDTO = new PublisherListDTO();

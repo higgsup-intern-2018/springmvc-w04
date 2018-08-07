@@ -31,7 +31,7 @@ public class AuthorService implements IAuthorService {
 
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public AuthorDTO findById(Long id) {
         Author author = iAuthorRepository.getById(id);
         if (author == null) {
@@ -56,7 +56,7 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void update(AuthorDTO authorDTO) {
         Long id = authorDTO.getId();
         if (iAuthorRepository.findOne(id) == null) {
@@ -68,7 +68,7 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void delete(Long id) {
         if (iAuthorRepository.findOne(id).getYearOfBirth() == 0) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
@@ -81,7 +81,7 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void create(AuthorDTO authorDTO) {
         Author author = mapper.map(authorDTO, Author.class);
         iAuthorRepository.save(author);
@@ -90,7 +90,7 @@ public class AuthorService implements IAuthorService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public AuthorListDTO findTop5BestSellingAuthors() {
-        List<Author> authors = iAuthorRepository.findTop5BestSellingAuthors();
+        List<Author> authors = iAuthorRepository.findTop5BestSellingAuthors().subList(0, 5);
         List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);
         AuthorListDTO authorListDTO = new AuthorListDTO();
         authorListDTO.setAuthorDTOs(authorDTOs);

@@ -38,7 +38,7 @@ public class PublisherController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PublisherDTO> getPublisherById(@PathVariable("id") Long id) {
-        PublisherDTO publisherDTO = publisherService.findById(id);
+        PublisherDTO publisherDTO = publisherService.findPublisherById(id);
         return ResponseEntity.ok(publisherDTO);
     }
 
