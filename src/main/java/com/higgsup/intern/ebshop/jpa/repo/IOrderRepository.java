@@ -19,21 +19,26 @@ public interface IOrderRepository extends CrudRepository<Orders, Long> {
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN od.ebook e " +
-            "JOIN e.author a " +
-            "JOIN e.publisher p " +
             "WHERE o.id = :id")
-    List<Ebook> findByOrderId(@Param("id") Long id);
+    List<Ebook> getEbookByOrdersId(@Param("id") Long id);
 
-    @Query( "SELECT o, c " +
-            "FROM OrderDetails od " +
-            "JOIN od.orders o " +
+
+    @Query( "SELECT c " +
+            "FROM Orders o " +
             "JOIN o.customer c " +
-            "JOIN od.ebook e " +
             "WHERE o.id = :id")
-    Orders exportOrder(@Param("id") Long id);
+    Customer getCustomerByOrdersId(@Param("id") Long id);
 
     @Query("SELECT o FROM Orders o WHERE o.createdDate = :date")
     Long getId(@Param("date") String date);
+
+    @Query( "SELECT od.quantity " +
+            "FROM OrderDetails od " +
+            "JOIN od.orders o " +
+            "JOIN od.ebook e " +
+            "WHERE e.id = :ebookId " +
+            "AND o.id = :ordersId")
+    Integer getQuantityByEbookId(@Param("ebookId") Long ebookId, @Param("ordersId") Long ordersId);
 
     @Query( "SELECT SUM(e.price * od.quantity) " +
             "FROM OrderDetails od " +

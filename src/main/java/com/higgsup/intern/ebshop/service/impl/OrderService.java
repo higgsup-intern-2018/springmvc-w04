@@ -16,10 +16,9 @@ import com.higgsup.intern.ebshop.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -39,34 +38,37 @@ public class OrderService implements IOrderService {
         this.mapper = mapper;
     }
 
-
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<EbookOrderDTO> getEbookOrderList(Long id) {
-        List<EbookOrderDTO> ebookOrders = iOrderRepository.findByOrderId(id);
-        return ebookOrders;
-    }
-
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public OrderExportDTO exportById(Long id) {
-       Orders orderExport = iOrderRepository.exportOrder(id);
-
-       OrderExportDTO orderExportDTO = new OrderExportDTO();
-        if (orderExport.getId() == 0) {
+        if (iOrderRepository.findOne(id)== null) {
             throw new ResourceNotFoundException(String.format("Order with id = %d does not exist!", id));
+        }else {
+            Customer customer = iOrderRepository.getCustomerByOrdersId(id);
+            List<Ebook> ebooks = iOrderRepository.getEbookByOrdersId(id);
+            List<ItemInfoDTO> itemInfoDTOs = new ArrayList<>();
+
+            for (Ebook ebook : ebooks) {
+                ItemInfoDTO itemInfoDTO = new ItemInfoDTO();
+                itemInfoDTO.setAuthorFirstName(customer.getFirstName());
+                itemInfoDTO.setAuthorLastName(customer.getLastName());
+                itemInfoDTO.setPublisherName(ebook.getPublisher().getName());
+                itemInfoDTO.setPrice(ebook.getPrice());
+                itemInfoDTO.setCopiesSold(iOrderRepository.getQuantityByEbookId(ebook.getId(), id));
+                itemInfoDTOs.add(itemInfoDTO);
+            }
+
+            OrderExportDTO orderExportDTO = new OrderExportDTO();
+            orderExportDTO.setId(id);
+            orderExportDTO.setItemList(itemInfoDTOs);
+            orderExportDTO.setCustomerFirstName(customer.getFirstName());
+            orderExportDTO.setCustomerLastName(customer.getLastName());
+            orderExportDTO.setEmail(customer.getEmail());
+            orderExportDTO.setPhone(customer.getPhone());
+            orderExportDTO.setTotalPrice(iOrderRepository.totalPrice(id));
+
+            return orderExportDTO;
         }
-
-        List<EbookOrderDTO> ebookOrderList = getEbookOrderList(id);
-        orderExportDTO.setId(id);
-        orderExportDTO.setItemList(ebookOrderList);
-        orderExportDTO.setCustomerFirstName(orderExport.getCustomer().getFirstName());
-        orderExportDTO.setCustomerLastName(orderExport.getCustomer().getLastName());
-        orderExportDTO.setEmail(orderExport.getCustomer().getEmail());
-        orderExportDTO.setPhone(orderExport.getCustomer().getPhone());
-        orderExportDTO.setTotalPrice(iOrderRepository.totalPrice(id));
-
-        return orderExportDTO;
     }
 
     @Override

@@ -9,6 +9,5 @@ import java.util.List;
 public interface IOrderService {
     void createOrder(OrderDTO orderDTO);
     OrderExportDTO exportById(Long id);
-    List<EbookOrderDTO> getEbookOrderList(Long id);
 
 }

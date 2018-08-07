@@ -1,11 +1,16 @@
 package com.higgsup.intern.ebshop.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.math.BigDecimal;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ItemInfoDTO {
     private String title;
     private String authorFirstName;
     private String authorLastName;
     private String publisherName;
-    private Double price;
+    private BigDecimal price;
     private Integer copiesSold;
 
     public String getTitle() {
@@ -40,11 +45,11 @@ public class ItemInfoDTO {
         this.publisherName = publisherName;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

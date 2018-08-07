@@ -8,8 +8,16 @@ public class OrderExportDTO {
     private String customerLastName;
     private String email;
     private String phone;
-    private List<EbookOrderDTO> itemList;
+    private List<ItemInfoDTO> itemList;
     private Double totalPrice;
+
+    public List<ItemInfoDTO> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<ItemInfoDTO> itemList) {
+        this.itemList = itemList;
+    }
 
     public Long getId() {
         return id;
@@ -49,14 +57,6 @@ public class OrderExportDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public List<EbookOrderDTO> getItemList() {
-        return itemList;
-    }
-
-    public void setItemList(List<EbookOrderDTO> itemList) {
-        this.itemList = itemList;
     }
 
     public Double getTotalPrice() {
