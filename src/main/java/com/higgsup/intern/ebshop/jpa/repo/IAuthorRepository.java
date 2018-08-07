@@ -2,13 +2,13 @@ package com.higgsup.intern.ebshop.jpa.repo;
 
 import com.higgsup.intern.ebshop.jpa.entity.Author;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface IAuthorRepository extends JpaRepository<Author, Long> {
+public interface IAuthorRepository extends CrudRepository<Author, Long> {
 
     @Query( "SELECT a, COUNT(a) AS countOfBooks " +
             "FROM Ebook e " +

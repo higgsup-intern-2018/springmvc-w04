@@ -6,7 +6,6 @@ import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
-import com.higgsup.intern.ebshop.jpa.repo.EbookRepositoy;
 import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.service.IEbookService;
 import ma.glasnost.orika.MapperFacade;
@@ -20,12 +19,10 @@ import java.util.List;
 @Service
 public class EbookService implements IEbookService {
 
-    private final EbookRepositoy ebookRepositoy;
     private final IEbookRepository iEbookRepository;
     private final MapperFacade mapper;
 
-    public EbookService(EbookRepositoy ebookRepositoy, IEbookRepository iEbookRepository, MapperFacade mapper) {
-        this.ebookRepositoy = ebookRepositoy;
+    public EbookService(IEbookRepository iEbookRepository, MapperFacade mapper) {
         this.iEbookRepository = iEbookRepository;
         this.mapper = mapper;
     }
@@ -34,7 +31,7 @@ public class EbookService implements IEbookService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public EbookDTO findById(Long id) {
-        Ebook ebook = ebookRepositoy.findOne(id);
+        Ebook ebook = iEbookRepository.findOne(id);
         if (ebook == null) {
             throw new ResourceNotFoundException(String.format("Ebook with id = %d does not exist!", id));
         }
@@ -45,12 +42,12 @@ public class EbookService implements IEbookService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void update(EbookDTO ebookDTO) {
         Long id = ebookDTO.getId();
-        if (ebookRepositoy.findOne(id) == null) {
+        if (iEbookRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
         }
 
         Ebook ebook = mapper.map(ebookDTO, Ebook.class);
-        ebookRepositoy.save(ebook);
+        iEbookRepository.save(ebook);
     }
 
     @Override
@@ -59,13 +56,13 @@ public class EbookService implements IEbookService {
         String isbn = ebookDTO.getIsbn();
         Integer newQuantity = ebookDTO.getQuantity();
         Ebook ebook = mapper.map(ebookDTO, Ebook.class);
-        if (ebookRepositoy.findOne(Long.valueOf(isbn)) == null) {
-            ebookRepositoy.save(ebook);
+        if (iEbookRepository.findByIsbn(isbn)== null) {
+            iEbookRepository.save(ebook);
             return GenericResponseDTO.created();
         } else {
-            Ebook originalEbook = ebookRepositoy.findOne(Long.valueOf(isbn));
+            Ebook originalEbook = iEbookRepository.findByIsbn(isbn);
             ebook.setQuantity(newQuantity + originalEbook.getQuantity());
-            ebookRepositoy.save(ebook);
+            iEbookRepository.save(ebook);
             return GenericResponseDTO.updated()
                     .addAdditionalInfo(String.format("Ebook with isbn = %s exists! The ebook is updated. ", isbn));
         }
@@ -74,7 +71,7 @@ public class EbookService implements IEbookService {
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (ebookRepositoy.findOne(id) == null) {
+        if (iEbookRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
         }
         iEbookRepository.deleteEbook(id);

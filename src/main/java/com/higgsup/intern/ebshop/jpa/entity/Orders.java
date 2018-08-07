@@ -7,7 +7,6 @@ import java.util.Date;
 @Entity
 public class Orders {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(
             strategy= GenerationType.AUTO,
             generator="native"

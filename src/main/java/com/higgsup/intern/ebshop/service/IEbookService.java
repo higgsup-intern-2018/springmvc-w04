@@ -8,6 +8,7 @@ import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 import java.util.List;
 
 public interface IEbookService {
+
     void update(EbookDTO ebookDTO);
     EbookDTO findById(Long id);
     GenericResponseDTO create(EbookDTO ebookDTO);

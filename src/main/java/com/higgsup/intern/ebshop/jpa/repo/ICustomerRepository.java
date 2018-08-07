@@ -1,14 +1,14 @@
 package com.higgsup.intern.ebshop.jpa.repo;
 
-import com.higgsup.intern.ebshop.dto.CustomerDTO;
 import com.higgsup.intern.ebshop.jpa.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ICustomerRepository extends JpaRepository<Customer, Long> {
+public interface ICustomerRepository extends CrudRepository<Customer, Long> {
     @Query( "SELECT c, " +
             "SUM(od.quantity) AS quantity, " +
             "SUM(e.price * quantity) AS totalPriceOfOrder " +
@@ -18,7 +18,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "JOIN od.ebook e " +
             "GROUP BY c.email " +
             "ORDER BY totalPriceOfOrder DESC ")
-    List<CustomerDTO> findTop5HighestOrderPriceCustomers();
+    List<Customer> findTop5HighestOrderPriceCustomers();
 
 
     @Query( "SELECT c, " +

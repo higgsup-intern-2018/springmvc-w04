@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 public class Publisher {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(
             strategy= GenerationType.AUTO,
             generator="native"

@@ -6,10 +6,8 @@ import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Author;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import com.higgsup.intern.ebshop.jpa.entity.Publisher;
-import com.higgsup.intern.ebshop.jpa.repo.EbookRepositoy;
 import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.jpa.repo.IPublisherRepository;
-import com.higgsup.intern.ebshop.jpa.repo.PublisherRepository;
 import com.higgsup.intern.ebshop.service.IPublisherService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
@@ -19,16 +17,12 @@ import java.util.List;
 
 @Service
 public class PublisherService implements IPublisherService {
-    private final PublisherRepository publisherRepository;
     private final IPublisherRepository iPublisherRepository;
-    private final EbookRepositoy ebookRepositoy;
     private final IEbookRepository iEbookRepository;
     private final MapperFacade mapper;
 
-    public PublisherService(PublisherRepository publisherRepository, IPublisherRepository iPublisherRepository, EbookRepositoy ebookRepositoy, IEbookRepository iEbookRepository, MapperFacade mapper) {
-        this.publisherRepository = publisherRepository;
+    public PublisherService(IPublisherRepository iPublisherRepository, IEbookRepository iEbookRepository, MapperFacade mapper) {
         this.iPublisherRepository = iPublisherRepository;
-        this.ebookRepositoy = ebookRepositoy;
         this.iEbookRepository = iEbookRepository;
         this.mapper = mapper;
     }
@@ -38,7 +32,7 @@ public class PublisherService implements IPublisherService {
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void create(PublisherDTO publisherDTO) {
         Publisher publisher = mapper.map(publisherDTO, Publisher.class);
-        publisherRepository.save(publisher);
+        iPublisherRepository.save(publisher);
     }
 
     @Override
@@ -50,7 +44,7 @@ public class PublisherService implements IPublisherService {
         if (iPublisherRepository.countBookOfPublisher(id) > 0) {
             throw new ServiceException(String.format("Publisher with id = %d still have book in it!", id));
         }
-        publisherRepository.delete(id);
+        iPublisherRepository.delete(id);
     }
 
     @Override
@@ -62,13 +56,13 @@ public class PublisherService implements IPublisherService {
         }
 
         Publisher publisher = mapper.map(publisherDTO, Publisher.class);
-        publisherRepository.save(publisher);
+        iPublisherRepository.save(publisher);
     }
 
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public PublisherDTO findById(Long id) {
-        Publisher publisher = publisherRepository.findOne(id);
+        Publisher publisher = iPublisherRepository.findOne(id);
         if (publisher == null) {
             throw new ResourceNotFoundException(String.format("Publisher with id = %d does not exist!", id));
         }

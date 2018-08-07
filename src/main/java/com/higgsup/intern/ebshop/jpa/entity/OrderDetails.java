@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 public class OrderDetails {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(
             strategy= GenerationType.AUTO,
             generator="native"

@@ -25,20 +25,16 @@ import java.util.Date;
 @Service
 public class OrderService implements IOrderService {
 
-    private final EbookRepositoy ebookRepositoy;
-    private final OrderRepository orderRepository;
     private final IOrderRepository iOrderRepository;
+    private final IEbookRepository iEbookRepository;
     private final OrderDetailsRepository orderDetailsRepository;
-    private final CustomerRepository customerRepository;
     private final ICustomerRepository iCustomerRepository;
     private final MapperFacade mapper;
 
-    public OrderService(EbookRepositoy ebookRepositoy, OrderRepository orderRepository, IOrderRepository iOrderRepository, OrderDetailsRepository orderDetailsRepository, CustomerRepository customerRepository, ICustomerRepository iCustomerRepository, MapperFacade mapper) {
-        this.ebookRepositoy = ebookRepositoy;
-        this.orderRepository = orderRepository;
+    public OrderService(IOrderRepository iOrderRepository, IEbookRepository iEbookRepository, OrderDetailsRepository orderDetailsRepository, ICustomerRepository iCustomerRepository, MapperFacade mapper) {
         this.iOrderRepository = iOrderRepository;
+        this.iEbookRepository = iEbookRepository;
         this.orderDetailsRepository = orderDetailsRepository;
-        this.customerRepository = customerRepository;
         this.iCustomerRepository = iCustomerRepository;
         this.mapper = mapper;
     }
@@ -82,16 +78,16 @@ public class OrderService implements IOrderService {
             customer.setAddress(orderDTO.getAddress());
             customerId = iCustomerRepository.getId(orderDTO.getEmail());
             customer.setId(customerId);
-            customerRepository.save(customer);
+            iCustomerRepository.save(customer);
         }
-        orderRepository.save(orders);
+        iOrderRepository.save(orders);
 
-        Orders order = orderRepository.findOne(iOrderRepository.getId(dateFormat.format(date)));
+        Orders order = iOrderRepository.findOne(iOrderRepository.getId(dateFormat.format(date)));
         for (ItemDTO itemDTO : orderDTO.getItemList()) {
             OrderDetails orderDetails = new OrderDetails();
-            Ebook ebook = ebookRepositoy.findOne(Long.valueOf(itemDTO.getIsbn()));
+            Ebook ebook = iEbookRepository.findByIsbn(itemDTO.getIsbn());
             ebook.setQuantity(ebook.getQuantity() - itemDTO.getQuantity());
-            ebookRepositoy.save(ebook);
+            iEbookRepository.save(ebook);
             orderDetails.setOrders(order);
             orderDetails.setEbook(ebook);
             orderDetails.setQuantity(itemDTO.getQuantity());
@@ -102,7 +98,7 @@ public class OrderService implements IOrderService {
 
     private void verifyOrder(OrderDTO orderDTO) {
         for (ItemDTO itemDTO : orderDTO.getItemList()) {
-            Ebook ebook = ebookRepositoy.findOne(Long.valueOf(itemDTO.getIsbn()));
+            Ebook ebook = iEbookRepository.findByIsbn(itemDTO.getIsbn());
             if (ebook == null || ebook.getDeleted() == true) {
                 throw new ServiceException(String.format("Book with isbn = %s does not exist!", itemDTO.getIsbn()));
             }

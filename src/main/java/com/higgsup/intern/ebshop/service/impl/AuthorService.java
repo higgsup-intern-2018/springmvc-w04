@@ -6,7 +6,6 @@ import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Author;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import com.higgsup.intern.ebshop.jpa.entity.Publisher;
-import com.higgsup.intern.ebshop.jpa.repo.AuthorRepository;
 import com.higgsup.intern.ebshop.jpa.repo.IAuthorRepository;
 import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.service.IAuthorService;
@@ -20,13 +19,11 @@ import java.util.List;
 
 @Service
 public class AuthorService implements IAuthorService {
-    private final AuthorRepository authorRepository;
     private final MapperFacade mapper;
     private final IAuthorRepository iAuthorRepository;
     private final IEbookRepository iEbookRepository;
 
-    public AuthorService(AuthorRepository authorRepository, MapperFacade mapper, IAuthorRepository iAuthorRepository, IEbookRepository iEbookRepository) {
-        this.authorRepository = authorRepository;
+    public AuthorService(MapperFacade mapper, IAuthorRepository iAuthorRepository, IEbookRepository iEbookRepository) {
         this.mapper = mapper;
         this.iAuthorRepository = iAuthorRepository;
         this.iEbookRepository = iEbookRepository;
@@ -62,22 +59,22 @@ public class AuthorService implements IAuthorService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void update(AuthorDTO authorDTO) {
         Long id = authorDTO.getId();
-        if (authorRepository.findOne(id) == null) {
+        if (iAuthorRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
         Author author = mapper.map(authorDTO, Author.class);
-        authorRepository.save(author);
+        iAuthorRepository.save(author);
 
     }
 
     @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (authorRepository.findOne(id).getYearOfBirth() == 0) {
+        if (iAuthorRepository.findOne(id).getYearOfBirth() == 0) {
             throw new ServiceException(String.format("Author with id = %d does not exist!", id));
         }
         if (iAuthorRepository.countEbooksOfAnAuthor(id) == 0) {
-            authorRepository.delete(id);
+            iAuthorRepository.delete(id);
         } else {
             throw new ServiceException(String.format("Not deleted! Because the author with id = %d has some ebooks!", id));
         }
@@ -87,7 +84,7 @@ public class AuthorService implements IAuthorService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public void create(AuthorDTO authorDTO) {
         Author author = mapper.map(authorDTO, Author.class);
-        authorRepository.save(author);
+        iAuthorRepository.save(author);
     }
 
     @Override

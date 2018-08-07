@@ -5,11 +5,12 @@ import com.higgsup.intern.ebshop.dto.OrderExportDTO;
 import com.higgsup.intern.ebshop.jpa.entity.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface IOrderRepository extends JpaRepository<Orders, Long> {
+public interface IOrderRepository extends CrudRepository<Orders, Long> {
 
     @Query( "SELECT e,a, p, od.quantity AS copies_sold " +
             "FROM OrderDetails od " +
@@ -27,7 +28,7 @@ public interface IOrderRepository extends JpaRepository<Orders, Long> {
             "JOIN o.customer c " +
             "JOIN od.ebook e " +
             "WHERE o.id = :id")
-    OrderExportDTO exportOrder(Long id);
+    OrderExportDTO exportOrder(@Param("id") Long id);
 
     @Query("SELECT o FROM Orders o WHERE o.createdDate = :date")
     Long getId(@Param("date") String date);

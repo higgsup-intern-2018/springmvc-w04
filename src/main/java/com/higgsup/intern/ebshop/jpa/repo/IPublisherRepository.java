@@ -4,11 +4,12 @@ import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import com.higgsup.intern.ebshop.jpa.entity.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface IPublisherRepository extends JpaRepository<Publisher, Long> {
+public interface IPublisherRepository extends CrudRepository<Publisher, Long> {
     @Query( "SELECT p, " +
             "SUM(od.quantity) AS countOfBook FROM OrderDetails od " +
             "LEFT JOIN od.ebook e " +

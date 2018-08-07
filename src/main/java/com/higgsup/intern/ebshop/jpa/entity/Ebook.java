@@ -9,7 +9,6 @@ import java.util.Date;
 @Entity
 public class Ebook {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(
             strategy= GenerationType.AUTO,
             generator="native"
