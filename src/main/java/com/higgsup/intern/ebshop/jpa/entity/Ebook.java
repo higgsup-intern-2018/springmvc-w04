@@ -20,11 +20,11 @@ public class Ebook {
     @Column(nullable = false)
     private String description;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Author author;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Publisher publisher;
 
