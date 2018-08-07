@@ -69,16 +69,4 @@ public class EbookService implements IEbookService {
         iEbookRepository.save(ebook);}
     }
 
-
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public EbookOrderListDTO top10BestSellers() {
-        List<EbookOrderDTO> ebookOrderDTOS = iEbookRepository.top10BestSeller().subList(0, 9);
-
-        EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
-        ebookOrderListDTO.setEbookOrderDTOs(ebookOrderDTOS);
-
-        return ebookOrderListDTO;
-    }
-
 }
