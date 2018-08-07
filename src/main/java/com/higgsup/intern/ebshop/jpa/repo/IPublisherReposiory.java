@@ -12,7 +12,7 @@ public interface IPublisherReposiory extends JpaRepository<Publisher, Long> {
 //Tim thong tin NXB
     @Query ("SELECT p, " +
             "SUM(od.quantity) AS countOfBook FROM OrderDetails od " +
-            "LEFT JOIN od.ebook e" +
+            "LEFT JOIN od.ebook e " +
             "LEFT JOIN e.publisher p " +
             "WHERE p.id = :id")
     Publisher getById(@Param("id") Long id);
@@ -23,7 +23,7 @@ public interface IPublisherReposiory extends JpaRepository<Publisher, Long> {
             "WHERE p.id = :id")
     Integer countBookOfPublisher(@Param("id") Long id);
 
-    @Query( "SELECT e.id, e.title, a.firstname, a.lastname, p.name, e.price " +
+    @Query( "SELECT e, p " +
             "FROM OrderDetails od " +
             "LEFT JOIN od.ebook e  " +
             "LEFT JOIN e.publisher p " +

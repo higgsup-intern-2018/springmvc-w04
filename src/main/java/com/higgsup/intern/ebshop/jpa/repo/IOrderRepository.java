@@ -24,7 +24,7 @@ public interface IOrderRepository extends JpaRepository<Orders, Long> {
     List<EbookOrderDTO> findByOrderId(@Param("id") Long id);
 
     @Query( "SELECT o.id, c.firstname, c.lastname, c.email, c.phone, " +
-            "SUM(e.price * od.quantity) AS total_price  " + //error
+            "SUM(e.price*od.quantity) AS total_price  " + //error
             "FROM OrderDetails od " +
             "JOIN od.orders o  " +
             "JOIN o.customer c " +

@@ -36,7 +36,7 @@ public class AuthorService implements IAuthorService {
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public AuthorDTO findById(Long id) {
-        AuthorDTO author = iAuthorRepository.getById(id);
+        Author author = iAuthorRepository.getById(id);
         if (author == null) {
             throw new ResourceNotFoundException(String.format("Author with id = %d does not exist!", id));
         }
@@ -54,6 +54,7 @@ public class AuthorService implements IAuthorService {
         authorDTO.setEbookListDTO(ebookListDTO);
 
         return authorDTO;
+
     }
 
     @Override

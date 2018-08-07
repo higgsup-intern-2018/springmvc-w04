@@ -47,9 +47,7 @@ public class OrderService implements IOrderService {
     @Override
     public List<EbookOrderDTO> getEbookOrderList(Long id) {
         List<EbookOrderDTO> ebookOrders = iOrderRepository.findByOrderId(id);
-
         return ebookOrders;
-
     }
 
     @Override
@@ -61,6 +59,7 @@ public class OrderService implements IOrderService {
         List<EbookOrderDTO> ebookOrderList = getEbookOrderList(id);
         orderExport.setItemList(ebookOrderList);
         return orderExport;
+
     }
 
 

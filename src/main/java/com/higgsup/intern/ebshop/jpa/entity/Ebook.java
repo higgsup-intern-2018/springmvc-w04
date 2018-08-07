@@ -34,7 +34,7 @@ public class Ebook {
     private Integer quantity;
     @Column(columnDefinition = "TINYINT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean deleted;
+    private Boolean deleted=false;
 
     public Long getId() {
         return id;

@@ -16,10 +16,10 @@ public interface ICustomerRepository extends JpaRepository<Customer ,Long> {
     //Top 5 khach hang co tong hoa don cao nhat
     @Query( "SELECT c, " +
             "SUM(od.quantity) AS quantity," +
-            "SUM( e.price * quantity ) AS totalPriceOfOrder " + //error
+            "SUM(e.price*quantity) AS totalPriceOfOrder " + //error
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
-            "JOIN od.customer c  " +
+            "JOIN o.customer c  " +
             "JOIN od.ebook e " +
             "GROUP BY c.email  " +
             "ORDER BY totalPriceOfOrder DESC ")

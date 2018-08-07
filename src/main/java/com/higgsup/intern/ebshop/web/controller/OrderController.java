@@ -26,7 +26,7 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<GenericResponseDTO> createPerson(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<GenericResponseDTO> createOrders(@RequestBody OrderDTO orderDTO) {
         orderService.createOrder(orderDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

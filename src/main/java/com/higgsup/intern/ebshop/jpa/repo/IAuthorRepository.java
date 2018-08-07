@@ -18,7 +18,7 @@ public interface IAuthorRepository extends JpaRepository<Author, Long> {
             "FROM Ebook e " +
             "LEFT JOIN e.author a " +
             "WHERE a.id = :id")
-    AuthorDTO getById(@Param("id") Long id);
+    Author getById(@Param("id") Long id);
 
     //Top 3 sach ban chay cua tac gia
     @Query( "SELECT e " +

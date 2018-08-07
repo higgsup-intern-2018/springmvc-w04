@@ -26,7 +26,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public CustomerListDTO findTop5HighestOrderPriceCustomers() {
-        List<CustomerDTO> customers = iCustomerRepository.findTop5HighestOrderPriceCustomers();
+       List<CustomerDTO> customers = iCustomerRepository.findTop5HighestOrderPriceCustomers();
 
         List<CustomerDTO> customerDTOList = mapper.mapAsList(customers, CustomerDTO.class);
         CustomerListDTO customerListDTO = new CustomerListDTO();
@@ -35,11 +35,12 @@ public class CustomerService implements ICustomerService {
 
         return customerListDTO;
 
+
     }
 
     @Override
     public CustomerListDTO findTop5BestBuyCustomers() {
-       List<Customer> customers = iCustomerRepository.findTop5BestBuyCustomers();
+      List<Customer> customers = iCustomerRepository.findTop5BestBuyCustomers();
 
         List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
         CustomerListDTO customerListDTO = new CustomerListDTO();

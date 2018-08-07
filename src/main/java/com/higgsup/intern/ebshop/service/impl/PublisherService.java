@@ -41,7 +41,7 @@ public class PublisherService implements IPublisherService {
 
     @Override
     public void delete(Long id) {
-        if (iPublisherReposiory.getById(id).getFoundedYear() == 0) {
+        if (iPublisherReposiory.findOne(id).getFoundedYear() == 0) {
             throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
         }
        if (iPublisherReposiory.countBookOfPublisher(id) > 0) {
@@ -53,8 +53,8 @@ public class PublisherService implements IPublisherService {
     @Override
     public void update(PublisherDTO publisherDTO) {
         Long id = publisherDTO.getId();
-        if (iPublisherReposiory.getById(id).getName() == null) {
-            throw new ServiceException(String.format("Person with id = %d does not exist!", id));
+        if (iPublisherReposiory.findOne(id).getName() == null) {
+            throw new ServiceException(String.format("Publisher with id = %d does not exist!", id));
         }
 
         Publisher publisher = mapper.map(publisherDTO, Publisher.class);
@@ -63,7 +63,7 @@ public class PublisherService implements IPublisherService {
 
     @Override
     public PublisherDTO findById(Long id) {
-        Publisher publisher = publisherRepository.findOne(id);
+        Publisher publisher = iPublisherReposiory.getById(id);
         if (publisher == null) {
             throw new ResourceNotFoundException(String.format("Publisher with id = %d does not exist!", id));
         }
