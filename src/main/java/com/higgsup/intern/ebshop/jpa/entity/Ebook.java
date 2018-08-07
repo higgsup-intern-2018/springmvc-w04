@@ -1,19 +1,47 @@
-package com.higgsup.intern.ebshop.jdbc.model;
+package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
 public class Ebook {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false, unique = true)
     private String isbn;
+
+    @Column(nullable = false)
     private String description;
-    private Long authorId;
-    private Long publisherId;
+
+    @OneToOne
+    @JoinColumn
+    private Author author;
+
+    @OneToOne
+    @JoinColumn
+    private Publisher publisher;
+
+    @Column(nullable = false)
     private Date publicationDate;
-    private Integer page;
-    private Long price;
+
+    @Column(nullable = false)
+    private Integer pages;
+
+    @Column(nullable = false)
+    private Double price;
+
+    @Column(nullable = false, columnDefinition = "INT(11) UNSIGNED")
     private Integer quantity;
-    private Boolean deleted;
+
+    @Column(nullable = false, columnDefinition="tinyint(1)")
+    private Boolean deleted = false;
 
     public Long getId() {
         return id;
@@ -47,20 +75,20 @@ public class Ebook {
         this.description = description;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Long getPublisherId() {
-        return publisherId;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setPublisherId(Long publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public Date getPublicationDate() {
@@ -71,19 +99,19 @@ public class Ebook {
         this.publicationDate = publicationDate;
     }
 
-    public Integer getPage() {
-        return page;
+    public Integer getPages() {
+        return pages;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

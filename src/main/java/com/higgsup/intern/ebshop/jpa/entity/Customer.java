@@ -1,11 +1,28 @@
-package com.higgsup.intern.ebshop.jdbc.model;
+package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private String address;
 
     public Long getId() {

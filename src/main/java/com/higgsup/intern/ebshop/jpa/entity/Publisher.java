@@ -1,11 +1,25 @@
-package com.higgsup.intern.ebshop.jdbc.model;
+package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
 public class Publisher {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
     private String website;
     private String founder;
+
+    @Column(nullable = false)
     private Integer foundedYear;
+
+    @Column(nullable = false)
     private String address;
 
     public Long getId() {

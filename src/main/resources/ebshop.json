@@ -1,0 +1,290 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ebshop",
+		"_postman_id": "6524c056-0776-18a9-2eae-9d769cb8a47a",
+		"description": "ebook shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a publisher",
+			"request": {
+				"url": "http://localhost:8080/ebshop/publishers/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Poet-Artist\",\r\n    \"website\": \"poet-artist.com\",\r\n    \"founder\": \"Poet\",\r\n    \"foundedYear\": 1998,\r\n    \"address\": \"New York\"\r\n}\r\n"
+				},
+				"description": "Create new publisher"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a publisher",
+			"request": {
+				"url": "http://localhost:8080/ebshop/publishers/10",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Poet-Artist\",\r\n    \"website\": \"poet-artist.com\",\r\n    \"founder\": \"Poet\",\r\n    \"foundedYear\": 1998,\r\n    \"address\": \"New York\"\r\n}\r\n"
+				},
+				"description": "Delete publisher"
+			},
+			"response": []
+		},
+		{
+			"name": "Export order",
+			"request": {
+				"url": "http://localhost:8080/ebshop/orders/13",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get an author",
+			"request": {
+				"url": "http://localhost:8080/ebshop/authors/2",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get a publisher",
+			"request": {
+				"url": "http://localhost:8080/ebshop/publishers/10",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Top 10 Bestsellers ebooks",
+			"request": {
+				"url": "http://localhost:8080/ebshop/statistics/top-10-best-seller-ebooks",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an ebook",
+			"request": {
+				"url": "http://localhost:8080/ebshop/ebooks/50",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Top 5 best selling publishers",
+			"request": {
+				"url": "http://localhost:8080/ebshop/statistics/top-5-best-selling-publishers",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Poet-Artist\",\r\n    \"website\": \"poet-artist.com\",\r\n    \"founder\": \"Poet\",\r\n    \"foundedYear\": 1998,\r\n    \"address\": \"New York\"\r\n}\r\n"
+				},
+				"description": "Delete publisher"
+			},
+			"response": []
+		},
+		{
+			"name": "Order ebook",
+			"request": {
+				"url": "http://localhost:8080/ebshop/orders",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itemList\": [\r\n          {\r\n             \"isbn\": \"1593278225\",\r\n             \"quantity\": 2\r\n          },\r\n          {\r\n            \"isbn\": \"1593275994\",\r\n            \"quantity\": 2\r\n          }\r\n     ],\r\n     \"firstName\": \"Cong\",\r\n     \"lastName\": \"Anh\",\r\n     \"email\": \"crazyguy@gmail.com\",\r\n     \"phone\": \"01674152723\",\r\n     \"address\": \"3 Cau Giay\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create ebook",
+			"request": {
+				"url": "http://localhost:8080/ebshop/ebooks",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"NA Book\",\r\n    \"isbn\": \"1484226887\",\r\n    \"description\": \".Very NA guy\",\r\n    \"authorId\": 9,\r\n    \"publisherId\": 4,\r\n    \"publicationDate\": 1461110400,\r\n    \"pages\": 352,\r\n    \"price\": 39.61,\r\n    \"quantity\": 2\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update ebook",
+			"request": {
+				"url": "http://localhost:8080/ebshop/ebooks",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": 50,\r\n    \"title\": \"NA Book\",\r\n    \"isbn\": \"1484226889\",\r\n    \"description\": \".Very NA guy\",\r\n    \"authorId\": 9,\r\n    \"publisherId\": 4,\r\n    \"publicationDate\": 1461110400,\r\n    \"pages\": 352,\r\n    \"price\": 39.61,\r\n    \"quantity\": 2\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update author",
+			"request": {
+				"url": "http://localhost:8080/ebshop/authors",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"id\": 8,\r\n            \"firstName\": \"Anna\",\r\n            \"lastName\": \"Le\",\r\n            \"yearOfBirth\": 1996,\r\n            \"description\": \"Test update for author 1\",\r\n            \"website\": \"www.test1.com\",\r\n            \"organization\": \"free\"\r\n        }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create an Author",
+			"request": {
+				"url": "http://localhost:8080/ebshop/authors",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Tu\",\r\n    \"lastName\": \"Thieu\",\r\n    \"yearOfBirth\": \"1994\",\r\n    \"description\": \"Nothing\",\r\n    \"website\": \"www\",\r\n    \"organization\": \"Higgsup\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an author",
+			"request": {
+				"url": "http://localhost:8080/ebshop/authors/10",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update a publisher",
+			"request": {
+				"url": "http://localhost:8080/ebshop/publishers",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"id\": 10,\n\"name\": \"No Starch Pressed \",\n\"website\": \"https://nostarch.com\",\n\"founder\": \"Jame Pollocka\",\n\"foundedYear\": 1995,\n\"address\": \"San Francisc California, America\" \n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Top 5 best-selling authors",
+			"request": {
+				"url": "http://localhost:8080/ebshop/statistics/top-5-best-selling-authors",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Top 5 highest order price",
+			"request": {
+				"url": "http://localhost:8080/ebshop/statistics/top-5-highest-order-price-customers",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Top 5 most buy",
+			"request": {
+				"url": "http://localhost:8080/ebshop/statistics/top-5-best-buy-customers",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

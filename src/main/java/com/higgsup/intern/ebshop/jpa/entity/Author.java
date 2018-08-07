@@ -1,10 +1,24 @@
-package com.higgsup.intern.ebshop.jdbc.model;
+package com.higgsup.intern.ebshop.jpa.entity;
 
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
 public class Author {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
     private Integer yearOfBirth;
+
     private String description;
     private String website;
     private String organization;
