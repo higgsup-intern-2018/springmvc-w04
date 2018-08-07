@@ -8,4 +8,5 @@ public interface IEbookService {
     void update(EbookDTO ebookDTO);
     GenericResponseDTO create(EbookDTO ebookDTO);
     void delete(Long id);
+    EbookOrderListDTO top10BestSellers();
 }

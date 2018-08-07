@@ -1,14 +1,20 @@
 package com.higgsup.intern.ebshop.service.impl;
 
 import com.higgsup.intern.ebshop.dto.EbookDTO;
+import com.higgsup.intern.ebshop.dto.EbookOrderDTO;
+import com.higgsup.intern.ebshop.dto.EbookOrderListDTO;
 import com.higgsup.intern.ebshop.dto.GenericResponseDTO;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Ebook;
 import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.service.IEbookService;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EbookService implements IEbookService {
@@ -56,5 +62,25 @@ public class EbookService implements IEbookService {
             throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
         }
         ebookRepository.delete(id);
+    }
+
+    @Override
+    public EbookOrderListDTO top10BestSellers() {
+        List<Ebook> ebooks = ebookRepository.top10BestSeller(new PageRequest(0,10));
+        List<EbookOrderDTO> ebookOrderDTOs = new ArrayList<EbookOrderDTO>();
+        for (Ebook ebook :  ebooks){
+            EbookOrderDTO ebookOrderDTO = new EbookOrderDTO();
+            ebookOrderDTO.setTitle(ebook.getTitle());
+            ebookOrderDTO.setAuthorFirstName(ebook.getAuthor().getFirstName());
+            ebookOrderDTO.setAuthorLastName(ebook.getAuthor().getLastName());
+            ebookOrderDTO.setPrice(ebook.getPrice());
+            ebookOrderDTO.setCopiesSold(ebookRepository.countCopySold(ebook.getId()));
+            ebookOrderDTOs.add(ebookOrderDTO);
+        }
+
+        EbookOrderListDTO ebookOrderListDTO = new EbookOrderListDTO();
+        ebookOrderListDTO.setEbookOrderDTOs(ebookOrderDTOs);
+
+        return ebookOrderListDTO;
     }
 }

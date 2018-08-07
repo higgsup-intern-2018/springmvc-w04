@@ -18,4 +18,11 @@ public interface IAuthorRepository extends CrudRepository<Author, Long> {
     @Query("select e from OrderDetails o join o.ebook e join e.author a where a.id = :id " +
             "group by o.ebook order by sum(o.quantity) desc")
     List<Ebook> top3BookOfAuthor(@Param("id") Long id, Pageable pageable);
+
+    @Query("select a from OrderDetails o join o.ebook e join e.author a " +
+            "group by a.id order by sum(o.quantity) desc")
+    List<Author> findTop5BestSellingAuthors(Pageable pageable);
+
+    @Query("select sum(o.quantity) from OrderDetails o join o.ebook e join e.author a where a.id = :id")
+    public Integer sumEbooksOfAuthor(@Param("id") Long id);
 }

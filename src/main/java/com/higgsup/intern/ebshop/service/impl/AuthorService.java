@@ -1,9 +1,6 @@
 package com.higgsup.intern.ebshop.service.impl;
 
-import com.higgsup.intern.ebshop.dto.AuthorDTO;
-import com.higgsup.intern.ebshop.dto.EbookDTO;
-import com.higgsup.intern.ebshop.dto.EbookListDTO;
-import com.higgsup.intern.ebshop.dto.PublisherDTO;
+import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Author;
@@ -14,6 +11,7 @@ import com.higgsup.intern.ebshop.jpa.repo.IEbookRepository;
 import com.higgsup.intern.ebshop.service.IAuthorService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,5 +85,17 @@ public class AuthorService implements IAuthorService {
         authorDTO.setAllBookOfAuthor(authorRepository.countEbooksOfAuthor(id));
 
         return authorDTO;
+    }
+
+    @Override
+    public AuthorListDTO findTop5BestSellingAuthors() {
+        List<Author> authors = authorRepository.findTop5BestSellingAuthors(new PageRequest(0,5));
+        List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);
+            for (AuthorDTO authorDTO : authorDTOs){
+                authorDTO.setCountOfBooks(authorRepository.sumEbooksOfAuthor(authorDTO.getId()));
+        }
+        AuthorListDTO authorListDTO = new AuthorListDTO();
+        authorListDTO.setAuthorDTOs(authorDTOs);
+        return authorListDTO;
     }
 }
