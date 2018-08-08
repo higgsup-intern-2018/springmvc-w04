@@ -85,15 +85,4 @@ public class PublisherService implements IPublisherService {
         return publisherDTO;
     }
 
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public PublisherListDTO top5BestSellingPublisher() {
-        List<Publisher> publishers = iPublisherRepository.findTop5BestSellingPublishers().subList(0, 5);
-        List<PublisherDTO> publisherDTOS = mapper.mapAsList(publishers, PublisherDTO.class);
-
-        PublisherListDTO publisherListDTO = new PublisherListDTO();
-        publisherListDTO.setPublisherDTOList(publisherDTOS);
-
-        return publisherListDTO;
-    }
 }

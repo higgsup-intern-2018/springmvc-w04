@@ -87,13 +87,5 @@ public class AuthorService implements IAuthorService {
         iAuthorRepository.save(author);
     }
 
-    @Override
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public AuthorListDTO findTop5BestSellingAuthors() {
-        List<Author> authors = iAuthorRepository.findTop5BestSellingAuthors().subList(0, 5);
-        List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);
-        AuthorListDTO authorListDTO = new AuthorListDTO();
-        authorListDTO.setAuthorDTOs(authorDTOs);
-        return authorListDTO;
     }
-}
+
