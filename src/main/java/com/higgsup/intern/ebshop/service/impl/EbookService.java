@@ -45,7 +45,7 @@ public class EbookService implements IEbookService {
         String isbn = ebookDTO.getIsbn();
         Integer newQuantity = ebookDTO.getQuantity();
         Ebook ebook = mapper.map(ebookDTO, Ebook.class);
-        if (iEbookRepository.findByIsbn(isbn)== null) {
+        if (iEbookRepository.findByIsbn(isbn) == null) {
             iEbookRepository.save(ebook);
             return GenericResponseDTO.created();
         } else {
@@ -63,10 +63,11 @@ public class EbookService implements IEbookService {
     public void delete(Long id) {
         if (iEbookRepository.findOne(id) == null) {
             throw new ServiceException(String.format("Ebook with id = %d does not exist!", id));
-        }else{
-        Ebook ebook = iEbookRepository.findOne(id);
-        ebook.setDeleted(true);
-        iEbookRepository.save(ebook);}
+        } else {
+            Ebook ebook = iEbookRepository.findOne(id);
+            ebook.setDeleted(true);
+            iEbookRepository.save(ebook);
+        }
     }
 
 }

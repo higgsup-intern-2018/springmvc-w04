@@ -42,7 +42,7 @@ public class StatisticsService implements IStatisticsService {
         List<ItemInfoDTO> itemInfoDTOs = new ArrayList<>();
         List<Ebook> ebooks = iEbookRepository.top10BestSellingEbooks().subList(0, 10);
 
-        for (Ebook ebook: ebooks){
+        for (Ebook ebook : ebooks) {
             ItemInfoDTO itemInfoDTO = new ItemInfoDTO();
             itemInfoDTO.setTitle(ebook.getTitle());
             itemInfoDTO.setPublisherName(ebook.getPublisher().getName());
@@ -62,7 +62,7 @@ public class StatisticsService implements IStatisticsService {
         List<Customer> customers = iCustomerRepository.findTop5HighestOrderPriceCustomers().subList(0, 5);
         List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
 
-        for (CustomerDTO customerDTO : customerDTOs){
+        for (CustomerDTO customerDTO : customerDTOs) {
             customerDTO.setTotalPriceOfOrders(iCustomerRepository.totalPrice(customerDTO.getId()));
             customerDTO.setQuantity(iCustomerRepository.quantity(customerDTO.getId()));
         }
@@ -76,7 +76,7 @@ public class StatisticsService implements IStatisticsService {
         List<Customer> customers = iCustomerRepository.findTop5BestBuyCustomers().subList(0, 5);
         List<CustomerDTO> customerDTOs = mapper.mapAsList(customers, CustomerDTO.class);
 
-        for (CustomerDTO customerDTO : customerDTOs){
+        for (CustomerDTO customerDTO : customerDTOs) {
             customerDTO.setTotalPriceOfOrders(iCustomerRepository.totalPrice(customerDTO.getId()));
             customerDTO.setQuantity(iCustomerRepository.quantity(customerDTO.getId()));
         }
@@ -89,7 +89,7 @@ public class StatisticsService implements IStatisticsService {
 
         List<Publisher> publishers = ipublisherRepository.findTop5BestSellingPublishers().subList(0, 5);
         List<PublisherDTO> publisherDTOS = mapper.mapAsList(publishers, PublisherDTO.class);
-        for (PublisherDTO publisherDTO : publisherDTOS){
+        for (PublisherDTO publisherDTO : publisherDTOS) {
             publisherDTO.setCountOfBook(iauthorRepository.countOfBooksByPublisherId(publisherDTO.getId()));
         }
         return publisherDTOS;
@@ -103,7 +103,7 @@ public class StatisticsService implements IStatisticsService {
 
         List<AuthorDTO> authorDTOs = mapper.mapAsList(authors, AuthorDTO.class);
 
-        for (AuthorDTO authorDTO: authorDTOs){
+        for (AuthorDTO authorDTO : authorDTOs) {
             authorDTO.setCountOfBooks(iauthorRepository.countOfBooks(authorDTO.getId()));
         }
         return authorDTOs;

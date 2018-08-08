@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface IOrderRepository extends CrudRepository<Orders, Long> {
 
-    @Query( "SELECT e " +
+    @Query("SELECT e " +
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN od.ebook e " +
@@ -23,7 +23,7 @@ public interface IOrderRepository extends CrudRepository<Orders, Long> {
     List<Ebook> getEbookByOrdersId(@Param("id") Long id);
 
 
-    @Query( "SELECT c " +
+    @Query("SELECT c " +
             "FROM Orders o " +
             "JOIN o.customer c " +
             "WHERE o.id = :id")
@@ -32,7 +32,7 @@ public interface IOrderRepository extends CrudRepository<Orders, Long> {
     @Query("SELECT o FROM Orders o WHERE o.createdDate = :date")
     Long getId(@Param("date") String date);
 
-    @Query( "SELECT od.quantity " +
+    @Query("SELECT od.quantity " +
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN od.ebook e " +
@@ -40,10 +40,10 @@ public interface IOrderRepository extends CrudRepository<Orders, Long> {
             "AND o.id = :ordersId")
     Integer getQuantityByEbookId(@Param("ebookId") Long ebookId, @Param("ordersId") Long ordersId);
 
-    @Query( "SELECT SUM(e.price * od.quantity) " +
+    @Query("SELECT SUM(e.price * od.quantity) " +
             "FROM OrderDetails od " +
-            "JOIN od.orders o "+
+            "JOIN od.orders o " +
             "JOIN od.ebook e " +
             "WHERE o.id = :id")
-    Double totalPrice(@Param("id")Long id);
+    Double totalPrice(@Param("id") Long id);
 }

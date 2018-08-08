@@ -10,12 +10,8 @@ import java.util.List;
 public interface IStatisticsService {
 
     List<ItemInfoDTO> findTop10BestSellingEbooks();
-
     List<CustomerDTO> findTop5HighestPrice();
-
     List<CustomerDTO> findTop5MostBuyCustomers();
-
     List<PublisherDTO> findTop5BestSellingPublisher();
-
     List<AuthorDTO> findTop5BestSellingAuthors();
 }

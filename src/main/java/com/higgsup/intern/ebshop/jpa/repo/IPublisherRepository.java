@@ -10,20 +10,14 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IPublisherRepository extends CrudRepository<Publisher, Long> {
-    @Query( "SELECT p, " +
-            "SUM(od.quantity) AS countOfBook FROM OrderDetails od " +
-            "LEFT JOIN od.ebook e " +
-            "LEFT JOIN e.publisher p " +
-            "WHERE p.id = :id")
-    Publisher findById(@Param("id") Long id);
 
-    @Query( "SELECT COUNT(p.id) " +
+    @Query("SELECT COUNT(p.id) " +
             "FROM Ebook e " +
             "LEFT JOIN e.publisher p " +
             "WHERE p.id = :id")
     Integer countBookOfPublisher(@Param("id") Long id);
 
-    @Query( "SELECT e, e.author, p " +
+    @Query("SELECT e, e.author, p " +
             "FROM OrderDetails od " +
             "LEFT JOIN od.ebook e " +
             "LEFT JOIN e.publisher p " +
@@ -33,7 +27,7 @@ public interface IPublisherRepository extends CrudRepository<Publisher, Long> {
     List<Ebook> top5BookOfPublisher(@Param("id") Long id);
 
 
-    @Query( "SELECT p " +
+    @Query("SELECT p " +
             "FROM OrderDetails od " +
             "JOIN od.ebook e " +
             "JOIN e.publisher p " +

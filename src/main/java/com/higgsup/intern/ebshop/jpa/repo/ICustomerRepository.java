@@ -10,7 +10,8 @@ import java.util.List;
 public interface ICustomerRepository extends CrudRepository<Customer, Long> {
 
     Customer findByEmail(String email);
-    @Query( "SELECT c " +
+
+    @Query("SELECT c " +
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN o.customer c " +
@@ -19,23 +20,23 @@ public interface ICustomerRepository extends CrudRepository<Customer, Long> {
             "ORDER BY SUM (od.quantity) DESC ")
     List<Customer> findTop5HighestOrderPriceCustomers();
 
-    @Query( "SELECT SUM(e.price * od.quantity) " +
+    @Query("SELECT SUM(e.price * od.quantity) " +
             "FROM OrderDetails od " +
             "JOIN od.ebook e " +
             "JOIN od.orders o " +
             "JOIN o.customer c " +
             "WHERE c.id = :id ")
-    Double totalPrice (@Param("id") Long id);
+    Double totalPrice(@Param("id") Long id);
 
-    @Query( "SELECT SUM(od.quantity) " +
+    @Query("SELECT SUM(od.quantity) " +
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN o.customer c " +
             "WHERE c.id = :id ")
-    Integer quantity (@Param("id") Long id);
+    Integer quantity(@Param("id") Long id);
 
 
-    @Query( "SELECT c " +
+    @Query("SELECT c " +
             "FROM OrderDetails od " +
             "JOIN od.orders o " +
             "JOIN o.customer c " +
@@ -46,5 +47,5 @@ public interface ICustomerRepository extends CrudRepository<Customer, Long> {
 
 
     @Query("SELECT c.id FROM Customer c where c.email = :email")
-    Long getId(@Param("email")String email);
+    Long getId(@Param("email") String email);
 }
