@@ -1,9 +1,6 @@
 package com.higgsup.intern.ebshop.service.impl;
 
-import com.higgsup.intern.ebshop.dto.AuthorDTO;
-import com.higgsup.intern.ebshop.dto.EbookDTO;
-import com.higgsup.intern.ebshop.dto.EbookListDTO;
-import com.higgsup.intern.ebshop.dto.PublisherDTO;
+import com.higgsup.intern.ebshop.dto.*;
 import com.higgsup.intern.ebshop.exception.ResourceNotFoundException;
 import com.higgsup.intern.ebshop.exception.ServiceException;
 import com.higgsup.intern.ebshop.jpa.entity.Author;
@@ -83,5 +80,18 @@ public class PublisherService implements IPublisherService {
 
         publisherDTO.setCountOfBook(publisherRepository.countEbooksOfPublisher(id));
         return publisherDTO;
+    }
+
+    @Override
+    public PublisherListDTO top5BestSellingPublisher() {
+        List<Publisher> publishers = publisherRepository.findTop5BestSellingPublishers(new PageRequest(0,5));
+        List<PublisherDTO> publisherDTOS = mapper.mapAsList(publishers, PublisherDTO.class);
+        for (PublisherDTO publisherDTO: publisherDTOS){
+            publisherDTO.setAllBookOfPublisher(publisherRepository.sumEbooksOfPublisher(publisherDTO.getId()));
+        }
+        PublisherListDTO publisherListDTO = new PublisherListDTO();
+        publisherListDTO.setPublisherDTOList(publisherDTOS);
+
+        return publisherListDTO;
     }
 }

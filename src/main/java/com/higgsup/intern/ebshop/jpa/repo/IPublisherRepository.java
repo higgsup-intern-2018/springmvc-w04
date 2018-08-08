@@ -14,9 +14,16 @@ import java.util.List;
 public interface IPublisherRepository extends CrudRepository<Publisher,Long> {
 
     @Query("select count(p) from Ebook e join e.publisher p where p.id = :id")
-    public Integer countEbooksOfPublisher(@Param("id") Long id);
+    Integer countEbooksOfPublisher(@Param("id") Long id);
 
     @Query("select e from OrderDetails o join o.ebook e join e.publisher p where p.id = :id " +
             "group by o.ebook order by sum(o.quantity) desc")
     List<Ebook> top5BookOfPublisher(@Param("id") Long id, Pageable pageable);
+
+    @Query(" select p from OrderDetails o join o.ebook e join e.publisher p" +
+            " group by p.id order by sum(o.quantity) DESC ")
+    List<Publisher> findTop5BestSellingPublishers(Pageable pageable);
+
+    @Query("select sum(o.quantity) from OrderDetails o join o.ebook e join e.publisher p where p.id = :id")
+    Integer sumEbooksOfPublisher(@Param("id") Long id);
 }

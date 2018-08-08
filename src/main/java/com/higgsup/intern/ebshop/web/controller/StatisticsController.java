@@ -47,12 +47,12 @@ public class StatisticsController {
 //        CustomerListDTO customerListDTO = customerService.findTop5BestBuyCustomers();
 //        return ResponseEntity.ok(customerListDTO);
 //    }
-//
-//    @GetMapping("/top-5-best-selling-publishers")
-//    public ResponseEntity<PublisherListDTO> getTop5Publisher() {
-//        PublisherListDTO top5Publisher = publisherService.top5BestSellingPublisher();
-//        return ResponseEntity.ok(top5Publisher);
-//    }
+
+    @GetMapping("/top-5-best-selling-publishers")
+    public ResponseEntity<PublisherListDTO> getTop5Publisher() {
+        PublisherListDTO top5Publisher = publisherService.top5BestSellingPublisher();
+        return ResponseEntity.ok(top5Publisher);
+    }
 
     @GetMapping("/top-5-best-selling-authors")
     public ResponseEntity<AuthorListDTO> getTop5Author() {
